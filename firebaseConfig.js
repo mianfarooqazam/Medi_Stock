@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getFirestore } from "firebase/firestore";
 
 
 // Initialize Firebase
@@ -11,15 +12,8 @@ const firebaseConfig = {
     appId: "1:982687367000:web:66b3a8eeb5732ca4d56f2d",
     measurementId: "G-ERLCZX8233"
 };
-let app;
+const app = initializeApp(firebaseConfig);
 
-try {
-    app = initializeApp(firebaseConfig);
-    console.log('Firebase connected successfully!');
-} catch (error) {
-    console.error('Error initializing Firebase:', error);
-}
-
-export default app;
+export const db = getFirestore(app);
 // For more information on how to access Firebase in your project,
 // see the Firebase documentation: https://firebase.google.com/docs/web/setup#access-firebase

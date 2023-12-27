@@ -1,22 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import { Alert, StyleSheet, Text, View } from 'react-native';
-import { TextInput } from 'react-native-paper';
-import firebase from './firebaseConfig';
-import { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { Button, Text } from 'react-native-paper';
+import { addContact, getContacts } from './lib/firestore-actions';
+import { useEffect, useState } from 'react';
 export default function App() {
+  const [contacts, setContacts] = useState([]) as any[];
+
+  const getData = async () => {
+    const data = await getContacts();
+    setContacts(data);
+  }
+
   useEffect(() => {
-    if (firebase) {
-      
-        Alert.alert('Connected');
-    } else {
-        Alert.alert('No');
-    }
-}, []);
+    getData()
+  }, []);
+
   return (
     <View style={styles.container}>
-      <Text>Opencool n your appddd!</Text>
-     
       <StatusBar style="auto" />
+      {
+        contacts.map((contact, index) => {
+          return (
+            <Text key={index}>{JSON.stringify(contact)}</Text>
+          )
+        })
+      }
+
+      <Button onPress={addContact}>Add Data</Button>
     </View>
   );
 }
