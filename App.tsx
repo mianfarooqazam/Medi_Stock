@@ -14,7 +14,7 @@ export default function App() {
 }, []);
   return (
     <View style={styles.container}>
-      <Text>Opencool n your appddd!</Text>
+      <Text>This file is changed</Text>
      
       <StatusBar style="auto" />
     </View>
