@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
-import { StyleSheet, View ,Text} from 'react-native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SignUp from './src/screens/auth/SignUp';
-import { TextInput } from 'react-native-paper';
-import Login from './src/screens/auth/Login';
+import { getAuth } from 'firebase/auth';
+import Dashboard from './src/screens/dashboard/Dashboard';
 
 export default function App() {
-
+  const auth = getAuth()
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-
-        <SignUp />
+      {
+        auth.currentUser ? <Dashboard currentUser={auth.currentUser}/> : <SignUp />
+      }
+        
       </View>
     </SafeAreaProvider>
   );
