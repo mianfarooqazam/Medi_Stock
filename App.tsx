@@ -1,33 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View } from 'react-native';
-import { Button, Text } from 'react-native-paper';
-import { addContact, getContacts } from './lib/firestore-actions';
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { StyleSheet, View ,Text} from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import SignUp from './src/screens/auth/SignUp';
+import { TextInput } from 'react-native-paper';
+import Login from './src/screens/auth/Login';
+
 export default function App() {
-  const [contacts, setContacts] = useState([]) as any[];
-
-  const getData = async () => {
-    const data = await getContacts();
-    setContacts(data);
-  }
-
-  useEffect(() => {
-    getData()
-  }, []);
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      {
-        contacts.map((contact, index) => {
-          return (
-            <Text key={index}>{JSON.stringify(contact)}</Text>
-          )
-        })
-      }
+    <SafeAreaProvider>
+      <View style={styles.container}>
 
-      <Button onPress={addContact}>Add Data</Button>
-    </View>
+        <SignUp />
+      </View>
+    </SafeAreaProvider>
   );
 }
 
@@ -35,7 +21,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
 });
