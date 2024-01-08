@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React from 'react';
-import { Modal, Portal, Provider, Button, Divider, Chip } from 'react-native-paper';
+import React, { useState } from 'react';
+import { Modal, Portal, Provider, Button, Divider, } from 'react-native-paper';
 import ReusableChip from '../../components/ReusableChip';
 
 const SearchCustomers = () => {
-    const [visible, setVisible] = React.useState(false);
+    const [visible, setVisible] = useState(false);
 
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
@@ -12,6 +12,7 @@ const SearchCustomers = () => {
 
     return (
         <View style={styles.container}>
+
             <Provider>
                 <Portal>
                     <Modal visible={visible} onDismiss={hideModal}>
@@ -22,14 +23,14 @@ const SearchCustomers = () => {
                             <Text style={styles.text}>Total Bill: </Text>
                             <Text style={styles.text}>Rs. 30000 </Text>
                             </View>
+                        
+                            <View style={{flexDirection:'row',justifyContent:"space-between"}}>
+                            <Text style={styles.text}>Last Bill: </Text>
+                            <Text style={styles.text}>Rs. 30000</Text>
+                            </View>
                             <View style={{flexDirection:'row',justifyContent:"space-between"}}>
                             <Text style={styles.text}>Pending: </Text>
                             <Text style={styles.text}>Rs. 32300000</Text>
-                            </View>
-                        
-                            <View style={{flexDirection:'row',justifyContent:"space-between"}}>
-                            <Text style={styles.text}>Total Bill: </Text>
-                            <Text style={styles.text}>Rs. 30000</Text>
                             </View>
                             
                             <View style={{flexDirection:'row',justifyContent:"space-evenly"}}>
@@ -44,6 +45,7 @@ const SearchCustomers = () => {
                     Show
                 </Button>
             </Provider>
+
         </View>
     );
 }
@@ -52,7 +54,7 @@ const SearchCustomers = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1, 
-
+backgroundColor:"#8efb"
     },
     containerStyle: {
         backgroundColor: '#ffff', 
