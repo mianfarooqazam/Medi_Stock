@@ -2,18 +2,20 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SignUp from './src/screens/auth/SignUp';
-import { getAuth } from 'firebase/auth';
+// import { getAuth } from 'firebase/auth';
 import Dashboard from './src/screens/dashboard/Dashboard';
+import MainNavigator from './src/navigator/MainNavigator';
 
 export default function App() {
-  const auth = getAuth()
+  // const auth = getAuth()
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-      {
+      {/* {
         auth.currentUser ? <Dashboard currentUser={auth.currentUser}/> : <SignUp />
-      }
-        
+      } */}
+        {/* <Dashboard currentUser={null}/> */}
+        <MainNavigator />
       </View>
     </SafeAreaProvider>
   );
@@ -22,8 +24,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'pink',
-    // alignItems: 'center',
-    // justifyContent: 'center',
+   
   },
 });
