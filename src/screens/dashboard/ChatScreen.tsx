@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React from 'react'
 
 //
-const Chat = () => {
+const ChatScreen = () => {
   return (
     <View >
       <Text>Chat</Text>
@@ -10,4 +10,4 @@ const Chat = () => {
   )
 }
 
-export default Chat
+export default ChatScreen

@@ -5,6 +5,7 @@ import SignUp from './src/screens/auth/SignUp';
 // import { getAuth } from 'firebase/auth';
 import Dashboard from './src/screens/dashboard/Dashboard';
 import MainNavigator from './src/navigator/MainNavigator';
+import SplashScreen from './src/splash/SplashScreen';
 
 export default function App() {
   // const auth = getAuth()
@@ -16,6 +17,7 @@ export default function App() {
       } */}
         {/* <Dashboard currentUser={null}/> */}
         <MainNavigator />
+        {/* <SplashScreen /> */}
       </View>
     </SafeAreaProvider>
   );

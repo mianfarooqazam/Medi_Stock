@@ -2,25 +2,43 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import Customers from '../screens/dashboard/Customers';
+import CustomersScreen from '../screens/dashboard/CustomersScreen';
 import Dashboard from '../screens/dashboard/Dashboard';
 import AddCustomer from '../screens/dashboard/AddCustomer';
-import DeleteCustomers from '../screens/dashboard/DeleteCustomers';
+import EditCustomers from '../screens/dashboard/EditCustomers';
 import SearchCustomers from '../screens/dashboard/SearchCustomers';
-import Chat from '../screens/dashboard/Chat';
 
-//
+import ChatScreen from '../screens/dashboard/ChatScreen';
+import ProductsScreen from '../screens/dashboard/ProductsScreen';
+import SplashScreen from '../splash/SplashScreen';
+import AddProduct from '../screens/dashboard/AddProduct';
+import EditProducts from '../screens/dashboard/EditProducts';
+import SearchProducts from '../screens/dashboard/SearchProducts';
+import NewInvoice from '../screens/dashboard/NewInvoice';
+
+
+
+//r
 const Stack = createNativeStackNavigator();
 const MainNavigator = () => {
   return (
    <NavigationContainer> 
-    <Stack.Navigator initialRouteName='Dashboard' screenOptions={{headerBackTitleVisible:false}}>
+    <Stack.Navigator initialRouteName='SplashScreen' screenOptions={{headerBackTitleVisible:false}}>
+    <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name='Dashboard' component={Dashboard}/>
-        <Stack.Screen name='Customers' component={Customers} options={{title:'Customers'}}/>
+
+        <Stack.Screen name='NewInvoice' component={NewInvoice} options={{title:'Generate Invoice'}}/>
+        <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
         <Stack.Screen  name='AddCustomer' component={AddCustomer} options={{title:"Add New Customer"}}/>
-        <Stack.Screen  name='DeleteCustomers' component={DeleteCustomers} options={{title:"Delete Customer"}}/>
         <Stack.Screen  name='SearchCustomers' component={SearchCustomers} options={{title:"Search Customer"}}/>
-        <Stack.Screen  name='Chat' component={Chat} options={{title:"Start Chatting with your friends"}}/>
+        <Stack.Screen  name='EditCustomers' component={EditCustomers} options={{title:"Edit Customer"}}/>
+        <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{title:'Products'}}/>
+        <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
+        <Stack.Screen name='EditProducts' component={EditProducts} options={{title:'Edit Product'}}/>
+        <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
+
+
+        <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
 
     </Stack.Navigator>
    </NavigationContainer>
