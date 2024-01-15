@@ -15,6 +15,9 @@ const Customers = ({ navigation }) => {
         <Button mode='contained' onPress={() => navigation.navigate("DeleteCustomers")} icon="delete" style={styles.button}>
           Delete Customers
         </Button>
+        <Button mode='contained' onPress={() => navigation.navigate("Chat")} icon="chat" style={styles.button}>
+          Chat 
+        </Button>
       </View>
     </View>
   );

@@ -1,7 +1,11 @@
 import { View, Text,StyleSheet } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 
+//
 const DeleteCustomers = () => {
+  useEffect(() => {
+  
+  }, [])
   return (
     <View style={styles.container}>
       <Text>Delete Customers</Text>
