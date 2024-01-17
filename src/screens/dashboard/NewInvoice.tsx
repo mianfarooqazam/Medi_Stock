@@ -1,72 +1,62 @@
-import { View, Text, ScrollView, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react';
+import { View, StyleSheet, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import { addDoc, collection, } from 'firebase/firestore';
-import db from '../../../firebaseConfig';
-import ReusableChip from '../../components/ReusableChip';
-//
+import ReusableButton from '../../components/Button/ReusableButton';
+import ResuableInput from '../../components/TextInput/ReusableInput';
+
 const NewInvoice = ({ navigation }) => {
-   
+    //    useEffect(() => {
+    //     Alert.alert("Dont Worry!","Invoice number will be auto generated");
+    //    }, [])   
     return (
-
-        <View style={styles.container}>
-
-
+        <View style={styles.container} >
             <View style={styles.view1}>
-                <TextInput label="Product Name" style={styles.textinput} />
-                <TextInput label="M.R.P" style={styles.textinput} />
-                <TextInput label="T.P" style={styles.textinput}  />
-                <TextInput label="Packing" style={styles.textinput} />
-                <TextInput label="Batch number" style={styles.textinput} />
 
-
+                <ResuableInput label="Product Name" style={undefined} />
+                <ResuableInput label="Qunatity" style={undefined}/>
+                <ResuableInput label="T.P" style={undefined}/>
+               <ResuableInput label="M.R.P" style={undefined} />
             </View>
-
             <View style={styles.view2}>
-                <Button mode="contained" onPress={()=>Alert.alert("Product Added")} style={styles.button}  > Generate Invoice</Button>
-
+            <ReusableButton
+          label="Add Another Product"
+          onPress={() => Alert.alert("Button Pressed")}
+          style={styles.button}    />
+                <ReusableButton label="Calculate Bill" onPress={()=>{}} style={styles.button} />
             </View>
-
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
-        backgroundColor: "#fff",
-        // justifyContent:"center",
-        // alignItems:'center'
+        // justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
     },
     view1: {
+        width: '90%',
         flex: 1,
-        // backgroundColor:"pink",
-        // width:"90%",
-        alignItems: 'center',
-        justifyContent: "center"
+        // backgroundColor:'red'
+        // justifyContent: 'center',
     },
     textinput: {
-        backgroundColor: "#fff",
-        width: "90%",
-        marginVertical: 10
-
+        marginVertical: 10,
+        width: '100%',
+        backgroundColor: '#fff',
     },
-
     view2: {
-        flex: 0.5,
-        // backgroundColor:"yellow",
-        // width:"90%",
-        // justifyContent:"center",
-        alignItems: 'center'
+        width: "90%",
+        gap: 10,
+        // backgroundColor:"pink",
+        justifyContent: "center",
+        flex: 1
     },
     button: {
-        backgroundColor: "#4683fb",
-        width: "90%",
-
+        width: '100%',
+        backgroundColor: '#4683fb',
     }
 });
-
-
 
 export default NewInvoice;

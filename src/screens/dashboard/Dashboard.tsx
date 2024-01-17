@@ -31,11 +31,11 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]}>
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Inventory")}>
           <Text style={styles.screenText}>Inventory</Text>
           <MaterialIcon name="inventory" size={40} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]}>
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]}onPress={()=>navigation.navigate("StockInOut")}>
           <Text style={styles.screenText}>Stock In-Out</Text>
           <MaterialIcon name="text-snippet" size={40} color="#fff" />
         </TouchableOpacity>

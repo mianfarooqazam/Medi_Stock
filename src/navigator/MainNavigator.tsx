@@ -15,6 +15,9 @@ import AddProduct from '../screens/dashboard/AddProduct';
 import EditProducts from '../screens/dashboard/EditProducts';
 import SearchProducts from '../screens/dashboard/SearchProducts';
 import NewInvoice from '../screens/dashboard/NewInvoice';
+import CalculateBill from '../screens/dashboard/CalculateBill';
+import Inventory from '../screens/dashboard/Inventory';
+import StockInOut from '../screens/dashboard/StockInOut';
 
 
 
@@ -28,6 +31,8 @@ const MainNavigator = () => {
         <Stack.Screen name='Dashboard' component={Dashboard}/>
 
         <Stack.Screen name='NewInvoice' component={NewInvoice} options={{title:'Generate Invoice'}}/>
+        <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
+
         <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
         <Stack.Screen  name='AddCustomer' component={AddCustomer} options={{title:"Add New Customer"}}/>
         <Stack.Screen  name='SearchCustomers' component={SearchCustomers} options={{title:"Search Customer"}}/>
@@ -36,7 +41,8 @@ const MainNavigator = () => {
         <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
         <Stack.Screen name='EditProducts' component={EditProducts} options={{title:'Edit Product'}}/>
         <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
-
+       <Stack.Screen name='Inventory' component={Inventory} options={{title:'Your Inventory'}}/>
+       <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
 
         <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
 
