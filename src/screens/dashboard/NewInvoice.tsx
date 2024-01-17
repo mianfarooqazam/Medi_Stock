@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { TextInput, Button } from 'react-native-paper';
 import { addDoc, collection, } from 'firebase/firestore';
 import db from '../../../firebaseConfig';
+import ReusableChip from '../../components/ReusableChip';
 //
 const NewInvoice = ({ navigation }) => {
    

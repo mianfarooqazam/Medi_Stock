@@ -1,20 +1,25 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
+import animationData from '../../assets/animation3.json'; 
 
 const SplashScreen = ({ navigation }) => {
   useEffect(() => {
-    const delay = setTimeout(() => {
+    const onAnimationFinish = () => {
       navigation.replace('Dashboard');
-    }, 1000);
+    };
 
-    return () => clearTimeout(delay);
+    return () => {};
   }, [navigation]);
+
+  function onAnimationFinish(): void {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <View style={styles.container}>
       <LottieView
-        source={{ uri: 'https://lottie.host/b15dc61a-d81d-4260-acc7-1e26ef9e0c8e/7Po5Fklu0q.json' }}
+     source={require('../../assets/animation3.json')}
         autoPlay
         loop={false}
         onAnimationFinish={() => {
@@ -27,7 +32,7 @@ const SplashScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,r
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
