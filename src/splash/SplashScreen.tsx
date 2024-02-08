@@ -12,7 +12,7 @@ const SplashScreen = ({ navigation }) => {
         autoPlay
         loop={false}
         onAnimationFinish={() => {
-          navigation.replace('OnBoarding');
+          navigation.replace('Dashboard');
         }}
       />
     </View>

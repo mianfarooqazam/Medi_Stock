@@ -44,11 +44,11 @@ const OnBoarding = ({ navigation }) => {
 
   const onDone = () => {
     setSlider(true)
-    //  navigation.replace("Dashboard")
+     navigation.replace("Dashboard")
   };
   const onSkip = () => {
     setSlider(true)
-    //  navigation.replace("Dashboard")
+     navigation.replace("Dashboard")
   };
 
   const RenderItem = ({ item }) => {
