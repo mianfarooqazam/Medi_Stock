@@ -71,6 +71,10 @@ const OnBoarding = ({ navigation }) => {
         onDone={onDone}
         showSkipButton={true}
         onSkip={onSkip}
+        activeDotStyle={{width:'6%',backgroundColor:"#fff"}}
+        doneLabel='Dashboard'
+      
+        
       />
     </>
   )

@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
 
 
 const SplashScreen = ({ navigation }) => {
-  
+
   return (
     <View style={styles.container}>
       <LottieView
-     source={require('../../assets/animation/animation1.json')}
+        source={require('../../assets/animation/animation1.json')}
         autoPlay
         loop={false}
         onAnimationFinish={() => {
