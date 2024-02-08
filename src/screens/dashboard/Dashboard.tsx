@@ -41,7 +41,7 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]}>
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("OnBoarding")}>
           <Text style={styles.screenText}>Sales</Text>
           <MaterialIcon name="attach-money" size={40} color="#fff" />
         </TouchableOpacity>

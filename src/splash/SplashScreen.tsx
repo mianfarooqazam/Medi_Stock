@@ -1,29 +1,18 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import LottieView from 'lottie-react-native';
-import animationData from '../../assets/animation3.json'; 
+
 
 const SplashScreen = ({ navigation }) => {
-  useEffect(() => {
-    const onAnimationFinish = () => {
-      navigation.replace('Dashboard');
-    };
-
-    return () => {};
-  }, [navigation]);
-
-  function onAnimationFinish(): void {
-    throw new Error('Function not implemented.');
-  }
-
+  
   return (
     <View style={styles.container}>
       <LottieView
-     source={require('../../assets/animation1.json')}
+     source={require('../../assets/animation/animation1.json')}
         autoPlay
         loop={false}
         onAnimationFinish={() => {
-          navigation.replace('Dashboard');
+          navigation.replace('OnBoarding');
         }}
       />
     </View>

@@ -18,6 +18,7 @@ import NewInvoice from '../screens/dashboard/NewInvoice';
 import CalculateBill from '../screens/dashboard/CalculateBill';
 import Inventory from '../screens/dashboard/Inventory';
 import StockInOut from '../screens/dashboard/StockInOut';
+import OnBoarding from '../screens/dashboard/onBoarding/OnBoarding';
 
 
 
@@ -29,6 +30,7 @@ const MainNavigator = () => {
     <Stack.Navigator initialRouteName='SplashScreen' screenOptions={{headerBackTitleVisible:false}}>
     <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name='Dashboard' component={Dashboard}/>
+        <Stack.Screen name='OnBoarding' component={OnBoarding}/>
 
         <Stack.Screen name='NewInvoice' component={NewInvoice} options={{title:'Generate Invoice'}}/>
         <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
