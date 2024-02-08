@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { TouchableRipple } from 'react-native-paper';
+
 
 const Dashboard = ({navigation}) => {
   const { height } = Dimensions.get('screen');
