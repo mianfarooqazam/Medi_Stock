@@ -41,7 +41,7 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("OnBoarding")}>
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} >
           <Text style={styles.screenText}>Sales</Text>
           <MaterialIcon name="attach-money" size={40} color="#fff" />
         </TouchableOpacity>
@@ -59,7 +59,17 @@ const Dashboard = ({navigation}) => {
           <Text style={styles.screenText}>Comming Soon</Text>
           <MaterialIcon name="timeline" size={40} color="#fff" />
         </TouchableOpacity>
+        
       </View>
+      <View style={styles.row}>
+      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("YourProfile")}>
+          <Text style={styles.screenText}>Your Profile</Text>
+          <MaterialIcon name="person" size={40} color="#fff" />
+        </TouchableOpacity>
+        
+        
+      </View>
+      
     </ScrollView>
   );
 }

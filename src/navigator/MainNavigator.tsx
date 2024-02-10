@@ -19,10 +19,11 @@ import CalculateBill from '../screens/dashboard/CalculateBill';
 import Inventory from '../screens/dashboard/Inventory';
 import StockInOut from '../screens/dashboard/StockInOut';
 import OnBoarding from '../screens/dashboard/onBoarding/OnBoarding';
+import YourProfile from '../screens/dashboard/YourProfile';
 
 
 
-//r
+//
 const Stack = createNativeStackNavigator();
 const MainNavigator = () => {
   return (
@@ -45,6 +46,7 @@ const MainNavigator = () => {
         <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
        <Stack.Screen name='Inventory' component={Inventory} options={{title:'Your Inventory'}}/>
        <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
+       <Stack.Screen name='YourProfile' component={YourProfile} options={{title:'Profile'}}/>
 
         <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
 
