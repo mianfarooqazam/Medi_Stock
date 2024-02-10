@@ -44,7 +44,7 @@ const MainNavigator = () => {
         <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
         <Stack.Screen name='EditProducts' component={EditProducts} options={{title:'Edit Product'}}/>
         <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
-       <Stack.Screen name='Inventory' component={Inventory} options={{title:'Your Inventory'}}/>
+       <Stack.Screen name='Inventory' component={Inventory} options={{title:'Inventory'}}/>
        <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
        <Stack.Screen name='YourProfile' component={YourProfile} options={{title:'Profile'}}/>
 

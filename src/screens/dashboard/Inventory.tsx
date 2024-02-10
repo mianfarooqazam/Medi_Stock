@@ -11,23 +11,24 @@ const Inventory = () => {
         <Text style={styles.tableHeader}>Product Name</Text>
         <Text style={styles.tableHeader}>Packing</Text>
         <Text style={styles.tableHeader}>Remaining Quantity</Text>
-        <Text style={styles.tableHeader}>Last Stock Out</Text>
+       
       </View>
 
+<ScrollView>
       {/* t-row */}
       <View style={styles.tableRow}>
         <Text style={styles.tableData}>1</Text>
         <Text style={styles.tableData}>Sach</Text>
         <Text style={styles.tableData}>Cosflor</Text>
         <Text style={styles.tableData}>180</Text>
-        <Text style={styles.tableData}>21</Text>
+       
       </View>
       <View style={styles.tableRow}>
         <Text style={styles.tableData}>2</Text>
         <Text style={styles.tableData}>Syp</Text>
         <Text style={styles.tableData}>Inicos</Text>
         <Text style={styles.tableData}>40</Text>
-        <Text style={styles.tableData}>20</Text>
+     
       </View>
 
       <View style={styles.tableRow}>
@@ -35,8 +36,9 @@ const Inventory = () => {
         <Text style={styles.tableData}>Cap</Text>
         <Text style={styles.tableData}>Refix</Text>
         <Text style={styles.tableData}>89</Text>
-        <Text style={styles.tableData}>7</Text>
+       
       </View>
+      </ScrollView>
      </View>
      
     </View>
@@ -66,7 +68,7 @@ tableHeader: {
   flex: 1,
   padding: 10,
   color: '#ffff',
-//   fontWeight: 'bold',
+  // fontWeight: 'bold',
   textAlign: 'center',
 //   overflow: "hidden",
     fontSize: 10,
