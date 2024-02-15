@@ -20,6 +20,7 @@ import Inventory from '../screens/dashboard/Inventory';
 import StockInOut from '../screens/dashboard/StockInOut';
 import OnBoarding from '../screens/dashboard/onBoarding/OnBoarding';
 import YourProfile from '../screens/dashboard/YourProfile';
+import ViewInvoice from '../screens/dashboard/ViewInvoice';
 
 
 
@@ -34,6 +35,7 @@ const MainNavigator = () => {
         <Stack.Screen name='OnBoarding' component={OnBoarding} options={{headerShown:false}}/>
 
         <Stack.Screen name='NewInvoice' component={NewInvoice} options={{title:'Generate Invoice'}}/>
+        <Stack.Screen name='ViewInvoice' component={ViewInvoice} options={{title:'Your Invoices'}}/>
         <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
 
         <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>

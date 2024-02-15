@@ -23,6 +23,7 @@ const NewInvoice = ({ navigation }) => {
           onPress={() => Alert.alert("Button Pressed")}
           style={styles.button}    />
                 <ReusableButton label="Calculate Bill" onPress={()=>navigation.navigate("CalculateBill")} style={styles.button} />
+                <ReusableButton label={"View Invoices"} onPress={()=>navigation.navigate("ViewInvoice")} style={styles.button} />
             </View>
         </View>
     );

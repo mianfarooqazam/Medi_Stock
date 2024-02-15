@@ -4,7 +4,7 @@ import React from 'react'
 const CalculateBill = () => {
   return (
     <View>
-     <FlatList data={""}/>
+     
     </View>
   )
 }

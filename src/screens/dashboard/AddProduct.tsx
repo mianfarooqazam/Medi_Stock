@@ -44,7 +44,7 @@ const AddProduct = ({ navigation }) => {
             </View>
 
             <View style={styles.view2}>
-                <Button mode="contained" onPress={()=>{AddProducttoFirestore();Alert.alert("Product Added")}} style={styles.button}  > Add Product</Button>
+                <Button mode="contained" onPress={()=>{AddProducttoFirestore();Alert.alert("Product Added");navigation.navigate("ProductsScreen")}} style={styles.button}  > Add Product</Button>
 
             </View>
 
