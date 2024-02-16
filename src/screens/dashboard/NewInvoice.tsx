@@ -7,6 +7,7 @@ import { AntDesign, FontAwesome5, Ionicons } from '@expo/vector-icons';
 import { Dropdown } from 'react-native-element-dropdown';
 import TextInputIcon from 'react-native-paper/lib/typescript/components/TextInput/Adornment/TextInputIcon';
 import DividerBar from '../../components/Divider/DividerBar';
+import moment from 'moment';
 
 const NewInvoice = ({ navigation }) => {
     const data = [
@@ -19,6 +20,8 @@ const NewInvoice = ({ navigation }) => {
         { label: 'Peter', value: '7' },
         { label: 'Richard', value: '8' },
     ];
+
+
     const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
     // const renderLabel = () => {
@@ -34,6 +37,9 @@ const NewInvoice = ({ navigation }) => {
     //    useEffect(() => {
     //     Alert.alert("Dont Worry!","Invoice number will be auto generated");
     //    }, [])   
+
+    const currentDate = moment().format('DD-MM-YYYY');
+
     return (
         <ScrollView style={styles.container} >
             {/* {renderLabel()} */}
@@ -46,14 +52,14 @@ const NewInvoice = ({ navigation }) => {
                     <HelperText type="info">Enable Auto Generate Invoice Number from Settings</HelperText>
                 </View>
 
-                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, backgroundColor: "#fff", padding: 10 }}>
-                    <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                        Date</Text>
+                <View style={{ width: '90%', alignSelf: 'center', borderWidth: 1, borderRadius: 10, backgroundColor: '#fff', padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', }}>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>Dated:</Text>
+                    <Text>{currentDate}</Text>
                 </View>
 
-                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, backgroundColor: "#fff", padding: 10,gap:10 }}>
+                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, backgroundColor: "#fff", padding: 10, gap: 10 }}>
                     <Text style={{ fontWeight: "bold", fontSize: 20 }}> Add Customer</Text>
-                        <DividerBar/>
+                    <DividerBar />
                     <Dropdown
                         style={styles.dropdown}
                         placeholderStyle={styles.placeholderStyle}
@@ -74,17 +80,17 @@ const NewInvoice = ({ navigation }) => {
                             setValue(item.value);
                             setIsFocus(false);
                         }}
-                        // renderLeftIcon={() => (
-                        //     <AntDesign  style={styles.icon}name="select1"size={20}  />
-                        // )}
+                    // renderLeftIcon={() => (
+                    //     <AntDesign  style={styles.icon}name="select1"size={20}  />
+                    // )}
                     />
                 </View>
 
-                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, backgroundColor: "#fff", padding: 10,gap:10 }}>
+                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, backgroundColor: "#fff", padding: 10, gap: 10 }}>
                     <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                         Products :
                     </Text>
-                    <DividerBar/>
+                    <DividerBar />
                     <Chip icon={() => <Ionicons name="add" size={30} color="#fff" />} style={{ backgroundColor: '#4683fb', }}
                         onPress={() => { }}
                     >
@@ -99,20 +105,24 @@ const NewInvoice = ({ navigation }) => {
                     <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                         Signature</Text>
                 </View>
-                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, flexDirection: "row", justifyContent: 'center', alignItems: "center" }}>
-                    <FontAwesome5 name="check-circle" size={24} color="#9BCF53" />
-                    <Text>Mark as Paid</Text>
-                </View>
-                
-                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, backgroundColor: "#fff", padding: 10 ,flexDirection:"row",}}>
-                    <ReusableButton label="Preview" onPress={undefined} style={{width:"50%",backgroundColor:"#4683fb"}} />
-                    <ReusableButton label="Save" onPress={undefined} style={{width:"50%",backgroundColor:"#4683fb"}}/>
+
+
+                <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, backgroundColor: "#fff", padding: 10, gap: 10 }}>
+                    <View style={{ width: "90%", alignSelf: "center", borderWidth: 1, borderRadius: 10, flexDirection: "row", justifyContent: 'center', alignItems: "center", backgroundColor: "#9BCF53", padding: 10 }}>
+                        <FontAwesome5 name="check-circle" size={24} color="#fff" />
+                        <Text style={{ color: "#fff" }}>Mark as Paid</Text>
+                    </View>
+                    <View style={{ flexDirection: "row", }}>
+                        <ReusableButton label="Preview" onPress={undefined} style={{ width: "50%", backgroundColor: "#4683fb" }} />
+                        <ReusableButton label="Save" onPress={undefined} style={{ width: "50%", backgroundColor: "#4683fb" }} />
+
+                    </View>
                 </View>
 
 
             </View>
 
-           
+
 
 
 
@@ -147,7 +157,7 @@ const styles = StyleSheet.create({
     },
     label: {
         position: 'absolute',
-        
+
         left: 22,
         top: 8,
         zIndex: 999,
@@ -156,21 +166,21 @@ const styles = StyleSheet.create({
     },
     placeholderStyle: {
         fontSize: 16,
-        
+
     },
     selectedTextStyle: {
         fontSize: 16,
-        
+
     },
     iconStyle: {
         width: 20,
         height: 20,
-        
+
     },
     inputSearchStyle: {
         height: 40,
         fontSize: 16,
-        
+
     },
 });
 
