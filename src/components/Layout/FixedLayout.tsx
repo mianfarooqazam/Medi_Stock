@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const ViewInvoice = () => {
+const FixedLayout = () => {
   return (
     <View>
-      <Text>ViewInvoice</Text>
+      <Text>FixedLayout</Text>
     </View>
   )
 }
 
-export default ViewInvoice
+export default FixedLayout

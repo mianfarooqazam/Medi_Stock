@@ -20,7 +20,7 @@ import Inventory from '../screens/dashboard/Inventory';
 import StockInOut from '../screens/dashboard/StockInOut';
 import OnBoarding from '../screens/dashboard/onBoarding/OnBoarding';
 import YourProfile from '../screens/dashboard/YourProfile';
-import ViewInvoice from '../screens/dashboard/ViewInvoice';
+import ViewInvoices from '../screens/dashboard/ViewInvoices';
 
 
 
@@ -29,13 +29,13 @@ const Stack = createNativeStackNavigator();
 const MainNavigator = () => {
   return (
    <NavigationContainer> 
-    <Stack.Navigator initialRouteName='SplashScreen' screenOptions={{headerBackTitleVisible:false}}>
+    <Stack.Navigator initialRouteName='NewInvoice' screenOptions={{headerBackTitleVisible:false}}>
     <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name='Dashboard' component={Dashboard}/>
         <Stack.Screen name='OnBoarding' component={OnBoarding} options={{headerShown:false}}/>
 
         <Stack.Screen name='NewInvoice' component={NewInvoice} options={{title:'Generate Invoice'}}/>
-        <Stack.Screen name='ViewInvoice' component={ViewInvoice} options={{title:'Your Invoices'}}/>
+        <Stack.Screen name='ViewInvoices' component={ViewInvoices} options={{title:'Your Invoices'}}/>
         <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
 
         <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
