@@ -4,7 +4,7 @@ import React from 'react'
 const FixedLayout = () => {
   return (
     <View>
-      <Text>FixedLayout</Text>
+     
     </View>
   )
 }

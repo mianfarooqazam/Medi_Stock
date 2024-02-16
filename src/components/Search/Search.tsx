@@ -5,7 +5,7 @@ import { Searchbar } from 'react-native-paper'
 const Search = ({placeholder, value}) => {
   return (
     <View>
-     <Searchbar style={{width:'90%', alignSelf:'center',borderRadius:10,}} iconColor='#4683fb' placeholder={placeholder} value={value}/>
+     <Searchbar style={{width:'90%', alignSelf:'center',borderRadius:10,}} iconColor='#bebebe' placeholder={placeholder} value={value}/>
     </View>
   )
 }
