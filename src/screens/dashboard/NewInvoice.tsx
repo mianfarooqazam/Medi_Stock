@@ -17,6 +17,7 @@ import {
     Portal,
     Modal,
     Provider,
+    Switch
 } from "react-native-paper";
 import ReusableButton from "../../components/Button/ReusableButton";
 import ResuableInput from "../../components/TextInput/ReusableInput";
@@ -27,7 +28,7 @@ import DividerBar from "../../components/Divider/DividerBar";
 import moment from "moment";
 
 const NewInvoice = ({ navigation }) => {
-    const data = [
+    const CustomerData = [
         { label: "Jhon", value: "1" },
         { label: "Doe", value: "2" },
         { label: "Lorem", value: "3" },
@@ -37,6 +38,15 @@ const NewInvoice = ({ navigation }) => {
         { label: "Peter", value: "7" },
         { label: "Richard", value: "8" },
     ];
+    const ProductData = [
+        { label: "Cap A", value: "1" },
+        { label: "Cap B", value: "2" },
+        { label: "Cap C", value: "3" },
+        { label: "Syp A", value: "4" },
+        { label: "Syp B", value: "5" },
+        { label: "Tab A", value: "6" },
+        { label: "Tab B", value: "7" },
+    ]
     const containerStyle = {
         backgroundColor: "white",
         padding: 20,
@@ -47,13 +57,27 @@ const NewInvoice = ({ navigation }) => {
         // alignItems: 'center',
     };
 
-    const [value, setValue] = useState(null);
-    const [isFocus, setIsFocus] = useState(false);
+    const [customervalue, setCustomerValue] = useState(null);
+    const [customerFocus, setCustomerFocus] = useState(false);
     const [visible, setVisible] = useState(false);
-
     const showModal = () => setVisible(true);
     const hideModal = () => setVisible(false);
+
+    const [productsVisible, setProductsVisible] = useState(false);
+    const [productvalue, setProductValue] = useState(null);
+    const [productFocus, setProductFocus] = useState(false);
+    const showProductsModal = () => setProductsVisible(true);
+    const hideProductsModal = () => setProductsVisible(false);
+
+const [discount,setDiscount] = useState(false);
+const showDiscountModal = () => setDiscount(true);
+const hideDiscountModal = () => setDiscount(false);
+
+    const [markpaidPressed,setMarkPaidPressed] =useState(false)
+
     const currentDate = moment().format("DD-MM-YYYY");
+    const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
     return (
         <Provider>
@@ -81,12 +105,12 @@ const NewInvoice = ({ navigation }) => {
                                 <Text
                                     style={{ fontWeight: "300", fontSize: 20, color: "#4683fb" }}
                                 >
-                                    0001
+                                    INV-0001
                                 </Text>
                             </View>
-                            <HelperText type="info">
-                                Enable Auto Generate Invoice Number from Settings
-                            </HelperText>
+                            {/* <HelperText type="info" style={{alignSelf:"center"}}>
+                                For Auto-Generate Invoice Number, Enable it from settings
+                            </HelperText> */}
                         </View>
                     </TouchableRipple>
                     <Portal>
@@ -139,21 +163,21 @@ const NewInvoice = ({ navigation }) => {
                             selectedTextStyle={styles.selectedTextStyle}
                             inputSearchStyle={styles.inputSearchStyle}
                             iconStyle={styles.iconStyle}
-                            data={data}
+                            data={CustomerData}
                             search
                             maxHeight={300}
                             labelField="label"
                             valueField="value"
                             placeholder={
-                                !isFocus ? "Select Customer" : "Loading Customers...."
+                                !customerFocus ? "Select Customer" : "🚀 Loading Customers"
                             }
                             searchPlaceholder="Search..."
-                            value={value}
-                            onFocus={() => setIsFocus(true)}
-                            onBlur={() => setIsFocus(false)}
+                            value={customervalue}
+                            onFocus={() => setCustomerFocus(true)}
+                            onBlur={() => setCustomerFocus(false)}
                             onChange={(item) => {
-                                setValue(item.value);
-                                setIsFocus(false);
+                                setCustomerValue(item.value)
+                                setCustomerFocus(false);
                             }}
                         />
                     </View>
@@ -170,25 +194,71 @@ const NewInvoice = ({ navigation }) => {
                         }} >
                         <Text style={{ fontWeight: "bold", fontSize: 20 }}>Products :</Text>
                         <DividerBar />
-                        
-                        <View
-                        style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            borderWidth: 1,
-                            borderColor: "#bebebe",
-                            borderRadius: 10,
-                            flexDirection: "row",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            backgroundColor: "#bebebe",
-                            padding: 5,
-                            gap: 10,
-                        }}
-                    >
-                        <Text style={{ color: "black", fontSize: 16 }}>Add Products</Text>
-                        <FontAwesome5 name="plus-circle" size={16} c />
-                    </View>
+                        <TouchableRipple onPress={() => showProductsModal()} >
+                            <View
+                                style={{
+                                    width: "90%",
+                                    alignSelf: "center",
+                                    borderWidth: 1,
+                                    borderColor: "#bebebe",
+                                    borderRadius: 10,
+                                    flexDirection: "row",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    backgroundColor: "#bebebe",
+                                    padding: 5,
+                                    gap: 10,
+                                }}
+                            >
+                                <Text style={{ color: "black", fontSize: 16 }}>Add Products</Text>
+                                <FontAwesome5 name="plus-circle" size={16} />
+                            </View>
+                        </TouchableRipple>
+                        <Portal>
+                            <Modal
+                                visible={productsVisible}
+                                onDismiss={hideProductsModal}
+                                contentContainerStyle={containerStyle}
+                            >
+                                <View style={{ gap: 10 }}>
+                                    <Dropdown
+                                        style={styles.dropdown}
+                                        placeholderStyle={styles.placeholderStyle}
+                                        selectedTextStyle={styles.selectedTextStyle}
+                                        inputSearchStyle={styles.inputSearchStyle}
+                                        iconStyle={styles.iconStyle}
+                                        data={ProductData}
+                                        search
+                                        maxHeight={300}
+                                        labelField="label"
+                                        valueField="value"
+                                        placeholder={
+                                            !productFocus ? "Select Products" : "🚀 Loading Products"
+                                        }
+                                        searchPlaceholder="Search..."
+                                        value={productvalue}
+                                        onFocus={() => setProductFocus(true)}
+                                        onBlur={() => setProductFocus(false)}
+                                        onChange={(item) => {
+                                            setProductValue(item.value);
+                                            setProductFocus(false);
+                                        }}
+                                    />
+
+                                    <View style={{ gap: 10 }}>
+
+                                        <TextInput placeholder="1" mode="outlined" label="Quantity :" />
+                                        <TextInput placeholder="1" mode="outlined" label="M.R.P :" />
+                                        <View style={{ gap: 10 }}>
+
+
+                                            <ReusableButton label="Add" onPress={() => console.log("🚀 Item Added!")} style={{ backgroundColor: "#468EFB" }} textColor={undefined} />
+                                        </View>
+                                    </View>
+                                </View>
+
+                            </Modal>
+                        </Portal>
                         <DividerBar />
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                             <Text>Sub Total :</Text>
@@ -196,7 +266,7 @@ const NewInvoice = ({ navigation }) => {
 
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                            <Text>Discount :</Text>
+                            <Text onPress={()=>showDiscountModal()}>Discount :</Text>
                             <Text>Rs 0.00</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
@@ -205,6 +275,39 @@ const NewInvoice = ({ navigation }) => {
                         </View>
                         <DividerBar />
 
+                        <Portal>
+                        <Modal
+                            visible={discount}
+                            onDismiss={hideDiscountModal}
+                            contentContainerStyle={containerStyle}
+                        >
+                            <View style={{ gap: 10 }}>
+                            <Text style={{ fontWeight: "bold" }}>Discount</Text>
+                            <DividerBar />
+                            <TextInput mode="outlined" label="Flat Amount :"/>
+                            <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReusableButton
+                    label="Cancel"
+                    onPress={() => console.log("🚀 Cancel")}
+                    style={{ width: "40%", backgroundColor: "#bebebe" }}
+                    textColor="#000"
+                  />
+                  <ReusableButton
+                    label="Done"
+                    onPress={() => console.log("🚀 Done")}
+                    style={{ width: "40%", backgroundColor: "#468EFB" }}
+                    textColor="#fff"
+                  />
+                </View>
+                            </View>
+                        </Modal>
+                    </Portal>
                         <View style={{
                             width: "100%",
                             alignSelf: "center",
@@ -213,8 +316,12 @@ const NewInvoice = ({ navigation }) => {
                             backgroundColor: "#F9F07A",
                             padding: 10,
                             gap: 10,
+                            flexDirection: "row",
+                            alignItems: 'center',
+                            justifyContent: "space-between"
                         }}>
                             <Text style={{ fontWeight: "bold", fontSize: 20 }}>  Balance Due :</Text>
+                            <Text style={{ fontWeight: "300", fontSize: 16 }}>  Rs. 00000.0</Text>
                         </View>
                     </View>
                     <View
@@ -225,30 +332,35 @@ const NewInvoice = ({ navigation }) => {
                             borderRadius: 10,
                             backgroundColor: "#fff",
                             padding: 10,
+                            flexDirection:'row',
+                            justifyContent:"space-between",
+                            alignItems:"center"
                         }}
                     >
                         <Text style={{ fontWeight: "bold", fontSize: 20 }}>Signature :</Text>
+                        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color="#468EFB" />
                     </View>
 
+
+<TouchableRipple onPress={()=>setMarkPaidPressed(!markpaidPressed)}>
                     <View
                         style={{
                             width: "90%",
                             alignSelf: "center",
                             borderWidth: 1,
-                            borderColor: "#9BCF53",
+                            borderColor: markpaidPressed ?  "#9BCF53" : "#bebebe",
                             borderRadius: 10,
                             flexDirection: "row",
                             justifyContent: "center",
                             alignItems: "center",
-                            backgroundColor: "#9BCF53",
+                            backgroundColor: markpaidPressed ? "#9BCF53" : "#bebebe",
                             padding: 10,
                             gap: 10,
                         }}
                     >
-                        <Text style={{ color: "#fff", fontSize: 20 }}>Mark as paid</Text>
-                        <FontAwesome5 name="check-circle" size={20} color="#fff" />
+                        <Text style={{ color: "#fff", fontSize: 20 }} >Mark as {markpaidPressed? "Paid" : "Unpaid"}</Text>
                     </View>
-
+                    </TouchableRipple>
                     <View
                         style={{
                             width: "90%",
@@ -265,11 +377,11 @@ const NewInvoice = ({ navigation }) => {
                         <ReusableButton
                             label="Preview"
                             onPress={() => console.log("🚀 Preview button pressed")}
-                            style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined}   />
+                            style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined} />
                         <ReusableButton
                             label="Save"
                             onPress={() => console.log("🚀 Save button pressed")}
-                            style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined}   />
+                            style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined} />
                     </View>
                 </View>
 

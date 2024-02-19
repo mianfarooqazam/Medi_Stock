@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import ReusableButton from "../../components/Button/ReusableButton";
 import { HelperText, Modal, Portal, Provider, TextInput } from "react-native-paper";
 import DividerBar from "../../components/Divider/DividerBar";
-import ResuableInput from "../../components/TextInput/ReusableInput";
-
+import { Switch } from 'react-native-paper';
 const SettingScreen = () => {
   const [invoiceVisible, setInvoiceVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -24,7 +23,12 @@ const SettingScreen = () => {
     borderRadius: 10,
     // alignItems: 'center',
   };
+
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+
   return (
+
     <Provider>
       <View style={{}}>
         <View style={{ gap: 10 }}>
@@ -49,6 +53,14 @@ const SettingScreen = () => {
                   <Text style={{ fontWeight: "bold" }}>Invoice Settings</Text>
                 </View>
                 <DividerBar />
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
+                  <Text style={{ fontWeight: "600", color: "#468EFB" }}>Auto-Generate Invoice Number</Text>
+                  <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color="#468EFB" />
+                </View>
+                <View>
+                  <Text>Or use your own set of invoice number</Text>
+                </View>
+                <DividerBar/>
                 <View style={{ gap: 10 }}>
                   <View>
                     <TextInput
@@ -68,14 +80,17 @@ const SettingScreen = () => {
 
 
 
-                <View>
-                  <HelperText type="error" >
-                    Please Note that all your next invoices will now start from: INV-0001
-                  </HelperText>
+                <View style={{ gap: 10 }}>
 
-                  <HelperText type="info" >
-                    This will not effect your previous invoices
-                  </HelperText>
+                  <View style={{}}>
+                    <HelperText type="error" >
+                      Please Note that all your next invoices will now start from: INV-0001
+                    </HelperText>
+
+                    <HelperText type="info" >
+                      This will not effect your previous invoices
+                    </HelperText>
+                  </View>
                 </View>
                 <View
                   style={{
@@ -157,6 +172,18 @@ const SettingScreen = () => {
               </View>
             </Modal>
           </Portal>
+
+          <ReusableButton
+            label="Business Terms & Conditions"
+            onPress={() => { }}
+            style={{
+              backgroundColor: "#F9F07A",
+              width: "80%",
+              alignSelf: "center",
+            }}
+            textColor={"#000"}
+          />
+
           <ReusableButton
             label="Delete Account"
             onPress={() => showDeleteModal()}
