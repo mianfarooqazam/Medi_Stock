@@ -21,6 +21,7 @@ import OnBoarding from '../screens/dashboard/onBoarding/OnBoarding';
 import YourProfile from '../screens/dashboard/YourProfile';
 import ViewInvoices from '../screens/dashboard/ViewInvoices';
 import SettingScreen from '../screens/dashboard/SettingScreen';
+import InvoicePreview from '../screens/dashboard/InvoicePreview';
 
 
 
@@ -51,7 +52,7 @@ const MainNavigator = () => {
        <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
        <Stack.Screen name='YourProfile' component={YourProfile} options={{title:'Profile'}}/>
        <Stack.Screen name='SettingScreen' component={SettingScreen} options={{title:'Settings'}}/>
-
+       <Stack.Screen name='InvoicePreview' component={InvoicePreview} options={{title:'Preview'}}/>
 
         <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
 

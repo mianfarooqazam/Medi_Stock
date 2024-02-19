@@ -384,7 +384,7 @@ const NewInvoice = ({ navigation }) => {
                     >
                         <ReusableButton
                             label="Preview"
-                            onPress={() => console.log("🚀 Preview button pressed")}
+                            onPress={() => navigation.navigate("InvoicePreview")}
                             style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined} />
                         <ReusableButton
                             label="Save"
