@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native'
+import { View, Text, Settings } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -29,7 +29,7 @@ const Stack = createNativeStackNavigator();
 const MainNavigator = () => {
   return (
    <NavigationContainer> 
-    <Stack.Navigator initialRouteName='NewInvoice' screenOptions={{headerBackTitleVisible:false}}>
+    <Stack.Navigator initialRouteName='Dashboard' screenOptions={{headerBackTitleVisible:false}}>
     <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
         <Stack.Screen name='Dashboard' component={Dashboard}/>
         <Stack.Screen name='OnBoarding' component={OnBoarding} options={{headerShown:false}}/>
@@ -38,6 +38,7 @@ const MainNavigator = () => {
         <Stack.Screen name='ViewInvoices' component={ViewInvoices} options={{title:'Your Invoices'}}/>
         <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
 
+       
         <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
         <Stack.Screen  name='AddCustomer' component={AddCustomer} options={{title:"Add New Customer"}}/>
         <Stack.Screen  name='SearchCustomers' component={SearchCustomers} options={{title:"Search Customer"}}/>
