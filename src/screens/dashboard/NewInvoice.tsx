@@ -59,9 +59,7 @@ const NewInvoice = ({ navigation }) => {
 
     const [customervalue, setCustomerValue] = useState(null);
     const [customerFocus, setCustomerFocus] = useState(false);
-    const [visible, setVisible] = useState(false);
-    const showModal = () => setVisible(true);
-    const hideModal = () => setVisible(false);
+   
 
     const [productsVisible, setProductsVisible] = useState(false);
     const [productvalue, setProductValue] = useState(null);
@@ -85,12 +83,12 @@ const hideDiscountModal = () => setDiscount(false);
                 {/* {renderLabel()} */}
 
                 <View style={{ gap: 20 }}>
-                    <TouchableRipple onPress={() => showModal()}>
+                   
                         <View
                             style={{
                                 width: "90%",
                                 alignSelf: "center",
-                                borderWidth: 1,
+                                // borderWidth: 1,
                                 borderRadius: 10,
                                 backgroundColor: "#fff",
                                 padding: 10,
@@ -108,28 +106,20 @@ const hideDiscountModal = () => setDiscount(false);
                                     INV-0001
                                 </Text>
                             </View>
-                            {/* <HelperText type="info" style={{alignSelf:"center"}}>
-                                For Auto-Generate Invoice Number, Enable it from settings
-                            </HelperText> */}
+                            <View style={{}}>
+                    <HelperText type="info" >
+                     Disable Auto-Generate Invoice number from settings and use your own inovice-numbers
+                    </HelperText>
+                  </View>
                         </View>
-                    </TouchableRipple>
-                    <Portal>
-                        <Modal
-                            visible={visible}
-                            onDismiss={hideModal}
-                            contentContainerStyle={containerStyle}
-                        >
-                            <View style={{ gap: 10 }}>
-                                <Text>Enter Your Invoice Number Below</Text>
-                            </View>
-                        </Modal>
-                    </Portal>
+                   
+                  
 
                     <View
                         style={{
                             width: "90%",
                             alignSelf: "center",
-                            borderWidth: 1,
+                            // borderWidth: 1,
                             borderRadius: 10,
                             backgroundColor: "#fff",
                             padding: 10,
@@ -146,7 +136,7 @@ const hideDiscountModal = () => setDiscount(false);
                         style={{
                             width: "90%",
                             alignSelf: "center",
-                            borderWidth: 1,
+                            // borderWidth: 1,
                             borderRadius: 10,
                             backgroundColor: "#fff",
                             padding: 10,
@@ -186,7 +176,7 @@ const hideDiscountModal = () => setDiscount(false);
                         style={{
                             width: "90%",
                             alignSelf: "center",
-                            borderWidth: 1,
+                            // borderWidth: 1,
                             borderRadius: 10,
                             backgroundColor: "#fff",
                             padding: 10,
@@ -284,7 +274,7 @@ const hideDiscountModal = () => setDiscount(false);
                             <View style={{ gap: 10 }}>
                             <Text style={{ fontWeight: "bold" }}>Discount</Text>
                             <DividerBar />
-                            <TextInput mode="outlined" label="Flat Amount :"/>
+                            <TextInput mode="outlined" label="Flat Amount :" placeholder="100"/>
                             <View
                   style={{
                     flexDirection: "row",
@@ -328,7 +318,7 @@ const hideDiscountModal = () => setDiscount(false);
                         style={{
                             width: "90%",
                             alignSelf: "center",
-                            borderWidth: 1,
+                            // borderWidth: 1,
                             borderRadius: 10,
                             backgroundColor: "#fff",
                             padding: 10,
@@ -365,7 +355,7 @@ const hideDiscountModal = () => setDiscount(false);
                         style={{
                             width: "90%",
                             alignSelf: "center",
-                            borderWidth: 1,
+                            // borderWidth: 1,
                             borderRadius: 10,
                             backgroundColor: "#fff",
                             padding: 10,
@@ -383,6 +373,7 @@ const hideDiscountModal = () => setDiscount(false);
                             onPress={() => console.log("🚀 Save button pressed")}
                             style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined} />
                     </View>
+                    
                 </View>
 
                 {/* <ReusableButton label="Calculate Bill" onPress={()=>navigation.navigate("CalculateBill")} style={styles.button} /> */}
