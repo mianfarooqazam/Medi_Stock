@@ -265,13 +265,11 @@ const NewInvoice = ({ navigation }) => {
                         <ReusableButton
                             label="Preview"
                             onPress={() => console.log("🚀 Preview button pressed")}
-                            style={{ width: "45%", backgroundColor: "#4683fb" }}
-                        />
+                            style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined}   />
                         <ReusableButton
                             label="Save"
                             onPress={() => console.log("🚀 Save button pressed")}
-                            style={{ width: "45%", backgroundColor: "#4683fb" }}
-                        />
+                            style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined}   />
                     </View>
                 </View>
 

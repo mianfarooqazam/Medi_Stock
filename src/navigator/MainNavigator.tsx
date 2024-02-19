@@ -1,4 +1,3 @@
-import { View, Text, Settings } from 'react-native'
 import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
@@ -21,6 +20,7 @@ import StockInOut from '../screens/dashboard/StockInOut';
 import OnBoarding from '../screens/dashboard/onBoarding/OnBoarding';
 import YourProfile from '../screens/dashboard/YourProfile';
 import ViewInvoices from '../screens/dashboard/ViewInvoices';
+import SettingScreen from '../screens/dashboard/SettingScreen';
 
 
 
@@ -36,12 +36,12 @@ const MainNavigator = () => {
 
         <Stack.Screen name='NewInvoice' component={NewInvoice} options={{title:'Generate Invoice'}}/>
         <Stack.Screen name='ViewInvoices' component={ViewInvoices} options={{title:'Your Invoices'}}/>
-        <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
 
+        <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
        
-        <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
         <Stack.Screen  name='AddCustomer' component={AddCustomer} options={{title:"Add New Customer"}}/>
         <Stack.Screen  name='SearchCustomers' component={SearchCustomers} options={{title:"Search Customer"}}/>
+        <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
         <Stack.Screen  name='EditCustomers' component={EditCustomers} options={{title:"Edit Customer"}}/>
         <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{title:'Products'}}/>
         <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
@@ -50,6 +50,8 @@ const MainNavigator = () => {
        <Stack.Screen name='Inventory' component={Inventory} options={{title:'Inventory'}}/>
        <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
        <Stack.Screen name='YourProfile' component={YourProfile} options={{title:'Profile'}}/>
+       <Stack.Screen name='SettingScreen' component={SettingScreen} options={{title:'Settings'}}/>
+
 
         <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
 
