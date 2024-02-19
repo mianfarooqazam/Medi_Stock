@@ -59,7 +59,7 @@ const NewInvoice = ({ navigation }) => {
 
     const [customervalue, setCustomerValue] = useState(null);
     const [customerFocus, setCustomerFocus] = useState(false);
-   
+
 
     const [productsVisible, setProductsVisible] = useState(false);
     const [productvalue, setProductValue] = useState(null);
@@ -67,11 +67,11 @@ const NewInvoice = ({ navigation }) => {
     const showProductsModal = () => setProductsVisible(true);
     const hideProductsModal = () => setProductsVisible(false);
 
-const [discount,setDiscount] = useState(false);
-const showDiscountModal = () => setDiscount(true);
-const hideDiscountModal = () => setDiscount(false);
+    const [discount, setDiscount] = useState(false);
+    const showDiscountModal = () => setDiscount(true);
+    const hideDiscountModal = () => setDiscount(false);
 
-    const [markpaidPressed,setMarkPaidPressed] =useState(false)
+    const [markpaidPressed, setMarkPaidPressed] = useState(true)
 
     const currentDate = moment().format("DD-MM-YYYY");
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
@@ -83,37 +83,37 @@ const hideDiscountModal = () => setDiscount(false);
                 {/* {renderLabel()} */}
 
                 <View style={{ gap: 20 }}>
-                   
+
+                    <View
+                        style={{
+                            width: "90%",
+                            alignSelf: "center",
+                            // borderWidth: 1,
+                            borderRadius: 10,
+                            backgroundColor: "#fff",
+                            padding: 10,
+                        }}
+                    >
                         <View
-                            style={{
-                                width: "90%",
-                                alignSelf: "center",
-                                // borderWidth: 1,
-                                borderRadius: 10,
-                                backgroundColor: "#fff",
-                                padding: 10,
-                            }}
+                            style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
                         >
-                            <View
-                                style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+                            <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                                Invoice Number:
+                            </Text>
+                            <Text
+                                style={{ fontWeight: "300", fontSize: 20, color: "#4683fb" }}
                             >
-                                <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                                    Invoice Number:
-                                </Text>
-                                <Text
-                                    style={{ fontWeight: "300", fontSize: 20, color: "#4683fb" }}
-                                >
-                                    INV-0001
-                                </Text>
-                            </View>
-                            <View style={{}}>
-                    <HelperText type="info" >
-                     Disable Auto-Generate Invoice number from settings and use your own inovice-numbers
-                    </HelperText>
-                  </View>
+                                INV-0001
+                            </Text>
                         </View>
-                   
-                  
+                        <View style={{}}>
+                            <HelperText type="info" >
+                                Disable Auto-Generate Invoice number from settings and use your own inovice-numbers
+                            </HelperText>
+                        </View>
+                    </View>
+
+
 
                     <View
                         style={{
@@ -256,7 +256,7 @@ const hideDiscountModal = () => setDiscount(false);
 
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                            <Text onPress={()=>showDiscountModal()}>Discount :</Text>
+                            <Text onPress={() => showDiscountModal()}>Discount :</Text>
                             <Text>Rs 0.00</Text>
                         </View>
                         <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
@@ -266,38 +266,38 @@ const hideDiscountModal = () => setDiscount(false);
                         <DividerBar />
 
                         <Portal>
-                        <Modal
-                            visible={discount}
-                            onDismiss={hideDiscountModal}
-                            contentContainerStyle={containerStyle}
-                        >
-                            <View style={{ gap: 10 }}>
-                            <Text style={{ fontWeight: "bold" }}>Discount</Text>
-                            <DividerBar />
-                            <TextInput mode="outlined" label="Flat Amount :" placeholder="100"/>
-                            <View
-                  style={{
-                    flexDirection: "row",
-                    gap: 10,
-                    justifyContent: "center",
-                  }}
-                >
-                  <ReusableButton
-                    label="Cancel"
-                    onPress={() => console.log("🚀 Cancel")}
-                    style={{ width: "40%", backgroundColor: "#bebebe" }}
-                    textColor="#000"
-                  />
-                  <ReusableButton
-                    label="Done"
-                    onPress={() => console.log("🚀 Done")}
-                    style={{ width: "40%", backgroundColor: "#468EFB" }}
-                    textColor="#fff"
-                  />
-                </View>
-                            </View>
-                        </Modal>
-                    </Portal>
+                            <Modal
+                                visible={discount}
+                                onDismiss={hideDiscountModal}
+                                contentContainerStyle={containerStyle}
+                            >
+                                <View style={{ gap: 10 }}>
+                                    <Text style={{ fontWeight: "bold" }}>Discount</Text>
+                                    <DividerBar />
+                                    <TextInput mode="outlined" label="Flat Amount :" placeholder="100" />
+                                    <View
+                                        style={{
+                                            flexDirection: "row",
+                                            gap: 10,
+                                            justifyContent: "center",
+                                        }}
+                                    >
+                                        <ReusableButton
+                                            label="Cancel"
+                                            onPress={() => console.log("🚀 Cancel")}
+                                            style={{ width: "40%", backgroundColor: "#bebebe" }}
+                                            textColor="#000"
+                                        />
+                                        <ReusableButton
+                                            label="Done"
+                                            onPress={() => console.log("🚀 Done")}
+                                            style={{ width: "40%", backgroundColor: "#468EFB" }}
+                                            textColor="#fff"
+                                        />
+                                    </View>
+                                </View>
+                            </Modal>
+                        </Portal>
                         <View style={{
                             width: "100%",
                             alignSelf: "center",
@@ -322,9 +322,9 @@ const hideDiscountModal = () => setDiscount(false);
                             borderRadius: 10,
                             backgroundColor: "#fff",
                             padding: 10,
-                            flexDirection:'row',
-                            justifyContent:"space-between",
-                            alignItems:"center"
+                            flexDirection: 'row',
+                            justifyContent: "space-between",
+                            alignItems: "center"
                         }}
                     >
                         <Text style={{ fontWeight: "bold", fontSize: 20 }}>Signature :</Text>
@@ -332,26 +332,44 @@ const hideDiscountModal = () => setDiscount(false);
                     </View>
 
 
-<TouchableRipple onPress={()=>setMarkPaidPressed(!markpaidPressed)}>
-                    <View
-                        style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            borderWidth: 1,
-                            borderColor: markpaidPressed ?  "#9BCF53" : "#bebebe",
-                            borderRadius: 10,
-                            flexDirection: "row",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            backgroundColor: markpaidPressed ? "#9BCF53" : "#bebebe",
-                            padding: 10,
-                            gap: 10,
-                        }}
-                    >
-                        <Text style={{ color: "#fff", fontSize: 20 }} >Mark as {markpaidPressed? "Paid" : "Unpaid"}</Text>
-                    </View>
+                    <TouchableRipple onPress={() => setMarkPaidPressed(!markpaidPressed)}>
+                        <View
+                            style={{
+                                width: "90%",
+                                alignSelf: "center",
+                                borderWidth: 1,
+                                borderColor: markpaidPressed ? "#9BCF53" : "#bebebe",
+                                borderRadius: 10,
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                backgroundColor: markpaidPressed ? "#9BCF53" : "#bebebe",
+                                padding: 10,
+                                gap: 10,
+                            }}
+                        >
+                            <Text style={{ color: "#fff", fontSize: 20 }} >Mark as {markpaidPressed ? "Paid" : "Unpaid"}</Text>
+                        </View>
                     </TouchableRipple>
-                    <View
+                   
+
+                </View>
+
+                {/* <ReusableButton label="Calculate Bill" onPress={()=>navigation.navigate("CalculateBill")} style={styles.button} /> */}
+                {/* <ReusableButton label={"View Invoices"} onPress={()=>navigation.navigate("ViewInvoices")} style={styles.button} /> */}
+            </ScrollView>
+            {/* <ReusableButton
+                            label="Save"
+                            onPress={() => console.log("🚀 Save button pressed")}
+                            style={{ width: "45%", backgroundColor: "#4683fb" ,position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                           // Button background color
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            height: 60, }} textColor={undefined} /> */}
+                             <View
                         style={{
                             width: "90%",
                             alignSelf: "center",
@@ -373,12 +391,7 @@ const hideDiscountModal = () => setDiscount(false);
                             onPress={() => console.log("🚀 Save button pressed")}
                             style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined} />
                     </View>
-                    
-                </View>
-
-                {/* <ReusableButton label="Calculate Bill" onPress={()=>navigation.navigate("CalculateBill")} style={styles.button} /> */}
-                {/* <ReusableButton label={"View Invoices"} onPress={()=>navigation.navigate("ViewInvoices")} style={styles.button} /> */}
-            </ScrollView>
+            
         </Provider>
     );
 };
