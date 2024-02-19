@@ -1,17 +1,20 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import ReusableButton from "../../components/Button/ReusableButton";
-import { Modal, Portal, Provider, TextInput } from "react-native-paper";
+import { HelperText, Modal, Portal, Provider, TextInput } from "react-native-paper";
 import DividerBar from "../../components/Divider/DividerBar";
 import ResuableInput from "../../components/TextInput/ReusableInput";
 
 const SettingScreen = () => {
   const [invoiceVisible, setInvoiceVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
+  const [signatureVisible, setSignatureVisible] = useState(false);
   const showInvoiceModal = () => setInvoiceVisible(true);
   const hideInvoiceModal = () => setInvoiceVisible(false);
   const showDeleteModal = () => setDeleteVisible(true);
   const hideDeleteModal = () => setDeleteVisible(false);
+  const showSignatureModal = () => setSignatureVisible(true);
+  const hideSignatureModal = () => setSignatureVisible(false)
   const containerStyle = {
     backgroundColor: "white",
     padding: 20,
@@ -65,6 +68,15 @@ const SettingScreen = () => {
 
 
 
+<View>
+                <HelperText type="error" >
+                                Please Note that all your next invoices will now start from: INV-0001
+                            </HelperText>
+
+                <HelperText type="info" >
+                               This will not effect your previous invoices
+                            </HelperText>
+                            </View>
                 <View
                   style={{
                     flexDirection: "row",
@@ -90,8 +102,8 @@ const SettingScreen = () => {
           </Portal>
 
           <ReusableButton
-            label="Invoice Settings"
-            onPress={() => showInvoiceModal()}
+            label="Signature Settings"
+            onPress={() => showSignatureModal()}
             style={{
               backgroundColor: "#468EFB",
               width: "80%",
@@ -99,7 +111,52 @@ const SettingScreen = () => {
             }}
             textColor={undefined}
           />
+          <Portal>
+            <Modal
+              visible={signatureVisible}
+              onDismiss={hideSignatureModal}
+              contentContainerStyle={containerStyle}
+            >
+              <View style={{ gap: 10, justifyContent: "flex-start" }}>
+                <View>
+                  <Text style={{ fontWeight: "bold" }}>Upload Signature</Text>
+                </View>
+                <DividerBar />
+                <View style={{ gap:15 }}>
+                <View style={{ borderWidth:1, borderColor:"#000" ,height:100,borderStyle:"dashed"}}>
 
+                </View>
+                <View>
+                  <ReusableButton label="Upload Image" onPress={()=>console.log("🚀 Image Uploaded")} style={undefined} textColor={undefined} />
+                </View>
+                <View style={{alignSelf:"center"}} >
+                  <Text style={{color:"#468EFB"}} onPress={()=>console.log("🚀 Signature cleared")}>Clear Signature</Text>
+                </View>
+                </View>
+                <DividerBar />
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReusableButton
+                    label="Cancel"
+                    onPress={() => console.log("🚀 Cancel")}
+                    style={{ width: "40%", backgroundColor: "#bebebe" }}
+                    textColor="#000"
+                  />
+                  <ReusableButton
+                    label="Done"
+                    onPress={() => console.log("🚀 Done")}
+                    style={{ width: "40%", backgroundColor: "#468EFB" }}
+                    textColor="#fff"
+                  />
+                </View>
+              </View>
+            </Modal>
+          </Portal>
           <ReusableButton
             label="Delete Account"
             onPress={() => showDeleteModal()}
