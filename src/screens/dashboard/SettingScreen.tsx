@@ -68,15 +68,15 @@ const SettingScreen = () => {
 
 
 
-<View>
-                <HelperText type="error" >
-                                Please Note that all your next invoices will now start from: INV-0001
-                            </HelperText>
+                <View>
+                  <HelperText type="error" >
+                    Please Note that all your next invoices will now start from: INV-0001
+                  </HelperText>
 
-                <HelperText type="info" >
-                               This will not effect your previous invoices
-                            </HelperText>
-                            </View>
+                  <HelperText type="info" >
+                    This will not effect your previous invoices
+                  </HelperText>
+                </View>
                 <View
                   style={{
                     flexDirection: "row",
@@ -122,16 +122,16 @@ const SettingScreen = () => {
                   <Text style={{ fontWeight: "bold" }}>Upload Signature</Text>
                 </View>
                 <DividerBar />
-                <View style={{ gap:15 }}>
-                <View style={{ borderWidth:1, borderColor:"#000" ,height:100,borderStyle:"dashed"}}>
+                <View style={{ gap: 15 }}>
+                  <View style={{ borderWidth: 1, borderColor: "#000", height: 100, borderStyle: "dashed" }}>
 
-                </View>
-                <View>
-                  <ReusableButton label="Upload Image" onPress={()=>console.log("🚀 Image Uploaded")} style={undefined} textColor={undefined} />
-                </View>
-                <View style={{alignSelf:"center"}} >
-                  <Text style={{color:"#468EFB"}} onPress={()=>console.log("🚀 Signature cleared")}>Clear Signature</Text>
-                </View>
+                  </View>
+                  <View>
+                    <ReusableButton label="Upload Image" onPress={() => console.log("🚀 Image Uploaded")} style={undefined} textColor={undefined} />
+                  </View>
+                  <View style={{ alignSelf: "center" }} >
+                    <Text style={{ color: "#468EFB" }} onPress={() => console.log("🚀 Signature cleared")}>Clear Signature</Text>
+                  </View>
                 </View>
                 <DividerBar />
                 <View
