@@ -18,49 +18,64 @@ const ProductsData = [
 
 const Inventory = () => {
   const [searchQuery, setSearchQuery] = useState('')
-  const filteredProducts = ProductsData.filter(item =>
-    item.productName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredProducts = ProductsData.filter(item => item.productName.toLowerCase().includes(searchQuery.toLowerCase()))
 
   return (
     <View style={styles.container}>
       <View>
         <Searchbar
-          style={{ width: "90%", alignSelf: "center" ,borderRadius:10}}
+          style={{ width: "90%", alignSelf: "center", borderRadius: 10 }}
           placeholder="Search Product"
           onChangeText={setSearchQuery}
           value={searchQuery}
 
         />
       </View>
-<View>
       <View>
-        <View style={styles.table}>
-          <Text style={styles.tableHeader}>S/N</Text>
-          <Text style={styles.tableHeader}>Product Name</Text>
-          <Text style={styles.tableHeader}>Packing</Text>
-          <Text style={styles.tableHeader}>Remaining Quantity</Text>
-        </View>
-
-        <ScrollView>
-
-
-
-
-          {filteredProducts.map((item, index) => (
-            <View style={styles.tableRow} key={index}>
-              <Text style={styles.tableData}>{index + 1}</Text>
-              <Text style={styles.tableData}>{item.packing}</Text>
-              <Text style={styles.tableData}>{item.productName}</Text>
-              <Text style={[styles.tableData, item.remainingQuantity < 20 ? styles.redText : null]}>{item.remainingQuantity}</Text>
-            </View>
-
-          ))}
-
-
-
-        </ScrollView>
+        <View>
+          <View style={styles.table}>
+            <Text style={styles.tableHeader}>S/N</Text>
+            <Text style={styles.tableHeader}>Product Name</Text>
+            <Text style={styles.tableHeader}>Packing</Text>
+            <Text style={styles.tableHeader}>Remaining Quantity</Text>
+          </View>
+          {/* <ScrollView>
+  {filteredProducts.length ===  0 ? (
+    <Text style={styles.noResultsText}>No such products</Text>
+  ) : (
+    filteredProducts.map((item, index) => (
+      <View style={styles.tableRow} key={index}>
+        <Text style={styles.tableData}>{index +  1}</Text>
+        <Text style={styles.tableData}>{item.packing}</Text>
+        <Text style={styles.tableData}>{item.productName}</Text>
+        <Text style={[styles.tableData, item.remainingQuantity <  20 ? styles.redText : null]}>{item.remainingQuantity}</Text>
       </View>
+    ))
+  )}
+</ScrollView> */}
+
+
+          <ScrollView>
+
+            {filteredProducts.length === 0 ? (
+              <View style={styles.noResultsView}>
+                <Text style={styles.noResultsText}>No such products 😔</Text>
+              </View>
+            ) : (
+              filteredProducts.map((item, index) => (
+                <View style={styles.tableRow} key={index}>
+                  <Text style={styles.tableData}>{index + 1}</Text>
+                  <Text style={styles.tableData}>{item.packing}</Text>
+                  <Text style={styles.tableData}>{item.productName}</Text>
+                  <Text style={[styles.tableData, item.remainingQuantity < 20 ? styles.redText : null]}>{item.remainingQuantity}</Text>
+                </View>
+              )
+              ))}
+
+
+
+          </ScrollView>
+        </View>
       </View>
     </View>
   );
@@ -70,7 +85,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    gap:10
+    gap: 10
   },
   table: {
     flexDirection: 'row',
@@ -100,6 +115,15 @@ const styles = StyleSheet.create({
   redText: {
     color: 'red',
   },
+  noResultsView: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+
+  },
+  noResultsText: {
+    fontSize: 20,
+  }
 });
 
 
