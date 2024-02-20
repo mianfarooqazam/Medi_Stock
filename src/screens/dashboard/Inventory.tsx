@@ -1,23 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Searchbar } from 'react-native-paper';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 
 const ProductsData = [
-  { productName: 'Sach', packing: 'Cosflor', remainingQuantity: 180 },
-  { productName: 'Syp', packing: 'Inicos', remainingQuantity: 40 },
-  { productName: 'Cap', packing: 'Refix', remainingQuantity: 15 },
-  { productName: 'Tab', packing: 'Mativ', remainingQuantity: 20 },
-  { productName: 'Syp', packing: 'Costio', remainingQuantity: 19 },
-  { productName: 'Cap', packing: 'Regix', remainingQuantity: 23 },
-  { productName: 'Tab', packing: 'Ivy', remainingQuantity: 2 },
-  { productName: 'Cap', packing: 'Sunrise', remainingQuantity: 89 },
+  { packing: 'Sach', productName: 'Cosflor', remainingQuantity: 180 },
+  { packing: 'Syp', productName: 'Inicos', remainingQuantity: 40 },
+  { packing: 'Cap', productName: 'Refix', remainingQuantity: 15 },
+  { packing: 'Tab', productName: 'Mativ', remainingQuantity: 20 },
+  { packing: 'Syp', productName: 'Costio', remainingQuantity: 19 },
+  { packing: 'Cap', productName: 'Regix', remainingQuantity: 2 },
+  { packing: 'Tab', productName: 'Ivy', remainingQuantity: 2 },
+  { packing: 'Cap', productName: 'Sunrise', remainingQuantity: 89 },
 ];
 
 
 const Inventory = () => {
+  const [searchQuery, setSearchQuery] = useState('')
+  const filteredProducts = ProductsData.filter(item =>
+    item.productName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <View style={styles.container}>
+      <View>
+        <Searchbar
+          style={{ width: "90%", alignSelf: "center" ,borderRadius:10}}
+          placeholder="Search Product"
+          onChangeText={setSearchQuery}
+          value={searchQuery}
+
+        />
+      </View>
+<View>
       <View>
         <View style={styles.table}>
           <Text style={styles.tableHeader}>S/N</Text>
@@ -27,23 +43,24 @@ const Inventory = () => {
         </View>
 
         <ScrollView>
-        
-          
 
 
-              {ProductsData.map((item,index)=> (
-                  <View style={styles.tableRow}>
-                    <Text style={styles.tableData}>{index+1}</Text>
-                    <Text style={styles.tableData}>{item.productName}</Text>
-                    <Text style={styles.tableData}>{item.packing}</Text>
-                    <Text style={[styles.tableData, item.remainingQuantity < 20 ? styles.redText: null]}>{item.remainingQuantity}</Text>
-                  </View>
 
-              ))}
+
+          {filteredProducts.map((item, index) => (
+            <View style={styles.tableRow} key={index}>
+              <Text style={styles.tableData}>{index + 1}</Text>
+              <Text style={styles.tableData}>{item.packing}</Text>
+              <Text style={styles.tableData}>{item.productName}</Text>
+              <Text style={[styles.tableData, item.remainingQuantity < 20 ? styles.redText : null]}>{item.remainingQuantity}</Text>
+            </View>
+
+          ))}
 
 
 
         </ScrollView>
+      </View>
       </View>
     </View>
   );
@@ -53,6 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    gap:10
   },
   table: {
     flexDirection: 'row',
