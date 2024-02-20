@@ -5,7 +5,7 @@ import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 
 
 const ProductsData = [
-  { packing: 'Sach', productName: 'Cosflor', remainingQuantity: 180 },
+  { packing: 'Sach',productName: 'Cosflor', remainingQuantity: 180 },
   { packing: 'Syp', productName: 'Inicos', remainingQuantity: 40 },
   { packing: 'Cap', productName: 'Refix', remainingQuantity: 15 },
   { packing: 'Tab', productName: 'Mativ', remainingQuantity: 20 },
@@ -35,26 +35,11 @@ const Inventory = () => {
         <View>
           <View style={styles.table}>
             <Text style={styles.tableHeader}>S/N</Text>
-            <Text style={styles.tableHeader}>Product Name</Text>
             <Text style={styles.tableHeader}>Packing</Text>
+            <Text style={styles.tableHeader}>Product Name</Text>
             <Text style={styles.tableHeader}>Remaining Quantity</Text>
           </View>
-          {/* <ScrollView>
-  {filteredProducts.length ===  0 ? (
-    <Text style={styles.noResultsText}>No such products</Text>
-  ) : (
-    filteredProducts.map((item, index) => (
-      <View style={styles.tableRow} key={index}>
-        <Text style={styles.tableData}>{index +  1}</Text>
-        <Text style={styles.tableData}>{item.packing}</Text>
-        <Text style={styles.tableData}>{item.productName}</Text>
-        <Text style={[styles.tableData, item.remainingQuantity <  20 ? styles.redText : null]}>{item.remainingQuantity}</Text>
-      </View>
-    ))
-  )}
-</ScrollView> */}
-
-
+      
           <ScrollView>
 
             {filteredProducts.length === 0 ? (
