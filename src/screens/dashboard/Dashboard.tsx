@@ -42,15 +42,15 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} >
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Sales")}>
           <Text style={styles.screenText}>Sales</Text>
           <MaterialIcon name="attach-money" size={40} color="#fff" />
         </TouchableOpacity>
-       
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Reports")}>
-          <Text style={styles.screenText}>Reports</Text>
-          <FontAwesome name="line-chart" size={40} color="#fff" />
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("YourProfile")}>
+          <Text style={styles.screenText}>Your Profile</Text>
+          <MaterialIcon name="person" size={40} color="#fff" />
         </TouchableOpacity>
+     
       </View>
       <View style={styles.row}>
       <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("SettingScreen")}>
@@ -64,10 +64,7 @@ const Dashboard = ({navigation}) => {
         
       </View>
       <View style={styles.row}>
-      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("YourProfile")}>
-          <Text style={styles.screenText}>Your Profile</Text>
-          <MaterialIcon name="person" size={40} color="#fff" />
-        </TouchableOpacity>
+      
         <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ChatScreen")}>
           <Text style={styles.screenText}>Chat</Text>
           <MaterialIcon name="chat-bubble" size={40} color="#fff" />

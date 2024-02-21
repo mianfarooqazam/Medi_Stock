@@ -22,7 +22,8 @@ import YourProfile from '../screens/dashboard/YourProfile';
 import ViewInvoices from '../screens/dashboard/ViewInvoices';
 import SettingScreen from '../screens/dashboard/SettingScreen';
 import InvoicePreview from '../screens/dashboard/InvoicePreview';
-import Reports from '../screens/dashboard/Reports';
+import Sales from '../screens/dashboard/Sales';
+
 
 
 
@@ -47,14 +48,14 @@ const MainNavigator = () => {
         
         <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{title:'Products'}}/>
         <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
-        
+        <Stack.Screen name='Sales' component={Sales} options={{title:'Sales Report'}}/>
         <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
        <Stack.Screen name='Inventory' component={Inventory} options={{title:'Inventory'}}/>
        <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
        <Stack.Screen name='YourProfile' component={YourProfile} options={{title:'Profile'}}/>
        <Stack.Screen name='SettingScreen' component={SettingScreen} options={{title:'Settings'}}/>
        <Stack.Screen name='InvoicePreview' component={InvoicePreview} options={{title:'Preview'}}/>
-       <Stack.Screen name='Reports' component={Reports} options={{title:'Reports'}}/>
+       
         <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
 
     </Stack.Navigator>
