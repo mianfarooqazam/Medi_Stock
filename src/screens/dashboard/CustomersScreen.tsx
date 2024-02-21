@@ -10,11 +10,9 @@ const CustomersScreen = ({ navigation }) => {
           Add Customers
         </Button>
         <Button mode='contained' onPress={() => navigation.navigate("SearchCustomers")} icon="account-search" style={styles.button}>
-          Search Customers
+        Search & Edit Customers
         </Button>
-        <Button mode='contained' onPress={() => navigation.navigate("EditCustomers")} icon="delete" style={styles.button}>
-          Edit Customers
-        </Button>
+       
         
       </View>
     </View>

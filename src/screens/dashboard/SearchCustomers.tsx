@@ -20,6 +20,7 @@ const CustomerData = [
   { customerName: "Jane Doe", Area: "Toronto", Address: "Canada" },
   { customerName: "Emma White", Area: "Dubai", Address: "United Arab Emirates" },
   { customerName: "Oliver Wilson", Area: "Singapore", Address: "Singapore" },
+  { customerName: "Farooq", Area: "Charsadda", Address: "Peshawar" },
   { customerName: "Sophia Martinez", Area: "Moscow", Address: "Russia" },
   { customerName: "Liam Miller", Area: "Rome", Address: "Italy" },
   { customerName: "Isabella Garcia", Area: "Barcelona", Address: "Spain" },

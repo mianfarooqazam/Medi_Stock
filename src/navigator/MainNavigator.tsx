@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import CustomersScreen from '../screens/dashboard/CustomersScreen';
 import Dashboard from '../screens/dashboard/Dashboard';
 import AddCustomer from '../screens/dashboard/AddCustomer';
-import EditCustomers from '../screens/dashboard/EditCustomers';
+
 import SearchCustomers from '../screens/dashboard/SearchCustomers';
 
 import ChatScreen from '../screens/dashboard/ChatScreen';
@@ -44,7 +44,7 @@ const MainNavigator = () => {
         <Stack.Screen  name='AddCustomer' component={AddCustomer} options={{title:"Add New Customer"}}/>
         <Stack.Screen  name='SearchCustomers' component={SearchCustomers} options={{title:"Search Customer"}}/>
         <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
-        <Stack.Screen  name='EditCustomers' component={EditCustomers} options={{title:"Edit Customer"}}/>
+        
         <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{title:'Products'}}/>
         <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
         
