@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { FontAwesome } from '@expo/vector-icons';
 
 
 const Dashboard = ({navigation}) => {
@@ -45,9 +46,10 @@ const Dashboard = ({navigation}) => {
           <Text style={styles.screenText}>Sales</Text>
           <MaterialIcon name="attach-money" size={40} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ChatScreen")}>
-          <Text style={styles.screenText}>Chat</Text>
-          <MaterialIcon name="chat-bubble" size={40} color="#fff" />
+       
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Reports")}>
+          <Text style={styles.screenText}>Reports</Text>
+          <FontAwesome name="line-chart" size={40} color="#fff" />
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
@@ -65,6 +67,10 @@ const Dashboard = ({navigation}) => {
       <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("YourProfile")}>
           <Text style={styles.screenText}>Your Profile</Text>
           <MaterialIcon name="person" size={40} color="#fff" />
+        </TouchableOpacity>
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ChatScreen")}>
+          <Text style={styles.screenText}>Chat</Text>
+          <MaterialIcon name="chat-bubble" size={40} color="#fff" />
         </TouchableOpacity>
         
         

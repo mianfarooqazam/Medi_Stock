@@ -60,7 +60,7 @@ const SettingScreen = () => {
                 <View>
                   <Text>Or use your own set of invoice number</Text>
                 </View>
-                <DividerBar/>
+                <DividerBar />
                 <View style={{ gap: 10 }}>
                   <View>
                     <TextInput
@@ -173,6 +173,16 @@ const SettingScreen = () => {
             </Modal>
           </Portal>
 
+          <ReusableButton
+            label="Products Settings "
+            onPress={() => { }}
+            style={{
+              backgroundColor: "#F9F07A",
+              width: "80%",
+              alignSelf: "center",
+            }}
+            textColor={"#000"}
+          />
           <ReusableButton
             label="Business Terms & Conditions"
             onPress={() => { }}
