@@ -6,7 +6,7 @@ import PieChart from 'react-native-pie-chart'
 
 
 const { width } = Dimensions.get('window')
-const SegmentedButtonExample = () => {
+const Sales = () => {
     const [selectedSegment, setSelectedSegment] = useState(0);
     const widthAndHeight = 200
     const series = [123, 521, 123, 789, 537,]
@@ -43,10 +43,10 @@ const SegmentedButtonExample = () => {
                 </Button>
             </View>
 
-            <ScrollView contentContainerStyle={{ gap: 20 }}>
+            <ScrollView contentContainerStyle={{ gap: 20, }}>
                 {selectedSegment === 2 && (
                     <TouchableRipple onPress={() => console.log("ripple pressed")} style={{}}>
-                        <View style={{ padding: 10, backgroundColor: "#fff", borderRadius: 10, width: "90%", alignSelf: 'center', gap: 10 }} >
+                        <View style={{ padding: 10, backgroundColor: "#fff", borderRadius: 10, width: "90%", alignSelf: 'center', gap: 10, }} >
 
                             <View style={{ alignItems: 'center' }}>
                                 <Text style={{ color: "#468EFB", fontSize: 25, fontWeight: "bold", }}>Sales by Customer</Text>
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     },
 })
 
-export default SegmentedButtonExample;
+export default Sales;
 
 // <View style={{ gap:  20 }}>
 // <View style={{ flexDirection: "row", alignSelf: 'center' }}>
