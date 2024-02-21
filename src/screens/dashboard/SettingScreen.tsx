@@ -31,7 +31,7 @@ const SettingScreen = () => {
 
     <Provider>
       <ScrollView contentContainerStyle={{ gap: 10 }}>
-        <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", marginTop:20}}>
+        <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", marginTop: 20 }}>
           <ReusableButton
             label="Logout"
             style={{
@@ -80,6 +80,18 @@ const SettingScreen = () => {
                       <HelperText type="info" >
                         Or use your own invoice number
                       </HelperText>
+                      <View style={{ gap: 10 }}>
+
+                        <View style={{}}>
+                          <HelperText type="error" >
+                            Please Note that all your next invoices will now start from your preffered Prefix and Number
+                          </HelperText>
+
+                          <HelperText type="info" >
+                            This will not effect your previous invoices
+                          </HelperText>
+                        </View>
+                      </View>
                     </>
                   )}
                 </View>
@@ -106,18 +118,7 @@ const SettingScreen = () => {
                 </View>
 
 
-                <View style={{ gap: 10 }}>
 
-                  <View style={{}}>
-                    <HelperText type="error" >
-                      Please Note that all your next invoices will now start from: INV-0001
-                    </HelperText>
-
-                    <HelperText type="info" >
-                      This will not effect your previous invoices
-                    </HelperText>
-                  </View>
-                </View>
                 <View
                   style={{
                     flexDirection: "row",
