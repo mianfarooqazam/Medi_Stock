@@ -11,7 +11,7 @@ import ChatScreen from '../screens/dashboard/ChatScreen';
 import ProductsScreen from '../screens/dashboard/ProductsScreen';
 import SplashScreen from '../splash/SplashScreen';
 import AddProduct from '../screens/dashboard/AddProduct';
-import EditProducts from '../screens/dashboard/EditProducts';
+
 import SearchProducts from '../screens/dashboard/SearchProducts';
 import NewInvoice from '../screens/dashboard/NewInvoice';
 import CalculateBill from '../screens/dashboard/CalculateBill';
@@ -47,7 +47,7 @@ const MainNavigator = () => {
         <Stack.Screen  name='EditCustomers' component={EditCustomers} options={{title:"Edit Customer"}}/>
         <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{title:'Products'}}/>
         <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
-        <Stack.Screen name='EditProducts' component={EditProducts} options={{title:'Edit Product'}}/>
+        
         <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
        <Stack.Screen name='Inventory' component={Inventory} options={{title:'Inventory'}}/>
        <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>

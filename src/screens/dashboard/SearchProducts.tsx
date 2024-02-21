@@ -17,6 +17,33 @@ const ProductsData = [
   { productName: 'Sunrise', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
   { productName: 'Refix', packing: "Tab", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
   { productName: 'Regix', packing: "Syp", Tp: 50, Mrp: 100, batchNumber: "FS323" },
+  { productName: 'Loratadine', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" },
+  { productName: 'Ibuprofen', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" },
+  { productName: 'Omeprazole', packing: "Tab", Tp: 530, Mrp: 600, batchNumber: "KL234" },
+  { productName: 'Paracetamol', packing: "Syp", Tp: 120, Mrp: 150, batchNumber: "IO595" },
+  { productName: 'Amoxicillin', packing: "Cap", Tp: 20, Mrp: 60, batchNumber: "F12HN23" },
+  { productName: 'Aspirin', packing: "Tab", Tp: 193, Mrp: 250, batchNumber: "RU433" },
+  { productName: 'Simvastatin', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
+  { productName: 'Metformin', packing: "Tab", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
+  { productName: 'Hydrochlorothiazide', packing: "Syp", Tp: 50, Mrp: 100, batchNumber: "FS323" },
+  { productName: 'Atorvastatin-D', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" },
+  { productName: 'Gabapentin', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" },
+  { productName: 'Warfarin', packing: "Tab", Tp: 530, Mrp: 600, batchNumber: "KL234" },
+  { productName: 'Citalopram', packing: "Syp", Tp: 120, Mrp: 150, batchNumber: "IO595" },
+  { productName: 'Metoprolol', packing: "Cap", Tp: 20, Mrp: 60, batchNumber: "F12HN23" },
+  { productName: 'Amlodipine', packing: "Tab", Tp: 193, Mrp: 250, batchNumber: "RU433" },
+  { productName: 'Diazepam', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
+  { productName: 'Ranitidine', packing: "Tab", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
+  { productName: 'Clopidogrel', packing: "Syp", Tp: 50, Mrp: 100, batchNumber: "FS323" },
+  { productName: 'Levothyroxine', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" },
+  { productName: 'Montelukast', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" },
+  { productName: 'Fluoxetine', packing: "Tab", Tp: 530, Mrp: 600, batchNumber: "KL234" },
+  { productName: 'Sildenafil', packing: "Syp", Tp: 120, Mrp: 150, batchNumber: "IO595" },
+  { productName: 'Pregabalin', packing: "Cap", Tp: 20, Mrp: 60, batchNumber: "F12HN23" },
+  { productName: 'Tadalafil', packing: "Tab", Tp: 193, Mrp: 250, batchNumber: "RU433" },
+  { productName: 'Methotrexate', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
+  { productName: 'Refix', packing: "Cap", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
+  { productName: 'Regix', packing: "Tab", Tp: 50, Mrp: 100, batchNumber: "FS323" },
 ]
 
 const containerStyle = {
@@ -37,16 +64,32 @@ const SearchProducts = () => {
   const showDeleteModal = () => setdeleteVisible(true);
   const hideDeleteModal = () => setdeleteVisible(false);
 
+  const [editProduct, setEditProduct] = useState<Item | null>(null);
+const [editPacking, setEditPacking] = useState("");
+const [editProductName, setEditProductName] = useState("");
+const [editBatchNumber, setEditBatchNumber] = useState("");
+const [editMrp, setEditMrp] = useState("");
+const [editTp, setEditTp] = useState("");
+
   const [editVisible, seteditVisible] = useState(false);
-  const showEditModal = () => seteditVisible(true);
+  const showEditModal = (product: Item) => {
+    setEditProduct(product);
+    setEditPacking(product.packing);
+    setEditProductName(product.productName);
+    setEditBatchNumber(product.batchNumber);
+    setEditMrp(product.Mrp.toString());
+    setEditTp(product.Tp.toString());
+    seteditVisible(true);
+  };
   const hideEditModal = () => seteditVisible(false);
   return (
     <Provider>
     <View style={styles.container}>
-      <View>
+      <View >
         <Searchbar onChangeText={setSearchQuery}
           value={searchQuery} placeholder='Search Products'
-          style={{ width: "90%", alignSelf: "center", borderRadius: 10 }}
+          style={{ width: "90%", alignSelf: "center", borderRadius: 10}}
+          
         />
       </View>
       <ScrollView contentContainerStyle={{ gap: 10 }}>
@@ -65,7 +108,7 @@ const SearchProducts = () => {
             </View>
 
             <View style={{ flexDirection: "row", gap: 10 }}>
-              <Feather name="edit-2" size={20} color="black" onPress={()=>showEditModal()} />
+            <Feather name="edit-2" size={20} color="black" onPress={() => showEditModal(item)} />
               <AntDesign name="delete" size={20} color="red" onPress={()=>showDeleteModal()} />
             </View>
           </View>
@@ -75,7 +118,7 @@ const SearchProducts = () => {
           </View>
           <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
             <Text>M.R.P</Text>
-            <Text>100</Text>
+            <Text>{item.Mrp}</Text>
           </View>
           <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
             <Text>Batch Number: </Text>
@@ -93,15 +136,15 @@ const SearchProducts = () => {
               contentContainerStyle={containerStyle}
             >
               <View style={{ gap: 20 }}>
-                <Text>Edid Product</Text>
+                <Text style={{fontSize:20}}>Edit Product</Text>
                 <DividerBar />
-                <TextInput placeholder="Cap" label='Packing :'  mode='outlined'/>
-                <TextInput placeholder="Mativ" mode="outlined" label="Product Name :" />
-                <TextInput placeholder='AB423' label="Batch Number :" mode='outlined' />
-                <TextInput placeholder="100" label='M.R.P :' mode='outlined'/>
-                <TextInput placeholder="40"  label='T.P :' mode='outlined'  />
+                <TextInput placeholder={`Previous Packing = ${editPacking}`} label='Packing :'  mode='outlined'  style={styles.textinput} />
+                <TextInput placeholder={`Previous Name = ${editProductName}`} mode="outlined" label="Product Name :"  style={styles.textinput}/>
+                <TextInput placeholder={`Previous B.No = ${editBatchNumber}`} label="Batch Number :" mode='outlined'  style={styles.textinput}/>
+                <TextInput placeholder={`Previous M.R.P = ${editMrp}`} label='M.R.P :' mode='outlined' style={styles.textinput}/>
+                <TextInput placeholder={`Previous T.P = ${editTp}`}  label='T.P :' mode='outlined'  style={styles.textinput} />
                 <ReusableButton
-                  label="Save Changes"
+                  label="Update Changes"
                   onPress={() => console.log("🚀 Changes Saved!")}
                   style={{ backgroundColor: "#468EFB" }}
                   textColor={undefined}
@@ -147,8 +190,6 @@ const styles = StyleSheet.create({
   },
   textinput: {
     backgroundColor: "#fff",
-    width: "90%",
-
 },
 })
 export default SearchProducts

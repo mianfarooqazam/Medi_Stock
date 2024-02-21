@@ -11,11 +11,9 @@ const ProductsScreen = ({ navigation }) => {
           Add Products
         </Button>
         <Button mode='contained' onPress={() => navigation.navigate("SearchProducts")} icon="account-search" style={styles.button}>
-          Search Products
+          Search & Edit Products
         </Button>
-        <Button mode='contained' onPress={() => navigation.navigate("EditProducts")} icon="delete" style={styles.button}>
-          Edit Products
-        </Button>
+       
         
       </View>
     </View>
