@@ -18,11 +18,12 @@ import CalculateBill from '../screens/dashboard/CalculateBill';
 import Inventory from '../screens/dashboard/Inventory';
 import StockInOut from '../screens/dashboard/StockInOut';
 import OnBoarding from '../screens/dashboard/onBoarding/OnBoarding';
-import YourProfile from '../screens/dashboard/YourProfile';
+
 import ViewInvoices from '../screens/dashboard/ViewInvoices';
 import SettingScreen from '../screens/dashboard/SettingScreen';
 import InvoicePreview from '../screens/dashboard/InvoicePreview';
 import Sales from '../screens/dashboard/Sales';
+import ComingSoon from '../screens/dashboard/ComingSoon';
 
 
 
@@ -52,11 +53,12 @@ const MainNavigator = () => {
         <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
        <Stack.Screen name='Inventory' component={Inventory} options={{title:'Inventory'}}/>
        <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
-       <Stack.Screen name='YourProfile' component={YourProfile} options={{title:'Profile'}}/>
+    
        <Stack.Screen name='SettingScreen' component={SettingScreen} options={{title:'Settings'}}/>
        <Stack.Screen name='InvoicePreview' component={InvoicePreview} options={{title:'Preview'}}/>
        
         <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
+        <Stack.Screen  name='ComingSoon' component={ComingSoon} options={{title:"Coming Soon"}}/>
 
     </Stack.Navigator>
    </NavigationContainer>

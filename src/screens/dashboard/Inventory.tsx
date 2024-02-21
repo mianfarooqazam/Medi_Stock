@@ -48,7 +48,7 @@ const Inventory = ({navigation}) => {
       </View>
       <View style={{ alignItems: "center" }}>
         <HelperText type='info'  >
-          You can set minimum Products threshold in <Text onPress={()=>navigation.navigate("SettingScreen")} style={{color:"#4683fb"}}>settings</Text>
+          You can set minimum Products threshold in <Text onPress={()=>navigation.navigate("SettingScreen")} style={{color:"#4683fb"}}>Settings</Text>
         </HelperText>
       </View>
       <View>

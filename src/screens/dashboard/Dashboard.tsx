@@ -15,9 +15,9 @@ const Dashboard = ({navigation}) => {
           <Text style={styles.screenText}>New Invoice</Text>
           <MaterialIcon name="add" size={40} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]}>
-          <Text style={styles.screenText}>Bilty</Text>
-          <MaterialIcon name="content-copy" size={40} color="#fff" />
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Inventory")}>
+          <Text style={styles.screenText}>Inventory</Text>
+          <MaterialIcon name="inventory" size={40} color="#fff" />
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
@@ -32,46 +32,36 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Inventory")}>
-          <Text style={styles.screenText}>Inventory</Text>
-          <MaterialIcon name="inventory" size={40} color="#fff" />
+      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Sales")}>
+          <Text style={styles.screenText}>Sales</Text>
+          <MaterialIcon name="attach-money" size={40} color="#fff" />
         </TouchableOpacity>
+     
         <TouchableOpacity style={[styles.item, { height: itemHeight }]}onPress={()=>navigation.navigate("StockInOut")}>
           <Text style={styles.screenText}>Stock In-Out</Text>
           <MaterialIcon name="text-snippet" size={40} color="#fff" />
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Sales")}>
-          <Text style={styles.screenText}>Sales</Text>
-          <MaterialIcon name="attach-money" size={40} color="#fff" />
+      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ChatScreen")}>
+          <Text style={styles.screenText}>Chat</Text>
+          <MaterialIcon name="chat-bubble" size={40} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("YourProfile")}>
-          <Text style={styles.screenText}>Your Profile</Text>
-          <MaterialIcon name="person" size={40} color="#fff" />
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("SettingScreen")}>
+          <Text style={styles.screenText}>Settings</Text>
+          <MaterialIcon name="settings" size={40} color="#fff" />
         </TouchableOpacity>
      
       </View>
       <View style={styles.row}>
-      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("SettingScreen")}>
-          <Text style={styles.screenText}>Settings</Text>
-          <MaterialIcon name="settings" size={40} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]}>
+      
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ComingSoon")}>
           <Text style={styles.screenText}>Comming Soon</Text>
           <MaterialIcon name="timeline" size={40} color="#fff" />
         </TouchableOpacity>
         
       </View>
-      <View style={styles.row}>
-      
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ChatScreen")}>
-          <Text style={styles.screenText}>Chat</Text>
-          <MaterialIcon name="chat-bubble" size={40} color="#fff" />
-        </TouchableOpacity>
-        
-        
-      </View>
+   
       
     </ScrollView>
   );
