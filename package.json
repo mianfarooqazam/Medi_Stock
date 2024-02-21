@@ -26,6 +26,7 @@
     "react-native-app-intro-slider": "^4.0.4",
     "react-native-element-dropdown": "^2.10.1",
     "react-native-gif": "^1.0.3",
+    "react-native-gifted-charts": "^1.4.7",
     "react-native-paper": "^4.12.6",
     "react-native-pie-chart": "^3.0.2",
     "react-native-safe-area-context": "4.6.3",
