@@ -52,32 +52,44 @@ const SettingScreen = () => {
                 <View>
                   <Text style={{ fontWeight: "bold" }}>Invoice Settings</Text>
                 </View>
+                <HelperText type="info" >
+                  It is recommended to use Auto-Generate Invoice Number
+                </HelperText>
                 <DividerBar />
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
                   <Text style={{ fontWeight: "600", color: "#468EFB" }}>Auto-Generate Invoice Number</Text>
                   <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color="#468EFB" />
                 </View>
                 <View>
-                  <Text>Or use your own set of invoice number</Text>
+{!isSwitchOn && ( 
+  <>
+                  <HelperText type="info" >
+                    Or use your own invoice number
+                  </HelperText>
+                  </>
+)}
                 </View>
                 <DividerBar />
                 <View style={{ gap: 10 }}>
-                  <View>
-                    <TextInput
-                      label="Prefix"
-                      style={{ width: "100%", backgroundColor: "#fff" }}
-                      placeholder="INV"
-                    />
-                  </View>
-                  <View>
-                    <TextInput
-                      label="Start From"
-                      style={{ width: "100%", backgroundColor: "#fff" }}
-                      placeholder="0001"
-                    />
-                  </View>
+                  {!isSwitchOn && (
+                    <>
+                      <View>
+                        <TextInput
+                          label="Prefix"
+                          style={{ width: "100%", backgroundColor: "#fff" }}
+                          placeholder="INV"
+                        />
+                      </View>
+                      <View>
+                        <TextInput
+                          label="Start From"
+                          style={{ width: "100%", backgroundColor: "#fff" }}
+                          placeholder="0001"
+                        />
+                      </View>
+                    </>
+                  )}
                 </View>
-
 
 
                 <View style={{ gap: 10 }}>
