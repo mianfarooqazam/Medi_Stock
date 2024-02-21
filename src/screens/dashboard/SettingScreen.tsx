@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
 import ReusableButton from "../../components/Button/ReusableButton";
 import { HelperText, Modal, Portal, Provider, TextInput } from "react-native-paper";
@@ -30,14 +30,28 @@ const SettingScreen = () => {
   return (
 
     <Provider>
-      <View style={{}}>
-        <View style={{ gap: 10 }}>
+      <ScrollView contentContainerStyle={{ gap: 10 }}>
+        <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", marginTop:20}}>
+          <ReusableButton
+            label="Logout"
+            style={{
+              backgroundColor: "#f39c12",
+              width: "100%",
+              alignSelf: "center",
+            }}
+            textColor={undefined} onPress={undefined} />
+        </View>
+
+        <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", gap: 10 }}>
+          <View>
+            <Text style={{ color: "#bebebe", fontWeight: "300", fontSize: 20 }}>GENERAL SETTINGS</Text>
+          </View>
           <ReusableButton
             label="Invoice Settings"
             onPress={() => showInvoiceModal()}
             style={{
               backgroundColor: "#468EFB",
-              width: "80%",
+              width: "100%",
               alignSelf: "center",
             }}
             textColor={undefined}
@@ -61,13 +75,13 @@ const SettingScreen = () => {
                   <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color="#468EFB" />
                 </View>
                 <View>
-{!isSwitchOn && ( 
-  <>
-                  <HelperText type="info" >
-                    Or use your own invoice number
-                  </HelperText>
-                  </>
-)}
+                  {!isSwitchOn && (
+                    <>
+                      <HelperText type="info" >
+                        Or use your own invoice number
+                      </HelperText>
+                    </>
+                  )}
                 </View>
                 <DividerBar />
                 <View style={{ gap: 10 }}>
@@ -119,7 +133,7 @@ const SettingScreen = () => {
                   />
                   <ReusableButton
                     label="Done"
-                    onPress={() => console.log("🚀 Done")}
+                    onPress={() => Alert.alert("🚀 New Invoice Settings Saved !")}
                     style={{ width: "40%", backgroundColor: "#468EFB" }}
                     textColor="#fff"
                   />
@@ -129,11 +143,21 @@ const SettingScreen = () => {
           </Portal>
 
           <ReusableButton
+            label="Business Info"
+            onPress={() => { }}
+            style={{
+              backgroundColor: "#468EFB",
+              width: "100%",
+              alignSelf: "center",
+            }}
+            textColor={undefined}
+          />
+          <ReusableButton
             label="Signature Settings"
             onPress={() => showSignatureModal()}
             style={{
               backgroundColor: "#468EFB",
-              width: "80%",
+              width: "100%",
               alignSelf: "center",
             }}
             textColor={undefined}
@@ -189,52 +213,93 @@ const SettingScreen = () => {
             label="Products Settings "
             onPress={() => { }}
             style={{
-              backgroundColor: "#F9F07A",
-              width: "80%",
+              backgroundColor: "#468EFB",
+              width: "100%",
               alignSelf: "center",
             }}
-            textColor={"#000"}
+            textColor={"#FFF"}
           />
           <ReusableButton
             label="Business Terms & Conditions"
             onPress={() => { }}
             style={{
-              backgroundColor: "#F9F07A",
-              width: "80%",
+              backgroundColor: "#468EFB",
+              width: "100%",
               alignSelf: "center",
             }}
-            textColor={"#000"}
+            textColor={"#fff"}
           />
 
+        </View>
+        <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", gap: 10 }}>
+          <View>
+            <Text style={{ color: "#bebebe", fontWeight: "300", fontSize: 20 }}>OTHER</Text>
+          </View>
           <ReusableButton
             label="Delete Account"
             onPress={() => showDeleteModal()}
             style={{
               backgroundColor: "red",
-              width: "80%",
+              width: "100%",
               alignSelf: "center",
             }}
             textColor={undefined}
           />
-          <Portal>
-            <Modal
-              visible={deleteVisible}
-              onDismiss={hideDeleteModal}
-              contentContainerStyle={containerStyle}
-            >
-              <View style={{ gap: 10 }}>
-                <Text>Delete your account permanently ?</Text>
-                <ReusableButton
-                  label="Delete"
-                  onPress={() => console.log("🚀 Account deleted!")}
-                  style={{ backgroundColor: "red" }}
-                  textColor={undefined}
-                />
-              </View>
-            </Modal>
-          </Portal>
         </View>
-      </View>
+        <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", gap: 10 }}>
+          <View>
+            <Text style={{ color: "#bebebe", fontWeight: "300", fontSize: 20 }}>ABOUT APP</Text>
+          </View>
+          <ReusableButton
+            label="Rate App"
+            onPress={() => showDeleteModal()}
+            style={{
+              backgroundColor: "#468EFB",
+              width: "100%",
+              alignSelf: "center",
+            }}
+            textColor={undefined}
+          />
+          <ReusableButton
+            label="Share App"
+            onPress={() => showDeleteModal()}
+            style={{
+              backgroundColor: "#468EFB",
+              width: "100%",
+              alignSelf: "center",
+            }}
+            textColor={undefined}
+          />
+          <ReusableButton
+            label="Terms & Privacy"
+            onPress={() => showDeleteModal()}
+            style={{
+              backgroundColor: "#468EFB",
+              width: "100%",
+              alignSelf: "center",
+            }}
+            textColor={undefined}
+          />
+        </View>
+        <Portal>
+          <Modal
+            visible={deleteVisible}
+            onDismiss={hideDeleteModal}
+            contentContainerStyle={containerStyle}
+          >
+            <View style={{ gap: 10 }}>
+              <Text>Delete your account permanently ?</Text>
+              <ReusableButton
+                label="Delete"
+                onPress={() => console.log("🚀 Account deleted!")}
+                style={{ backgroundColor: "red" }}
+                textColor={undefined}
+              />
+            </View>
+          </Modal>
+        </Portal>
+
+      </ScrollView>
     </Provider>
   );
 };
