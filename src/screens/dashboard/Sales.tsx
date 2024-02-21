@@ -18,6 +18,7 @@ const Sales = () => {
         Tom: 433,
         Peter: 789,
         Emilia: 537,
+        
     };
     const productSalesData = {
         Cosflor: 323,
@@ -27,7 +28,7 @@ const Sales = () => {
         Mativ: 437,
     };
 
-    const sliceColors = ['#fbd203', '#7F27FF', '#2ecc71', '#ff3c00', '#468EFB',]
+    const sliceColors = ['#fbd203', '#7F27FF', '#2ecc71', '#ff3c00', '#468EFB','#d3d3d3']
 
     const customerSeries = Object.values(customerSalesData);
     const sliceCustomerColor = Object.keys(customerSalesData).map((customer, index) => {
@@ -43,10 +44,11 @@ const Sales = () => {
 
 
     const customerPercentages = Object.entries(customerSalesData).map(([customer, sales]) => {
-        return { customer, percentage: (sales / totalSales) * 100 };
+        return { customer, percentage: (sales / totalSales) *  100 };
     });
+    
     const productPercentages = Object.entries(productSalesData).map(([product, sales]) => {
-        return { product, percentage: (sales / totalSales) * 100 };
+        return { product, percentage: (sales / totalSales) *  100 };
     });
     return (
 
@@ -99,7 +101,7 @@ const Sales = () => {
                         </View>
                         <View style={{ flexDirection: "row", gap: 20, }}>
                             <View style={{ gap: 5, }}>
-                                
+
                                 {customerPercentages.map(({ customer }) => (
                                     <Text key={customer} onPress={() => setSelectedCustomer(customer)} style={{ fontSize: 20, }}>
                                         {customer}
@@ -142,7 +144,7 @@ const Sales = () => {
                         </View>
                         <View style={{ flexDirection: "row", gap: 20, }}>
                             <View style={{ gap: 5, }}>
-                            {productPercentages.map(({ product }) => (
+                                {productPercentages.map(({ product }) => (
                                     <Text key={product} onPress={() => setSelectedProduct(product)} style={{ fontSize: 20, }}>
                                         {product}
                                     </Text>
