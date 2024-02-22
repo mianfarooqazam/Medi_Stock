@@ -1,36 +1,24 @@
-import React from 'react';
-import { View } from 'react-native';
-import { BarChart } from 'react-native-gifted-charts';
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+import Toast from 'react-native-toast-message';
+import { Button } from 'react-native-paper';
 
 const ChatScreen = () => {
-  // Sample data for the chart
-  const data = [
-    { label: 'Jan', value:  100 },
-    { label: 'Feb', value:  150 },
-    { label: 'Mar', value:  200 },
-    // ... add more data points as needed
-  ];
-
+  const showToast = () => {
+    Toast.show({
+      type: 'success',
+      text1: 'Hello',
+      text2: 'This is some something 👋'
+    });
+  }
   return (
-    <View style={{ flex:  1, justifyContent: 'center', alignItems: 'center' }}>
-      <BarChart
-        data={data}
-        width={300}
-        height={200}
-        chartConfig={{
-          backgroundColor: '#e26a00',
-          backgroundGradientFrom: '#fb8c00',
-          backgroundGradientTo: '#ffa726',
-          color: (opacity =  1) => `rgba(255,  255,  255, ${opacity})`,
-          labelColor: (opacity =  1) => `rgba(255,  255,  255, ${opacity})`,
-        }}
-        style={{
-          marginVertical:  8,
-          borderRadius:  16,
-        }}
-      />
+    <View>
+      <Text>ChatScreen</Text>
+      <Button onPress={showToast}>Press</Button>
     </View>
-  );
-};
+  )
+}
 
-export default ChatScreen;
+export default ChatScreen
+
+const styles = StyleSheet.create({})

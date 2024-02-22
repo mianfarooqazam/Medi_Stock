@@ -8,12 +8,15 @@ const SettingScreen = () => {
   const [invoiceVisible, setInvoiceVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [signatureVisible, setSignatureVisible] = useState(false);
+  const [productVisible, setProductVisible] = useState(false);
   const showInvoiceModal = () => setInvoiceVisible(true);
   const hideInvoiceModal = () => setInvoiceVisible(false);
   const showDeleteModal = () => setDeleteVisible(true);
   const hideDeleteModal = () => setDeleteVisible(false);
   const showSignatureModal = () => setSignatureVisible(true);
-  const hideSignatureModal = () => setSignatureVisible(false)
+  const hideSignatureModal = () => setSignatureVisible(false);
+  const showProductModal = () => setProductVisible(true);
+  const hideProductModal = () => setProductVisible(false);
   const containerStyle = {
     backgroundColor: "white",
     padding: 20,
@@ -30,7 +33,7 @@ const SettingScreen = () => {
   return (
 
     <Provider>
-      <ScrollView contentContainerStyle={{ gap: 10 }}>
+      <View style={{ gap: 10 }}>
         <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", marginTop: 20 }}>
           <ReusableButton
             label="Logout"
@@ -212,7 +215,7 @@ const SettingScreen = () => {
 
           <ReusableButton
             label="Products Settings "
-            onPress={() => { }}
+            onPress={() => showProductModal()}
             style={{
               backgroundColor: "#468EFB",
               width: "100%",
@@ -220,16 +223,45 @@ const SettingScreen = () => {
             }}
             textColor={"#FFF"}
           />
-          <ReusableButton
-            label="Business Terms & Conditions"
-            onPress={() => { }}
-            style={{
-              backgroundColor: "#468EFB",
-              width: "100%",
-              alignSelf: "center",
-            }}
-            textColor={"#fff"}
-          />
+          <Portal>
+            <Modal
+              visible={productVisible}
+              onDismiss={hideProductModal}
+              contentContainerStyle={containerStyle}
+            >
+              <View style={{ gap: 10, justifyContent: "flex-start" }}>
+                <View>
+                  <Text style={{ fontWeight: "bold" }}>Product Settings</Text>
+                  <HelperText type="info" >
+                    You can add minimum limit for your products below
+                  </HelperText>
+                </View>
+
+                <DividerBar />
+
+                    <View style={{flexDirection:'row',width:'90%',alignItems:'center'}}>
+                      <Text style={{width:"50%"}}>d</Text>
+                      <TextInput label="hello" style={{width:"50%"}}/>
+                    </View>
+
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 10,
+                    justifyContent: "center",
+                  }}
+                >
+                  <ReusableButton
+                    label="Save"
+                    onPress={() => console.log("🚀 Saved")}
+                    style={{ width: "100%", backgroundColor: "#468EFB" }}
+                    textColor="#fff"
+                  />
+                </View>
+              </View>
+            </Modal>
+          </Portal>
 
         </View>
         <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", gap: 10 }}>
@@ -300,7 +332,7 @@ const SettingScreen = () => {
           </Modal>
         </Portal>
 
-      </ScrollView>
+      </View>
     </Provider>
   );
 };

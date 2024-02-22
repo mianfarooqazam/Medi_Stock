@@ -1,11 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 
 
 const Dashboard = ({navigation}) => {
+  useEffect(() => {
+    const showToast = () => {
+      Toast.show({
+        type: 'success',
+        text1: 'Hello User!',
+        text2: 'This is some something 👋'
+      });
+    }
+    showToast(); 
+  }, []);
+  
   const { height } = Dimensions.get('screen');
   const itemHeight = height * 0.2; 
   return (
@@ -66,6 +78,7 @@ const Dashboard = ({navigation}) => {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
