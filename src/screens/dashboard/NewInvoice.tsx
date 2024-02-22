@@ -28,25 +28,7 @@ import moment from "moment";
 import { CustomersData, ProductsData } from "../../DummyData/Data";
 
 const NewInvoice = ({ navigation }) => {
-    // const CustomerData = [
-    //     { label: "Jhon", value: "1" },
-    //     { label: "Doe", value: "2" },
-    //     { label: "Lorem", value: "3" },
-    //     { label: "Ipsum", value: "4" },
-    //     { label: "Admin", value: "5" },
-    //     { label: "Neutral", value: "6" },
-    //     { label: "Peter", value: "7" },
-    //     { label: "Richard", value: "8" },
-    // ];
-    // const ProductData = [
-    //     { label: "Cap A", value: "1" },
-    //     { label: "Cap B", value: "2" },
-    //     { label: "Cap C", value: "3" },
-    //     { label: "Syp A", value: "4" },
-    //     { label: "Syp B", value: "5" },
-    //     { label: "Tab A", value: "6" },
-    //     { label: "Tab B", value: "7" },
-    // ]
+   
     const containerStyle = {
         backgroundColor: "white",
         padding: 20,
@@ -54,7 +36,7 @@ const NewInvoice = ({ navigation }) => {
         alignSelf: "center",
         justifyContent: "center",
         borderRadius: 10,
-        // alignItems: 'center',
+ 
     };
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
     const [productQuantity, setProductQuantity] = useState('');

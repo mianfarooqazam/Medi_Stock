@@ -1,7 +1,8 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
-
+import moment from 'moment'
 const StockInOut = () => {
+  const currentDate = moment().format("DD-MM-YYYY");
   return (
     <View style={styles.container}>
       
@@ -19,7 +20,7 @@ const StockInOut = () => {
       {/* t-row */}
       <View style={styles.tableRow}>
         <Text style={styles.tableData}>1</Text>
-        <Text style={styles.tableData}>1-1-2024</Text>
+        <Text style={[styles.tableData,{fontSize:10}]}>{currentDate.split('-')[0] + '-' + currentDate.split('-')[1] + '\n' + currentDate.split('-')[2]}</Text>
         <Text style={styles.tableData}>Sach</Text>
         <Text style={styles.tableData}>Cosflor</Text>
         
@@ -28,7 +29,7 @@ const StockInOut = () => {
       </View>
       <View style={styles.tableRow}>
         <Text style={styles.tableData}>2</Text>
-        <Text style={styles.tableData}>1-1-2024</Text>
+        <Text style={[styles.tableData,{fontSize:10}]}>{currentDate.split('-')[0] + '-' + currentDate.split('-')[1] + '\n' + currentDate.split('-')[2]}</Text>
         <Text style={styles.tableData}>Syp</Text>
         <Text style={styles.tableData}>Inicos</Text>
         
@@ -38,7 +39,7 @@ const StockInOut = () => {
 
       <View style={styles.tableRow}>
         <Text style={styles.tableData}>3</Text>
-        <Text style={styles.tableData}>1-1-2024</Text>
+        <Text style={[styles.tableData,{fontSize:10}]}>{currentDate.split('-')[0] + '-' + currentDate.split('-')[1] + '\n' + currentDate.split('-')[2]}</Text>
         <Text style={styles.tableData}>Cap</Text>
         <Text style={styles.tableData}>Refix</Text>
         
