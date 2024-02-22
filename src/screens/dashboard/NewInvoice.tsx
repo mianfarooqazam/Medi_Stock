@@ -28,7 +28,7 @@ import moment from "moment";
 import { CustomersData, ProductsData } from "../../DummyData/Data";
 
 const NewInvoice = ({ navigation }) => {
-   
+
     const containerStyle = {
         backgroundColor: "white",
         padding: 20,
@@ -36,12 +36,12 @@ const NewInvoice = ({ navigation }) => {
         alignSelf: "center",
         justifyContent: "center",
         borderRadius: 10,
- 
+
     };
     const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
     const [productQuantity, setProductQuantity] = useState('');
     const [productMRP, setProductMRP] = useState('');
-
+    const [discountValue, setDiscountValue] = useState('');
     const [customervalue, setCustomerValue] = useState(null);
     const [customerFocus, setCustomerFocus] = useState(false);
 
@@ -62,15 +62,25 @@ const NewInvoice = ({ navigation }) => {
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
+    
     const calculateSubtotal = () => {
         return selectedProducts.reduce((total, product) => {
             return total + (product.mrp * product.quantity);
         }, 0);
     };
     const calculateTotal = () => {
-        return selectedProducts.reduce((total, product) => {
+        const subtotal = selectedProducts.reduce((total, product) => {
             return total + (product.mrp * product.quantity);
-        }, 0);
+        },  0);
+        const discount = parseFloat(discountValue) ||  0; 
+        return subtotal - discount;
+    };
+    const calculateBalance = () => {
+        const subtotal = selectedProducts.reduce((total, product) => {
+            return total + (product.mrp * product.quantity);
+        },  0);
+        const discount = parseFloat(discountValue) ||  0; 
+        return subtotal - discount;
     }
     return (
         <Provider>
@@ -201,7 +211,13 @@ const NewInvoice = ({ navigation }) => {
                                 </View>
 
                                 <View style={{}}>
-
+                                    <View style={styles.table}>
+                                        <Text style={styles.tableHeader}>S/N</Text>
+                                        <Text style={styles.tableHeader}>Product</Text>
+                                        <Text style={styles.tableHeader}>Quantity</Text>
+                                        <Text style={styles.tableHeader}>MRP</Text>
+                                        <Text style={styles.tableHeader}>Total</Text>
+                                    </View>
 
 
 
@@ -211,29 +227,22 @@ const NewInvoice = ({ navigation }) => {
 
                         </TouchableRipple>
                         {selectedProducts.map((product, index) => (
-                            <>
-                                <View style={styles.table}>
-                                    <Text style={styles.tableHeader}>S/N</Text>
-                                    <Text style={styles.tableHeader}>Product</Text>
-                                    <Text style={styles.tableHeader}>Quantity</Text>
-                                    <Text style={styles.tableHeader}>MRP</Text>
-                                    <Text style={styles.tableHeader}>Total</Text>
-                                </View>
-                                <View style={styles.tableRow} key={index}>
-                                    <Text style={styles.tableData}>{index + 1}</Text>
-                                    < Text style={styles.tableData}>Refix</Text>
-                                    <Text style={styles.tableData}>{product.quantity}</Text>
-                                    <Text style={styles.tableData}>{product.mrp}</Text>
-                                    <Text style={[styles.tableData, { backgroundColor: "#F9F07A" }]}>{product.mrp * product.quantity}</Text>
-                                </View>
-                            </>
+
+                            <View style={styles.tableRow} key={index}>
+                                <Text style={styles.tableData}>{index + 1}</Text>
+                                < Text style={styles.tableData}>Refix</Text>
+                                <Text style={styles.tableData}>{product.quantity}</Text>
+                                <Text style={styles.tableData}>{product.mrp}</Text>
+                                <Text style={[styles.tableData, { backgroundColor: "#F9F07A" }]}>{product.mrp * product.quantity}</Text>
+                            </View>
+
                         ))}
 
                         <Portal>
                             <Modal
                                 visible={productsVisible}
                                 onDismiss={hideProductsModal}
-                                contentContainerStyle={[containerStyle, { height: 600 }]}
+                                contentContainerStyle={[containerStyle, { maxHeight: 300 }]}
                             >
                                 <View style={{ gap: 10 }}>
                                     <Dropdown
@@ -260,40 +269,40 @@ const NewInvoice = ({ navigation }) => {
                                         }}
                                     />
 
-                                  
-                                        <View style={{ gap: 10 }}>
-                                            <TextInput
-                                                mode="outlined"
-                                                label="Quantity"
-                                                value={productQuantity}
-                                                onChangeText={setProductQuantity}
-                                                keyboardType='numeric'
-                                            />
-                                            <TextInput
-                                                mode="outlined"
-                                                label="M.R.P"
-                                                value={productMRP}
-                                                onChangeText={setProductMRP}
-                                                keyboardType='numeric'
-                                            />
-                                            <ReusableButton
-                                                label="Add"
-                                                onPress={() => {
-                                                    setSelectedProducts(prevProducts => [
-                                                        ...prevProducts,
-                                                        {
-                                                            productName: productvalue,
-                                                            quantity: productQuantity,
-                                                            mrp: productMRP,
-                                                        }
-                                                    ]);
-                                                    hideProductsModal();
-                                                }}
-                                                style={{ backgroundColor: "#468EFB" }}
-                                                textColor={undefined}
-                                            />
-                                        </View>
-                                
+
+                                    <View style={{ gap: 10 }}>
+                                        <TextInput
+                                            mode="outlined"
+                                            label="Quantity"
+                                            value={productQuantity}
+                                            onChangeText={setProductQuantity}
+                                            keyboardType='numeric'
+                                        />
+                                        <TextInput
+                                            mode="outlined"
+                                            label="M.R.P"
+                                            value={productMRP}
+                                            onChangeText={setProductMRP}
+                                            keyboardType='numeric'
+                                        />
+                                        <ReusableButton
+                                            label="Add"
+                                            onPress={() => {
+                                                setSelectedProducts(prevProducts => [
+                                                    ...prevProducts,
+                                                    {
+                                                        productName: productvalue,
+                                                        quantity: productQuantity,
+                                                        mrp: productMRP,
+                                                    }
+                                                ]);
+                                                hideProductsModal();
+                                            }}
+                                            style={{ backgroundColor: "#468EFB" }}
+                                            textColor={undefined}
+                                        />
+                                    </View>
+
                                 </View>
                             </Modal>
                         </Portal>
@@ -301,15 +310,15 @@ const NewInvoice = ({ navigation }) => {
                         <View style={{ gap: 10, backgroundColor: "#F6F5F5" }}>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text>Sub Total :</Text>
-                                <Text>Rs {calculateSubtotal().toFixed(2)}</Text>
+                                <Text>Rs. {calculateSubtotal()}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text onPress={() => showDiscountModal()}>Discount :</Text>
-                                <Text>Rs 0.00</Text>
+                                <Text>Rs. {discountValue}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text>Total :</Text>
-                                <Text>Rs {calculateTotal().toFixed(2)}</Text>
+                                <Text>Rs. {calculateTotal()}</Text>
                             </View>
                         </View>
                         <DividerBar />
@@ -323,7 +332,8 @@ const NewInvoice = ({ navigation }) => {
                                 <View style={{ gap: 10 }}>
                                     <Text style={{ fontWeight: "bold" }}>Discount</Text>
                                     <DividerBar />
-                                    <TextInput mode="outlined" label="Flat Amount :" placeholder="100" />
+                                    <TextInput mode="outlined" label="Flat Amount :" placeholder="100" value={productMRP}
+                                        onChangeText={setProductMRP} />
                                     <View
                                         style={{
                                             flexDirection: "row",
@@ -331,17 +341,16 @@ const NewInvoice = ({ navigation }) => {
                                             justifyContent: "center",
                                         }}
                                     >
+
                                         <ReusableButton
-                                            label="Cancel"
-                                            onPress={() => console.log("🚀 Cancel")}
-                                            style={{ width: "40%", backgroundColor: "#bebebe" }}
-                                            textColor="#000"
-                                        />
-                                        <ReusableButton
-                                            label="Done"
-                                            onPress={() => console.log("🚀 Done")}
-                                            style={{ width: "40%", backgroundColor: "#468EFB" }}
-                                            textColor="#fff"
+                                            label="Discount"
+                                            onPress={() => {
+
+                                                setDiscountValue(productMRP);
+                                                hideDiscountModal();
+                                            }}
+                                            style={{ width: "100%", backgroundColor: "#468EFB" }}
+                                            textColor={undefined}
                                         />
                                     </View>
                                 </View>
@@ -360,7 +369,7 @@ const NewInvoice = ({ navigation }) => {
                             justifyContent: "space-between"
                         }}>
                             <Text style={{ fontWeight: "bold", fontSize: 20 }}>  Balance Due :</Text>
-                            <Text style={{ fontWeight: "300", fontSize: 16 }}>  Rs. 00000.0</Text>
+                            <Text style={{ fontWeight: "500", fontSize: 16 }}>Rs. {calculateBalance().toFixed(2)} </Text>
                         </View>
                     </View>
                     <View
