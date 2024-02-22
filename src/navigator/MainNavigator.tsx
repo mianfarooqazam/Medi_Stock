@@ -7,7 +7,6 @@ import AddCustomer from '../screens/dashboard/AddCustomer';
 
 import SearchCustomers from '../screens/dashboard/SearchCustomers';
 
-import ChatScreen from '../screens/dashboard/ChatScreen';
 import ProductsScreen from '../screens/dashboard/ProductsScreen';
 import SplashScreen from '../splash/SplashScreen';
 import AddProduct from '../screens/dashboard/AddProduct';
@@ -56,8 +55,7 @@ const MainNavigator = () => {
     
        <Stack.Screen name='SettingScreen' component={SettingScreen} options={{title:'Settings'}}/>
        <Stack.Screen name='InvoicePreview' component={InvoicePreview} options={{title:'Preview'}}/>
-       
-        <Stack.Screen  name='ChatScreen' component={ChatScreen} options={{title:"Start Chatting with your friends"}}/>
+   
         <Stack.Screen  name='ComingSoon' component={ComingSoon} options={{title:"Coming Soon"}}/>
 
     </Stack.Navigator>

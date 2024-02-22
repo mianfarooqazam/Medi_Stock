@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { KeyboardAvoidingView, Platform } from 'react-native';
 import {
     View,
     StyleSheet,
-    KeyboardAvoidingView,
-    Platform,
     Alert,
     Text,
     ScrollView,
@@ -81,6 +80,16 @@ const NewInvoice = ({ navigation }) => {
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
     const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
 
+    const calculateSubtotal = () => {
+        return selectedProducts.reduce((total, product) => {
+            return total + (product.mrp * product.quantity);
+        }, 0);
+    };
+    const calculateTotal = () => {
+        return selectedProducts.reduce((total, product) => {
+            return total + (product.mrp * product.quantity);
+        }, 0);
+    }
     return (
         <Provider>
             <ScrollView style={styles.container}>
@@ -210,15 +219,9 @@ const NewInvoice = ({ navigation }) => {
                                 </View>
 
                                 <View style={{}}>
-                                    
-                                        <View style={styles.table}>
-                                            <Text style={styles.tableHeader}>S/N</Text>
-                                            <Text style={styles.tableHeader}>Product</Text>
-                                            <Text style={styles.tableHeader}>Quantity</Text>
-                                            <Text style={styles.tableHeader}>MRP</Text>
-                                            <Text style={styles.tableHeader}>Total</Text>
-                                        </View>
-                                  
+
+
+
 
                                 </View>
                             </View>
@@ -226,19 +229,22 @@ const NewInvoice = ({ navigation }) => {
 
                         </TouchableRipple>
                         {selectedProducts.map((product, index) => (
-                            // <View key={index} style={{ flexDirection: 'row', justifyContent: "space-between", padding: 5 }}>
-                            //     <Text style={{ fontSize: 12 }}>Hydrochlorothiazide-D</Text>
-                            //     <Text>{product.quantity}</Text>
-                            //     <Text>{product.mrp}</Text>
-                            //     <Text>Rs. {product.mrp * product.quantity}</Text>
-                            // </View>
-                            <View style={styles.tableRow} key={index}>
-                  <Text style={styles.tableData}>{index + 1}</Text>
-                 < Text style={styles.tableData}>Cosflor</Text>
-                  <Text style={styles.tableData}>{product.quantity}</Text>
-                  <Text style={styles.tableData}>{product.mrp}</Text>
-                  <Text style={styles.tableData}>{product.mrp * product.quantity}</Text>
-                </View>
+                            <>
+                                <View style={styles.table}>
+                                    <Text style={styles.tableHeader}>S/N</Text>
+                                    <Text style={styles.tableHeader}>Product</Text>
+                                    <Text style={styles.tableHeader}>Quantity</Text>
+                                    <Text style={styles.tableHeader}>MRP</Text>
+                                    <Text style={styles.tableHeader}>Total</Text>
+                                </View>
+                                <View style={styles.tableRow} key={index}>
+                                    <Text style={styles.tableData}>{index + 1}</Text>
+                                    < Text style={styles.tableData}>Refix</Text>
+                                    <Text style={styles.tableData}>{product.quantity}</Text>
+                                    <Text style={styles.tableData}>{product.mrp}</Text>
+                                    <Text style={[styles.tableData, { backgroundColor: "#F9F07A" }]}>{product.mrp * product.quantity}</Text>
+                                </View>
+                            </>
                         ))}
 
                         <Portal>
@@ -272,38 +278,40 @@ const NewInvoice = ({ navigation }) => {
                                         }}
                                     />
 
-                                    <View style={{ gap: 10 }}>
-                                        <TextInput
-                                            mode="outlined"
-                                            label="Quantity"
-                                            value={productQuantity}
-                                            onChangeText={setProductQuantity}
-                                        />
-                                        <TextInput
-                                            mode="outlined"
-                                            label="M.R.P"
-                                            value={productMRP}
-                                            onChangeText={setProductMRP}
-                                        />
-                                        <ReusableButton
-                                            label="Add"
-                                            onPress={() => {
-
-                                                setSelectedProducts(prevProducts => [
-                                                    ...prevProducts,
-                                                    {
-                                                        productName: productvalue,
-                                                        quantity: productQuantity,
-                                                        mrp: productMRP,
-                                                    }
-                                                ]);
-                                                hideProductsModal();
-                                            }}
-                                            style={{ backgroundColor: "#468EFB" }}
-                                            textColor={undefined}
-                                        />
-
-                                    </View>
+                                  
+                                        <View style={{ gap: 10 }}>
+                                            <TextInput
+                                                mode="outlined"
+                                                label="Quantity"
+                                                value={productQuantity}
+                                                onChangeText={setProductQuantity}
+                                                keyboardType='numeric'
+                                            />
+                                            <TextInput
+                                                mode="outlined"
+                                                label="M.R.P"
+                                                value={productMRP}
+                                                onChangeText={setProductMRP}
+                                                keyboardType='numeric'
+                                            />
+                                            <ReusableButton
+                                                label="Add"
+                                                onPress={() => {
+                                                    setSelectedProducts(prevProducts => [
+                                                        ...prevProducts,
+                                                        {
+                                                            productName: productvalue,
+                                                            quantity: productQuantity,
+                                                            mrp: productMRP,
+                                                        }
+                                                    ]);
+                                                    hideProductsModal();
+                                                }}
+                                                style={{ backgroundColor: "#468EFB" }}
+                                                textColor={undefined}
+                                            />
+                                        </View>
+                                
                                 </View>
                             </Modal>
                         </Portal>
@@ -311,8 +319,7 @@ const NewInvoice = ({ navigation }) => {
                         <View style={{ gap: 10, backgroundColor: "#F6F5F5" }}>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text>Sub Total :</Text>
-                                <Text>Rs 0.00</Text>
-
+                                <Text>Rs {calculateSubtotal().toFixed(2)}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text onPress={() => showDiscountModal()}>Discount :</Text>
@@ -320,7 +327,7 @@ const NewInvoice = ({ navigation }) => {
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text>Total :</Text>
-                                <Text>Rs 0.00</Text>
+                                <Text>Rs {calculateTotal().toFixed(2)}</Text>
                             </View>
                         </View>
                         <DividerBar />
@@ -493,20 +500,20 @@ const styles = StyleSheet.create({
         // justifyContent:"space-around"
     },
     tableHeader: {
-            flex: 1,
-            textAlign:"center"
+        flex: 1,
+        textAlign: "center",
     },
     tableRow: {
         flexDirection: 'row',
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
         padding: 5,
-      },
-      tableData: {
+    },
+    tableData: {
         flex: 1,
         padding: 5,
         textAlign: 'center',
-      },
+    },
 });
 
 export default NewInvoice;

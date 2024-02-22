@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { FontAwesome, Ionicons } from '@expo/vector-icons';
+import { Feather, FontAwesome, Ionicons } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 
 
@@ -27,10 +27,11 @@ const Dashboard = ({navigation}) => {
           <Text style={styles.screenText}>New Invoice</Text>
           <MaterialIcon name="add" size={40} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Inventory")}>
-          <Text style={styles.screenText}>Inventory</Text>
-          <MaterialIcon name="inventory" size={40} color="#fff" />
+        <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ViewInvoices")}>
+          <Text style={styles.screenText}>View Invoices</Text>
+          <Feather name="eye" size={40} color="#fff" />
         </TouchableOpacity>
+       
       </View>
       <View style={styles.row}>
         <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("CustomersScreen")}>
@@ -55,15 +56,14 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("ChatScreen")}>
-          <Text style={styles.screenText}>Chat</Text>
-          <MaterialIcon name="chat-bubble" size={40} color="#fff" />
+      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Inventory")}>
+          <Text style={styles.screenText}>Inventory</Text>
+          <MaterialIcon name="inventory" size={40} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("SettingScreen")}>
           <Text style={styles.screenText}>Settings</Text>
           <MaterialIcon name="settings" size={40} color="#fff" />
         </TouchableOpacity>
-     
       </View>
       <View style={styles.row}>
       
