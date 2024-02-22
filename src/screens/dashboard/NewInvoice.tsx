@@ -189,7 +189,7 @@ const NewInvoice = ({ navigation }) => {
                         <Text style={{ fontWeight: "bold", fontSize: 20 }}>Products :</Text>
                         <DividerBar />
                         <TouchableRipple onPress={() => showProductsModal()} >
-                            <View>
+                            <View style={{ gap: 10 }}>
                                 <View
                                     style={{
                                         width: "90%",
@@ -209,37 +209,36 @@ const NewInvoice = ({ navigation }) => {
                                     <FontAwesome5 name="plus-circle" size={16} color="#fff" />
                                 </View>
 
-                                <View style={{ flexDirection:"row",justifyContent:"space-between" ,}}>
-                                    <DividerBar />
-                                    <View style={{  }}>
-                                        <Text>Product</Text>
-                                        <Text>Cosflor</Text>
+                                <View style={{}}>
+                                    
+                                        <View style={styles.table}>
+                                            <Text style={styles.tableHeader}>S/N</Text>
+                                            <Text style={styles.tableHeader}>Product</Text>
+                                            <Text style={styles.tableHeader}>Quantity</Text>
+                                            <Text style={styles.tableHeader}>MRP</Text>
+                                            <Text style={styles.tableHeader}>Total</Text>
+                                        </View>
+                                  
 
-                                    </View>
-                                    <View style={{ }}>
-                                        <Text onPress={() => showDiscountModal()}>Quantity</Text>
-                                        <Text>1</Text>
-                                    </View>
-                                    <View style={{  }}>
-                                        <Text>MRP</Text>
-                                        <Text>Rs. 10</Text>
-                                    </View>
-                                    <View style={{ }}>
-                                        <Text>Total</Text>
-                                        <Text>Rs. 100</Text>
-                                    </View>
                                 </View>
                             </View>
 
 
                         </TouchableRipple>
                         {selectedProducts.map((product, index) => (
-                            <View key={index} style={{ gap: 10, flexDirection: "row" }}>
-                                <Text>product: {product.productName}</Text>
-                                <Text>quantity: {product.quantity}</Text>
-                                <Text>mrp: {product.mrp}</Text>
-                                <Text>Total: Rs. {product.mrp * product.quantity}</Text>
-                            </View>
+                            // <View key={index} style={{ flexDirection: 'row', justifyContent: "space-between", padding: 5 }}>
+                            //     <Text style={{ fontSize: 12 }}>Hydrochlorothiazide-D</Text>
+                            //     <Text>{product.quantity}</Text>
+                            //     <Text>{product.mrp}</Text>
+                            //     <Text>Rs. {product.mrp * product.quantity}</Text>
+                            // </View>
+                            <View style={styles.tableRow} key={index}>
+                  <Text style={styles.tableData}>{index + 1}</Text>
+                 < Text style={styles.tableData}>Cosflor</Text>
+                  <Text style={styles.tableData}>{product.quantity}</Text>
+                  <Text style={styles.tableData}>{product.mrp}</Text>
+                  <Text style={styles.tableData}>{product.mrp * product.quantity}</Text>
+                </View>
                         ))}
 
                         <Portal>
@@ -289,7 +288,7 @@ const NewInvoice = ({ navigation }) => {
                                         <ReusableButton
                                             label="Add"
                                             onPress={() => {
-                                                
+
                                                 setSelectedProducts(prevProducts => [
                                                     ...prevProducts,
                                                     {
@@ -309,7 +308,7 @@ const NewInvoice = ({ navigation }) => {
                             </Modal>
                         </Portal>
                         <DividerBar />
-                        <View style={{ gap: 10,backgroundColor:"#F6F5F5" }}>
+                        <View style={{ gap: 10, backgroundColor: "#F6F5F5" }}>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text>Sub Total :</Text>
                                 <Text>Rs 0.00</Text>
@@ -416,9 +415,9 @@ const NewInvoice = ({ navigation }) => {
 
                 </View>
 
-              
+
             </ScrollView>
-           
+
             <View
                 style={{
                     width: "90%",
@@ -487,6 +486,27 @@ const styles = StyleSheet.create({
         height: 40,
         fontSize: 16,
     },
+    table: {
+        flexDirection: 'row',
+        backgroundColor: '#bebebe',
+        padding: 5,
+        // justifyContent:"space-around"
+    },
+    tableHeader: {
+            flex: 1,
+            textAlign:"center"
+    },
+    tableRow: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        padding: 5,
+      },
+      tableData: {
+        flex: 1,
+        padding: 5,
+        textAlign: 'center',
+      },
 });
 
 export default NewInvoice;
