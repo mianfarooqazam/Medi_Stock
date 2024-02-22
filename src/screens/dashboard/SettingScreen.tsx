@@ -239,11 +239,7 @@ const SettingScreen = () => {
 
                 <DividerBar />
 
-                    <View style={{flexDirection:'row',width:'90%',alignItems:'center'}}>
-                      <Text style={{width:"50%"}}>d</Text>
-                      <TextInput label="hello" style={{width:"50%"}}/>
-                    </View>
-
+                    
 
                 <View
                   style={{

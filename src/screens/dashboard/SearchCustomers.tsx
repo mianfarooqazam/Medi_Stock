@@ -5,34 +5,8 @@ import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 import { AntDesign, Feather } from '@expo/vector-icons'
 import ReusableButton from '../../components/Button/ReusableButton'
 import DividerBar from '../../components/Divider/DividerBar'
+import { CustomersData } from '../../DummyData/Data'
 
-
-const CustomerData = [
-  { customerName: "John Smith", Area: "New York", Address: "United States" },
-  { customerName: "Emily Johnson", Area: "London", Address: "United Kingdom" },
-  { customerName: "Ahmed Hassan", Area: "Cairo", Address: "Egypt" },
-  { customerName: "Maria Garcia", Area: "Madrid", Address: "Spain" },
-  { customerName: "Luis Rodriguez", Area: "Mexico City", Address: "Mexico" },
-  { customerName: "Yuki Tanaka", Area: "Tokyo", Address: "Japan" },
-  { customerName: "Sophie Dupont", Area: "Paris", Address: "France" },
-  { customerName: "Anna Müller", Area: "Berlin", Address: "Germany" },
-  { customerName: "Michael Brown", Area: "Sydney", Address: "Australia" },
-  { customerName: "Jane Doe", Area: "Toronto", Address: "Canada" },
-  { customerName: "Emma White", Area: "Dubai", Address: "United Arab Emirates" },
-  { customerName: "Oliver Wilson", Area: "Singapore", Address: "Singapore" },
-  { customerName: "Farooq", Area: "Charsadda", Address: "Peshawar" },
-  { customerName: "Sophia Martinez", Area: "Moscow", Address: "Russia" },
-  { customerName: "Liam Miller", Area: "Rome", Address: "Italy" },
-  { customerName: "Isabella Garcia", Area: "Barcelona", Address: "Spain" },
-  { customerName: "Mason Anderson", Area: "Amsterdam", Address: "Netherlands" },
-  { customerName: "Mia Thompson", Area: "Vienna", Address: "Austria" },
-  { customerName: "Ethan Jackson", Area: "Stockholm", Address: "Sweden" },
-  { customerName: "Ava White", Area: "Helsinki", Address: "Finland" },
-  { customerName: "Ethan Lee", Area: "Oslo", Address: "Norway" },
-  { customerName: "Olivia Harris", Area: "Copenhagen", Address: "Denmark" },
-  { customerName: "William Clark", Area: "Lisbon", Address: "Portugal" },
-  { customerName: "Emily Taylor", Area: "Luxembourg City", Address: "Luxembourg" },
-];
 
 const containerStyle = {
   backgroundColor: "white",
@@ -46,7 +20,7 @@ const containerStyle = {
 
 const SearchCustomers = () => {
   const [searchQuery, setSearchQuery] = useState("")
-  const filteredCustomers = CustomerData.filter(item => item.customerName.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredCustomers = CustomersData.filter(item => item.customerName.toLowerCase().includes(searchQuery.toLowerCase()))
 
   const [deleteVisible, setdeleteVisible] = useState(false);
   const showDeleteModal = () => setdeleteVisible(true);

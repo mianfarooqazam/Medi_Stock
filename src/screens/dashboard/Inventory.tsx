@@ -2,19 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { HelperText, Searchbar } from 'react-native-paper';
 import { Item } from 'react-native-paper/lib/typescript/components/List/List';
-
-
-const ProductsData = [
-  { packing: 'Sach', productName: 'Cosflor', remainingQuantity: 180 },
-  { packing: 'Syp', productName: 'Inicos', remainingQuantity: 40 },
-  { packing: 'Cap', productName: 'Refix', remainingQuantity: 15 },
-  { packing: 'Tab', productName: 'Mativ', remainingQuantity: 20 },
-  { packing: 'Syp', productName: 'Costio', remainingQuantity: 19 },
-  { packing: 'Cap', productName: 'Regix', remainingQuantity: 3},
-  { packing: 'Tab', productName: 'Ivy', remainingQuantity: 2 },
-  { packing: 'Cap', productName: 'Sunrise', remainingQuantity: 89 },
-];
-
+import Toast from 'react-native-toast-message';
+import { ProductsData } from '../../DummyData/Data';
 
 const Inventory = ({navigation}) => {
   useEffect(() => {
@@ -31,7 +20,16 @@ const Inventory = ({navigation}) => {
       );
     }
   }, []);
-
+useEffect(() => {
+  const showToast = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Time to Re-Stock!',
+      text2: 'Some of your products have reached minimun limit 👋'
+    });
+  }
+  showToast(); 
+}, [])
   const [searchQuery, setSearchQuery] = useState('')
   const filteredProducts = ProductsData.filter(item => item.productName.toLowerCase().includes(searchQuery.toLowerCase()))
 

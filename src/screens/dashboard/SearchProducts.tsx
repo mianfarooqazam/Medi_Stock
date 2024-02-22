@@ -5,46 +5,9 @@ import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 import { AntDesign, Feather } from '@expo/vector-icons'
 import ReusableButton from '../../components/Button/ReusableButton'
 import DividerBar from '../../components/Divider/DividerBar'
+import { ProductsData } from '../../DummyData/Data'
 
 
-const ProductsData = [
-  { productName: 'Costio-D', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" },
-  { productName: 'Mativ', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" },
-  { productName: 'Cosflor', packing: "Tab", Tp: 530, Mrp: 600, batchNumber: "KL234" },
-  { productName: 'Inicos', packing: "Syp", Tp: 120, Mrp: 150, batchNumber: "IO595" },
-  { productName: 'Malgro', packing: "Cap", Tp: 20, Mrp: 60, batchNumber: "F12HN23" },
-  { productName: 'Caycal', packing: "Tab", Tp: 193, Mrp: 250, batchNumber: "RU433" },
-  { productName: 'Sunrise', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
-  { productName: 'Refix', packing: "Tab", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
-  { productName: 'Regix', packing: "Syp", Tp: 50, Mrp: 100, batchNumber: "FS323" },
-  { productName: 'Loratadine', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" },
-  { productName: 'Ibuprofen', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" },
-  { productName: 'Omeprazole', packing: "Tab", Tp: 530, Mrp: 600, batchNumber: "KL234" },
-  { productName: 'Paracetamol', packing: "Syp", Tp: 120, Mrp: 150, batchNumber: "IO595" },
-  { productName: 'Amoxicillin', packing: "Cap", Tp: 20, Mrp: 60, batchNumber: "F12HN23" },
-  { productName: 'Aspirin', packing: "Tab", Tp: 193, Mrp: 250, batchNumber: "RU433" },
-  { productName: 'Simvastatin', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
-  { productName: 'Metformin', packing: "Tab", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
-  { productName: 'Hydrochlorothiazide', packing: "Syp", Tp: 50, Mrp: 100, batchNumber: "FS323" },
-  { productName: 'Atorvastatin-D', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" },
-  { productName: 'Gabapentin', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" },
-  { productName: 'Warfarin', packing: "Tab", Tp: 530, Mrp: 600, batchNumber: "KL234" },
-  { productName: 'Citalopram', packing: "Syp", Tp: 120, Mrp: 150, batchNumber: "IO595" },
-  { productName: 'Metoprolol', packing: "Cap", Tp: 20, Mrp: 60, batchNumber: "F12HN23" },
-  { productName: 'Amlodipine', packing: "Tab", Tp: 193, Mrp: 250, batchNumber: "RU433" },
-  { productName: 'Diazepam', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
-  { productName: 'Ranitidine', packing: "Tab", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
-  { productName: 'Clopidogrel', packing: "Syp", Tp: 50, Mrp: 100, batchNumber: "FS323" },
-  { productName: 'Levothyroxine', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" },
-  { productName: 'Montelukast', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" },
-  { productName: 'Fluoxetine', packing: "Tab", Tp: 530, Mrp: 600, batchNumber: "KL234" },
-  { productName: 'Sildenafil', packing: "Syp", Tp: 120, Mrp: 150, batchNumber: "IO595" },
-  { productName: 'Pregabalin', packing: "Cap", Tp: 20, Mrp: 60, batchNumber: "F12HN23" },
-  { productName: 'Tadalafil', packing: "Tab", Tp: 193, Mrp: 250, batchNumber: "RU433" },
-  { productName: 'Methotrexate', packing: "Syp", Tp: 234, Mrp: 300, batchNumber: "90WER" },
-  { productName: 'Refix', packing: "Cap", Tp: 43, Mrp: 70, batchNumber: "23FWE" },
-  { productName: 'Regix', packing: "Tab", Tp: 50, Mrp: 100, batchNumber: "FS323" },
-]
 
 const containerStyle = {
   backgroundColor: "white",
