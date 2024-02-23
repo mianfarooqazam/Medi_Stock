@@ -25,6 +25,8 @@ import Sales from '../screens/dashboard/Sales';
 import ComingSoon from '../screens/dashboard/ComingSoon';
 import Login from '../screens/auth/Login';
 import SignUp from '../screens/auth/SignUp';
+import ForgotPassword from '../screens/auth/ForgotPassword';
+import ResetPassword from '../screens/auth/ResetPassword';
 
 
 
@@ -33,37 +35,39 @@ import SignUp from '../screens/auth/SignUp';
 const Stack = createNativeStackNavigator();
 const MainNavigator = () => {
   return (
-   <NavigationContainer> 
-    <Stack.Navigator initialRouteName='Login' screenOptions={{headerBackTitleVisible:false}}>
-    <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
-    <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
-    <Stack.Screen name='SignUp' component={SignUp} options={{headerShown:true}}/>
-        <Stack.Screen name='Dashboard' component={Dashboard}/>
-        <Stack.Screen name='OnBoarding' component={OnBoarding} options={{headerShown:false}}/>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Login' screenOptions={{ headerBackTitleVisible: false }}>
+        <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
+        <Stack.Screen name='Login' component={Login} options={{ headerShown: false }} />
+        <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
+        <Stack.Screen name='ForgotPassword' component={ForgotPassword} options={{ headerShown: false }} />
+        <Stack.Screen name='ResetPassword' component={ResetPassword} options={{ headerShown: false }} />
+        <Stack.Screen name='Dashboard' component={Dashboard} />
+        <Stack.Screen name='OnBoarding' component={OnBoarding} options={{ headerShown: false }} />
 
-        <Stack.Screen name='NewInvoice' component={NewInvoice} options={{title:'Generate Invoice'}}/>
-        <Stack.Screen name='ViewInvoices' component={ViewInvoices} options={{title:'Your Invoices'}}/>
+        <Stack.Screen name='NewInvoice' component={NewInvoice} options={{ title: 'Generate Invoice' }} />
+        <Stack.Screen name='ViewInvoices' component={ViewInvoices} options={{ title: 'Your Invoices' }} />
 
-        <Stack.Screen name='CalculateBill' component={CalculateBill} options={{title:'Bill Calculated'}}/>
-       
-        <Stack.Screen  name='AddCustomer' component={AddCustomer} options={{title:"Add New Customer"}}/>
-        <Stack.Screen  name='SearchCustomers' component={SearchCustomers} options={{title:"Search Customer"}}/>
-        <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{title:'Customers'}}/>
-        
-        <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{title:'Products'}}/>
-        <Stack.Screen name='AddProduct' component={AddProduct} options={{title:'Add New Product'}}/>
-        <Stack.Screen name='Sales' component={Sales} options={{title:'Sales Report'}}/>
-        <Stack.Screen name='SearchProducts' component={SearchProducts} options={{title:'Search Product'}}/>
-       <Stack.Screen name='Inventory' component={Inventory} options={{title:'Inventory'}}/>
-       <Stack.Screen name='StockInOut' component={StockInOut} options={{title:'In-Out Stock'}}/>
-    
-       <Stack.Screen name='SettingScreen' component={SettingScreen} options={{title:'Settings'}}/>
-       <Stack.Screen name='InvoicePreview' component={InvoicePreview} options={{title:'Preview'}}/>
-   
-        <Stack.Screen  name='ComingSoon' component={ComingSoon} options={{title:"Coming Soon"}}/>
+        <Stack.Screen name='CalculateBill' component={CalculateBill} options={{ title: 'Bill Calculated' }} />
 
-    </Stack.Navigator>
-   </NavigationContainer>
+        <Stack.Screen name='AddCustomer' component={AddCustomer} options={{ title: "Add New Customer" }} />
+        <Stack.Screen name='SearchCustomers' component={SearchCustomers} options={{ title: "Search Customer" }} />
+        <Stack.Screen name='CustomersScreen' component={CustomersScreen} options={{ title: 'Customers' }} />
+
+        <Stack.Screen name='ProductsScreen' component={ProductsScreen} options={{ title: 'Products' }} />
+        <Stack.Screen name='AddProduct' component={AddProduct} options={{ title: 'Add New Product' }} />
+        <Stack.Screen name='Sales' component={Sales} options={{ title: 'Sales Report' }} />
+        <Stack.Screen name='SearchProducts' component={SearchProducts} options={{ title: 'Search Product' }} />
+        <Stack.Screen name='Inventory' component={Inventory} options={{ title: 'Inventory' }} />
+        <Stack.Screen name='StockInOut' component={StockInOut} options={{ title: 'In-Out Stock' }} />
+
+        <Stack.Screen name='SettingScreen' component={SettingScreen} options={{ title: 'Settings' }} />
+        <Stack.Screen name='InvoicePreview' component={InvoicePreview} options={{ title: 'Preview' }} />
+
+        <Stack.Screen name='ComingSoon' component={ComingSoon} options={{ title: "Coming Soon" }} />
+
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
 

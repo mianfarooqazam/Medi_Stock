@@ -6,7 +6,7 @@ import LottieView from 'lottie-react-native';
 import animationData from '../../../assets/animation/animation2.json';
 import ReusableButton from '../../components/Button/ReusableButton';
 
-const Login = () => {
+const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState("");
   return (
@@ -30,10 +30,12 @@ const Login = () => {
         <View style={styles.formButtonView}>
           <ReusableButton label="Login" onPress={undefined} style={styles.button} textColor="#fff" />
         </View>
+        
       </View>
 
       <View style={styles.footer}>
-        <Text>Forgot Password 🤦</Text>
+        <Text style={styles.textLink} onPress={()=>navigation.navigate("ForgotPassword")}>Forgot Password 🤦</Text>
+        <Text>Don't have an account? <Text style={styles.textLink} onPress={()=>navigation.navigate("SignUp")}>Sign Up</Text></Text>
       </View>
 
     </SafeAreaView>
@@ -53,7 +55,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    // backgroundColor: "#bebebe",
   },
   logoText: {
     fontSize: 30,
@@ -63,9 +64,8 @@ const styles = StyleSheet.create({
   form: {
     flex: 2,
     justifyContent: 'center',
-    // backgroundColor: "yellow",
     width: "100%",
-    gap: 30
+    gap: 30,
   },
   formTextView: {
     gap: 10
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   formButtonView: {
 
   },
-  textInput: {
+    textInput: {
     backgroundColor: "#fff",
     width: "90%",
     alignSelf: 'center',
@@ -82,15 +82,18 @@ const styles = StyleSheet.create({
     backgroundColor: "#4683fb",
     width: "90%",
     alignSelf: "center",
-
   },
 
   footer: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent:'flex-end',
     alignItems: 'center',
-    // backgroundColor: "#bebebe",
-    width: "100%"
+    width: "100%",
+    gap:10
+  },
+  textLink: {
+    color:"#4683FB",
+    fontSize:16
   },
   animation: {
     width: '100%',

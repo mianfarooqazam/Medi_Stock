@@ -6,10 +6,9 @@ import LottieView from 'lottie-react-native';
 import animationData from '../../../assets/animation/animation2.json';
 import ReusableButton from '../../components/Button/ReusableButton';
 
-const SignUp = ({navigation}) => {
+const ForgotPassword = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logo}>
@@ -25,19 +24,15 @@ const SignUp = ({navigation}) => {
 
       <View style={styles.form}>
         <View style={styles.formTextView}>
-          <TextInput mode='outlined' label="Email" value={email} onChangeText={text => setEmail(text)} style={styles.textInput} activeOutlineColor='#4683FB' outlineColor='#4683FB' />
-          <TextInput mode='outlined' label="Password" value={password} onChangeText={text => setPassword(text)} style={styles.textInput} outlineColor='#4683FB' activeOutlineColor='#4683FB' />
-          <TextInput mode='outlined' label="Confirm Password" value={confirmpassword} onChangeText={text => setConfirmPassword(text)} style={styles.textInput} outlineColor='#4683FB' activeOutlineColor='#4683FB' />
+          <TextInput mode='outlined' label="Enter Email" value={email} onChangeText={text => setEmail(text)} style={styles.textInput} activeOutlineColor='#4683FB' outlineColor='#4683FB' />
         </View>
         <View style={styles.formButtonView}>
-          <ReusableButton label="Sign Up" onPress={undefined} style={styles.button} textColor="#fff" />
+          <ReusableButton label="Submit" onPress={()=>navigation.navigate("ResetPassword")} style={styles.button} textColor="#fff" />
         </View>
         
       </View>
-
       <View style={styles.footer}>
-      <Text style={styles.textLink}>Guest</Text>
-        <Text>Already have account! <Text style={styles.textLink} onPress={()=>navigation.navigate("Login")}>Login</Text></Text>
+         <Text style={styles.textLink} onPress={()=>navigation.navigate("Login")}>Back to Login</Text>
       </View>
 
     </SafeAreaView>
@@ -103,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SignUp;
+export default ForgotPassword;
