@@ -23,6 +23,8 @@ import SettingScreen from '../screens/dashboard/SettingScreen';
 import InvoicePreview from '../screens/dashboard/InvoicePreview';
 import Sales from '../screens/dashboard/Sales';
 import ComingSoon from '../screens/dashboard/ComingSoon';
+import Login from '../screens/auth/Login';
+import SignUp from '../screens/auth/SignUp';
 
 
 
@@ -32,8 +34,10 @@ const Stack = createNativeStackNavigator();
 const MainNavigator = () => {
   return (
    <NavigationContainer> 
-    <Stack.Navigator initialRouteName='Dashboard' screenOptions={{headerBackTitleVisible:false}}>
+    <Stack.Navigator initialRouteName='Login' screenOptions={{headerBackTitleVisible:false}}>
     <Stack.Screen name="SplashScreen" component={SplashScreen} options={{ headerShown: false }} />
+    <Stack.Screen name='Login' component={Login} options={{headerShown:false}}/>
+    <Stack.Screen name='SignUp' component={SignUp} options={{headerShown:true}}/>
         <Stack.Screen name='Dashboard' component={Dashboard}/>
         <Stack.Screen name='OnBoarding' component={OnBoarding} options={{headerShown:false}}/>
 
