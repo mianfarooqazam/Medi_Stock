@@ -45,9 +45,9 @@ const NewInvoice = ({ navigation }) => {
     const [customervalue, setCustomerValue] = useState(null);
     const [customerFocus, setCustomerFocus] = useState(false);
 
-
+    const [discountType, setDiscountType] = useState('flat');
     const [productsVisible, setProductsVisible] = useState(false);
-    const [productvalue, setProductValue] = useState(null);
+    const [productValue, setProductValue] = useState(null);
     const [productFocus, setProductFocus] = useState(false);
     const showProductsModal = () => setProductsVisible(true);
     const hideProductsModal = () => setProductsVisible(false);
@@ -60,9 +60,13 @@ const NewInvoice = ({ navigation }) => {
 
     const currentDate = moment().format("DD-MM-YYYY");
     const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-    const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
+    const onToggleSwitch = () => {
+        const newValue = !isSwitchOn;
+        console.log("🚀 Switch", newValue);
+        setIsSwitchOn(newValue);
+    };
 
-    
+
     const calculateSubtotal = () => {
         return selectedProducts.reduce((total, product) => {
             return total + (product.mrp * product.quantity);
@@ -71,15 +75,15 @@ const NewInvoice = ({ navigation }) => {
     const calculateTotal = () => {
         const subtotal = selectedProducts.reduce((total, product) => {
             return total + (product.mrp * product.quantity);
-        },  0);
-        const discount = parseFloat(discountValue) ||  0; 
+        }, 0);
+        const discount = parseFloat(discountValue) || 0;
         return subtotal - discount;
     };
     const calculateBalance = () => {
         const subtotal = selectedProducts.reduce((total, product) => {
             return total + (product.mrp * product.quantity);
-        },  0);
-        const discount = parseFloat(discountValue) ||  0; 
+        }, 0);
+        const discount = parseFloat(discountValue) || 0;
         return subtotal - discount;
     }
     return (
@@ -230,10 +234,11 @@ const NewInvoice = ({ navigation }) => {
 
                             <View style={styles.tableRow} key={index}>
                                 <Text style={styles.tableData}>{index + 1}</Text>
-                                < Text style={styles.tableData}>Refix</Text>
+                                <Text style={styles.tableData}>{product.productName}</Text>
                                 <Text style={styles.tableData}>{product.quantity}</Text>
                                 <Text style={styles.tableData}>{product.mrp}</Text>
                                 <Text style={[styles.tableData, { backgroundColor: "#F9F07A" }]}>{product.mrp * product.quantity}</Text>
+
                             </View>
 
                         ))}
@@ -254,20 +259,24 @@ const NewInvoice = ({ navigation }) => {
                                         data={ProductsData}
                                         search
                                         maxHeight={300}
+                                        // other props
+
                                         labelField="productName"
                                         valueField="productName"
                                         placeholder={
                                             !productFocus ? "Select Products" : "🚀 Loading Products"
                                         }
                                         searchPlaceholder="Search..."
-                                        value={productvalue}
+                                        value={productValue}
                                         onFocus={() => setProductFocus(true)}
                                         onBlur={() => setProductFocus(false)}
+
                                         onChange={(item) => {
                                             setProductValue(item.value);
                                             setProductFocus(false);
                                         }}
                                     />
+
 
 
                                     <View style={{ gap: 10 }}>
@@ -291,7 +300,7 @@ const NewInvoice = ({ navigation }) => {
                                                 setSelectedProducts(prevProducts => [
                                                     ...prevProducts,
                                                     {
-                                                        productName: productvalue,
+                                                        productName: productValue,
                                                         quantity: productQuantity,
                                                         mrp: productMRP,
                                                     }
@@ -306,7 +315,7 @@ const NewInvoice = ({ navigation }) => {
                                 </View>
                             </Modal>
                         </Portal>
-                        <DividerBar />
+
                         <View style={{ gap: 10, backgroundColor: "#F6F5F5" }}>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text>Sub Total :</Text>
@@ -330,10 +339,17 @@ const NewInvoice = ({ navigation }) => {
                                 contentContainerStyle={containerStyle}
                             >
                                 <View style={{ gap: 10 }}>
+                                    
                                     <Text style={{ fontWeight: "bold" }}>Discount</Text>
                                     <DividerBar />
+                                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+                                        <Text>Use Percentage instead</Text>
+                                        <Switch value={discountType === 'percentage'} onValueChange={() => setDiscountType(discountType === 'flat' ? 'percentage' : 'flat')} color="#468EFB" />
+                                    </View>
                                     <TextInput mode="outlined" label="Flat Amount :" placeholder="100" value={productMRP}
                                         onChangeText={setProductMRP} />
+
+                                    
                                     <View
                                         style={{
                                             flexDirection: "row",
@@ -341,12 +357,17 @@ const NewInvoice = ({ navigation }) => {
                                             justifyContent: "center",
                                         }}
                                     >
-
                                         <ReusableButton
-                                            label="Discount"
+                                            label="Apply Discount"
                                             onPress={() => {
-
-                                                setDiscountValue(productMRP);
+                                                const subtotal = calculateSubtotal();
+                                                if (discountType === 'percentage') {
+                                                    const discountPercentage = parseFloat(productMRP) / 100;
+                                                    const discountAmount = subtotal * discountPercentage;
+                                                    setDiscountValue(discountAmount);
+                                                } else {
+                                                    setDiscountValue(productMRP);
+                                                }
                                                 hideDiscountModal();
                                             }}
                                             style={{ width: "100%", backgroundColor: "#468EFB" }}
