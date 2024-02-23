@@ -323,7 +323,7 @@ const NewInvoice = ({ navigation }) => {
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text onPress={() => showDiscountModal()}>Discount :</Text>
-                                <Text>Rs. {discountValue}</Text>
+                                <Text>Rs. {discountValue}{discountType === 'percentage' ? '%' : ''}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
                                 <Text>Total :</Text>
@@ -339,17 +339,17 @@ const NewInvoice = ({ navigation }) => {
                                 contentContainerStyle={containerStyle}
                             >
                                 <View style={{ gap: 10 }}>
-                                    
+
                                     <Text style={{ fontWeight: "bold" }}>Discount</Text>
                                     <DividerBar />
                                     <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
                                         <Text>Use Percentage instead</Text>
                                         <Switch value={discountType === 'percentage'} onValueChange={() => setDiscountType(discountType === 'flat' ? 'percentage' : 'flat')} color="#468EFB" />
                                     </View>
-                                    <TextInput mode="outlined" label="Flat Amount :" placeholder="100" value={productMRP}
-                                        onChangeText={setProductMRP} />
+                                    <TextInput mode="outlined" label={discountType === 'percentage' ? "Percentage" : "Flat Amount"} placeholder="100" value={productMRP}
+    onChangeText={setProductMRP} />
 
-                                    
+
                                     <View
                                         style={{
                                             flexDirection: "row",
