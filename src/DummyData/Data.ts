@@ -1,3 +1,32 @@
+export const InvoicesData = [
+  
+    { customerName: "John Smith", Area: "New York", invoiceNumber: "INV-0001",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Emily Johnson", Area: "London", invoiceNumber: "INV-0002",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Ahmed Hassan", Area: "Cairo", invoiceNumber: "INV-0003",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Maria Garcia", Area: "Madrid", invoiceNumber: "INV-0004",status:"Unpaid",balance:"Rs. 123456.00" },
+    { customerName: "Luis Rodriguez", Area: "Mexico City", invoiceNumber: "INV-0005",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Yuki Tanaka", Area: "Tokyo", invoiceNumber: "INV-0006",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Sophie Dupont", Area: "Paris", invoiceNumber: "INV-0007",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Anna Müller", Area: "Berlin", invoiceNumber: "INV-0008",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Michael Brown", Area: "Sydney", invoiceNumber: "INV-0009",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Jane Doe", Area: "Toronto", invoiceNumber: "INV-0010" ,status:"Paid",balance:"Rs. 123456.00"},
+    { customerName: "Emma White", Area: "Dubai", invoiceNumber: "INV-0011",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Oliver Wilson", Area: "Singapore", invoiceNumber: "INV-0012",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Admin", Area: "Admin", invoiceNumber: "INV-0013" ,status:"Paid",balance:"Rs. 123456.00"},
+    { customerName: "Sophia Martinez", Area: "Moscow", invoiceNumber: "INV-0014",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Liam Miller", Area: "Rome", invoiceNumber: "INV-0015" ,status:"Unpaid",balance:"Rs. 123456.00"},
+    { customerName: "Isabella Garcia", Area: "Barcelona", invoiceNumber: "INV-0016",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Mason Anderson", Area: "Amsterdam", invoiceNumber: "INV-0017",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Mia Thompson", Area: "Vienna", invoiceNumber: "INV-0018" ,status:"Paid",balance:"Rs. 123456.00"},
+    { customerName: "Ethan Jackson", Area: "Stockholm", invoiceNumber: "INV-0019" ,status:"Paid",balance:"Rs. 123456.00"},
+    { customerName: "Ava White", Area: "Helsinki", invoiceNumber: "INV-0020",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Ethan Lee", Area: "Oslo", invoiceNumber: "INV-0021",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Olivia Harris", Area: "Copenhagen", invoiceNumber: "INV-0022",status:"Unpaid",balance:"Rs. 123456.00" },
+    { customerName: "William Clark", Area: "Lisbon", invoiceNumber: "INV-0023",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "Emily Taylor", Area: "Luxembourg City", invoiceNumber: "INV-0024",status:"Paid",balance:"Rs. 123456.00" },
+]
+
+
 export const ProductsData = [
     { productName: 'Costio-D', packing: "Tab", Tp: 410, Mrp: 450, batchNumber: "BF123" ,remainingQuantity:122},
     { productName: 'Mativ', packing: "Cap", Tp: 40, Mrp: 60, batchNumber: "AB423" ,remainingQuantity:123},

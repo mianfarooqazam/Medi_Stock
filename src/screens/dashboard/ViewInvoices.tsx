@@ -6,11 +6,13 @@ import Search from '../../components/Search/Search'
 import { AntDesign, Entypo, Feather, Ionicons } from '@expo/vector-icons'
 import DividerBar from '../../components/Divider/DividerBar'
 import moment from 'moment'
+import { InvoicesData } from '../../DummyData/Data'
 const ViewInvoices = () => {
-  const [selectedItem, setSelectedItem] = useState('');
-  const handlePress = (item) => {
-    setSelectedItem(item);
-  }
+  const [selectedItem,setSelectedItem] =useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const filteredInvoices = InvoicesData.filter(invoice => {
+    return selectedStatus === 'All' || invoice.status === selectedStatus;
+  });
   const currentDate = moment().format("DD-MM-YY");
   return (
     <View style={styles.container}>
@@ -24,10 +26,10 @@ const ViewInvoices = () => {
         <TouchableRipple
           style={[
             styles.ripple,
-            { borderColor: selectedItem === 'All' ? '#4683fb' : '#bebebe' },
-            { backgroundColor: selectedItem === 'All' ? '#4683fb' : 'transparent' },
+            { borderColor: selectedStatus === 'All' ? '#4683fb' : '#bebebe' },
+            { backgroundColor: selectedStatus === 'All' ? '#4683fb' : 'transparent' },
           ]}
-          onPress={() => handlePress('All')}
+          onPress={() => setSelectedStatus('All')} 
           rippleColor='#4683fb'
         >
           <View style={styles.rippleView}>
@@ -40,10 +42,10 @@ const ViewInvoices = () => {
         <TouchableRipple
           style={[
             styles.ripple,
-            { borderColor: selectedItem === 'Paid' ? '#9bcf53' : '#bebebe' },
-            { backgroundColor: selectedItem === 'Paid' ? '#9bcf53' : 'transparent' },
+            { borderColor: selectedStatus === 'Paid' ? '#9bcf53' : '#bebebe' },
+            { backgroundColor: selectedStatus === 'Paid' ? '#9bcf53' : 'transparent' },
           ]}
-          onPress={() => handlePress('Paid')}
+          onPress={() => setSelectedStatus('Paid')} 
           rippleColor='#9bcf53'
         >
           <View style={styles.rippleView}>
@@ -56,10 +58,11 @@ const ViewInvoices = () => {
         <TouchableRipple
           style={[
             styles.ripple,
-            { borderColor: selectedItem === 'Unpaid' ? '#FF0000' : '#bebebe' },
-            { backgroundColor: selectedItem === 'Unpaid' ? '#FF0000' : 'transparent' },
+            { borderColor: selectedStatus === 'Unpaid' ? '#FF0000' : '#bebebe' },
+            { backgroundColor: selectedStatus === 'Unpaid' ? '#FF0000' : 'transparent' },
           ]}
-          onPress={() => handlePress('Unpaid')}
+          onPress={() => setSelectedStatus('Unpaid')}
+          
           rippleColor='#FF0000'
         >
           <View style={styles.rippleView}>
@@ -74,13 +77,20 @@ const ViewInvoices = () => {
 
       <DividerBar />
 
+      
 
-      <View style={{ padding: 5, backgroundColor: "#fff", borderRadius: 10, width: "90%", alignSelf: 'center', gap: 5 }} >
-
+      <ScrollView contentContainerStyle={{gap:15}}>
+      {selectedStatus === '' ? (
+        <View style={{alignItems:"center"}}>
+          <Text style={{color:"#4683fb",fontSize:20}}>No data found 😔</Text>
+        </View>
+      ) : (
+      filteredInvoices.map((invoice, index) => (
+      <View style={{ padding: 5, backgroundColor: "#fff", borderRadius: 10, width: "90%", alignSelf: 'center', gap: 5 }} key={index}  >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", alignItems: 'baseline', gap: 10 }}>
-            <Text style={{ color: "#468EFB", fontSize: 20, fontWeight: "bold" }}>Lorem Ipsum</Text>
-            <Text style={{ color: "#bebebe", fontWeight: "bold", fontSize: 12 }}>INV-0001</Text>
+            <Text style={{ color: "#468EFB", fontSize: 20, fontWeight: "bold" }}>{invoice.customerName}</Text>
+            <Text style={{ color: "#bebebe", fontWeight: "bold", fontSize: 12 }}>{invoice.invoiceNumber}</Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: 'center' }}>
             <Text style={{ fontSize: 12 }}>{currentDate}</Text>
@@ -89,16 +99,16 @@ const ViewInvoices = () => {
 
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", alignItems: 'baseline', gap: 10 }}>
-            <Text style={{ }}>London</Text>
+            <Text style={{ }}>{invoice.Area}</Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: 'center' }}>
-            <Text style={{ color: "#9bcf53",fontWeight:'bold' }}>Paid</Text>
+            <Text style={{ color: "#9bcf53",fontWeight:'bold' }}>{invoice.status}</Text>
           </View>
         </View>
 
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row", alignItems: 'center', gap: 10 }}>
-            <Text style={{ }}>Rs. 123456.00</Text>
+            <Text style={{ }}>{invoice.balance}</Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: 'center',gap:10 }}>
           <Feather name="eye" size={24} color="#000" />
@@ -108,6 +118,10 @@ const ViewInvoices = () => {
         </View>
 
       </View>
+              ))
+              )}
+        
+      </ScrollView>
 
     </View>
 
