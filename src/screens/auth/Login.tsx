@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
   logo: {
     width: "100%",
     flex: 1,
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   logoText: {
