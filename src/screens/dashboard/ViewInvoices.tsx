@@ -1,14 +1,12 @@
-import { View, Text, Alert, StyleSheet, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, ScrollView } from 'react-native'
 import React, { useState } from 'react'
-import { Chip, Searchbar, TouchableRipple } from 'react-native-paper'
-import ReusableChip from '../../components/ReusableChip'
+import { TouchableRipple } from 'react-native-paper'
 import Search from '../../components/Search/Search'
-import { AntDesign, Entypo, Feather, Ionicons } from '@expo/vector-icons'
+import { AntDesign, Feather, Ionicons } from '@expo/vector-icons'
 import DividerBar from '../../components/Divider/DividerBar'
 import moment from 'moment'
 import { InvoicesData } from '../../DummyData/Data'
 const ViewInvoices = () => {
-  const [selectedItem,setSelectedItem] =useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
   const filteredInvoices = InvoicesData.filter(invoice => {
     return selectedStatus === 'All' || invoice.status === selectedStatus;
@@ -33,9 +31,9 @@ const ViewInvoices = () => {
           rippleColor='#4683fb'
         >
           <View style={styles.rippleView}>
-            <Ionicons name="documents-outline" size={30} color={selectedItem === 'All' ? '#fff' : '#bebebe'} />
-            <Text style={{ fontSize: 20, color: selectedItem === 'All' ? '#fff' : '#bebebe' }}>All</Text>
-            <Text style={{ fontSize: 20, color: selectedItem === 'All' ? '#fff' : '#bebebe' }}>0</Text>
+            <Ionicons name="documents-outline" size={30} color={selectedStatus === 'All' ? '#fff' : '#bebebe'} />
+            <Text style={{ fontSize: 20, color: selectedStatus === 'All' ? '#fff' : '#bebebe' }}>All</Text>
+            <Text style={{ fontSize: 20, color: selectedStatus === 'All' ? '#fff' : '#bebebe' }}>0</Text>
           </View>
         </TouchableRipple>
 
@@ -49,9 +47,9 @@ const ViewInvoices = () => {
           rippleColor='#9bcf53'
         >
           <View style={styles.rippleView}>
-            <Ionicons name="documents-outline" size={30} color={selectedItem === 'Paid' ? '#fff' : '#bebebe'} />
-            <Text style={{ fontSize: 20, color: selectedItem === 'Paid' ? '#fff' : '#bebebe' }}>Paid</Text>
-            <Text style={{ fontSize: 20, color: selectedItem === 'Paid' ? '#fff' : '#bebebe' }}>0</Text>
+            <Ionicons name="documents-outline" size={30} color={selectedStatus === 'Paid' ? '#fff' : '#bebebe'} />
+            <Text style={{ fontSize: 20, color: selectedStatus === 'Paid' ? '#fff' : '#bebebe' }}>Paid</Text>
+            <Text style={{ fontSize: 20, color: selectedStatus === 'Paid' ? '#fff' : '#bebebe' }}>0</Text>
           </View>
         </TouchableRipple>
 
@@ -66,9 +64,9 @@ const ViewInvoices = () => {
           rippleColor='#FF0000'
         >
           <View style={styles.rippleView}>
-            <Ionicons name="documents-outline" size={30} color={selectedItem === 'Unpaid' ? '#fff' : '#bebebe'} />
-            <Text style={{ fontSize: 20, color: selectedItem === 'Unpaid' ? '#fff' : '#bebebe' }}>Unpaid</Text>
-            <Text style={{ fontSize: 20, color: selectedItem === 'Unpaid' ? '#fff' : '#bebebe' }}>0</Text>
+            <Ionicons name="documents-outline" size={30} color={selectedStatus === 'Unpaid' ? '#fff' : '#bebebe'} />
+            <Text style={{ fontSize: 20, color: selectedStatus === 'Unpaid' ? '#fff' : '#bebebe' }}>Unpaid</Text>
+            <Text style={{ fontSize: 20, color: selectedStatus === 'Unpaid' ? '#fff' : '#bebebe' }}>0</Text>
           </View>
         </TouchableRipple>
 
