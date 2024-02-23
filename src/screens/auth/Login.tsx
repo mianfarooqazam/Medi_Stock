@@ -28,7 +28,7 @@ const Login = ({navigation}) => {
           <TextInput mode='outlined' label="Password" value={password} onChangeText={text => setPassword(text)} style={styles.textInput} outlineColor='#4683FB' activeOutlineColor='#4683FB' />
         </View>
         <View style={styles.formButtonView}>
-          <ReusableButton label="Login" onPress={()=>navigation.navigate("Dashboard")} style={styles.button} textColor="#fff" />
+          <ReusableButton label="Login" onPress={()=>navigation.replace("Dashboard")} style={styles.button} textColor="#fff" />
         </View>
         
       </View>

@@ -11,8 +11,8 @@ const Dashboard = ({navigation}) => {
     const showToast = () => {
       Toast.show({
         type: 'success',
-        text1: 'Hello User!',
-        text2: 'This is some something 👋'
+        text1: 'Hello User 👋',
+        text2: 'Lorem ipsum dolor sit amet, consectetur'
       });
     }
     showToast(); 

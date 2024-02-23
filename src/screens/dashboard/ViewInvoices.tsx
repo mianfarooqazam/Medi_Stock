@@ -1,5 +1,5 @@
 import { View, Text, Alert, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Chip, Searchbar, TouchableRipple } from 'react-native-paper'
 import ReusableChip from '../../components/ReusableChip'
 import Search from '../../components/Search/Search'
@@ -7,6 +7,11 @@ import { AntDesign, Entypo, Ionicons } from '@expo/vector-icons'
 import DividerBar from '../../components/Divider/DividerBar'
 
 const ViewInvoices = () => {
+  const [selectedItem, setSelectedItem] = useState('');
+  const handlePress = (item) => {
+    setSelectedItem(item);
+    
+  }
   return (
     <View style={styles.container}>
 
@@ -16,27 +21,51 @@ const ViewInvoices = () => {
 
       <View style={styles.rippleContainer}>
 
-        <TouchableRipple style={[styles.ripple, { borderColor: "#4683fb" }]} onPress={() => console.log("All")}  rippleColor='#4683fb'>
+        <TouchableRipple
+          style={[
+            styles.ripple,
+            { borderColor: selectedItem === 'All' ? '#4683fb' : '#bebebe' },
+            { backgroundColor: selectedItem === 'All' ? '#4683fb' : 'transparent' },
+          ]}
+          onPress={() => handlePress('All')}
+          rippleColor='#4683fb'
+        >
           <View style={styles.rippleView}>
-            <Ionicons name="documents-outline" size={30} color="#4683fb" />
-            <Text style={{ fontSize: 20, color: '#4683fb' }}>All</Text>
-            <Text style={{ fontSize: 20, color: '#4683fb' }}>0</Text>
+            <Ionicons name="documents-outline" size={30} color={selectedItem === 'All' ? '#fff' : '#bebebe'} />
+            <Text style={{ fontSize: 20, color: selectedItem === 'All' ? '#fff' : '#bebebe' }}>All</Text>
+            <Text style={{ fontSize: 20, color: selectedItem === 'All' ? '#fff' : '#bebebe' }}>0</Text>
           </View>
         </TouchableRipple>
 
-        <TouchableRipple style={[styles.ripple, { borderColor: '#9BCF53' }]} onPress={() => console.log("Paid")} rippleColor='#9BCF53'>
+        <TouchableRipple
+          style={[
+            styles.ripple,
+            { borderColor: selectedItem === 'Paid' ? '#9bcf53' : '#bebebe' },
+            { backgroundColor: selectedItem === 'Paid' ? '#9bcf53' : 'transparent' },
+          ]}
+          onPress={() => handlePress('Paid')}
+          rippleColor='#9bcf53'
+        >
           <View style={styles.rippleView}>
-            <Ionicons name="documents-outline" size={30} color="#9BCF53" />
-            <Text style={{ fontSize: 20, color: "#9BCF53" }}>Paid</Text>
-            <Text style={{ fontSize: 20, color: "#9BCF53" }}>0</Text>
+            <Ionicons name="documents-outline" size={30} color={selectedItem === 'Paid' ? '#fff' : '#bebebe'} />
+            <Text style={{ fontSize: 20, color: selectedItem === 'Paid' ? '#fff' : '#bebebe' }}>Paid</Text>
+            <Text style={{ fontSize: 20, color: selectedItem === 'Paid' ? '#fff' : '#bebebe' }}>0</Text>
           </View>
         </TouchableRipple>
 
-        <TouchableRipple style={[styles.ripple, { borderColor: "#FF004D" }]} onPress={() => console.log("Unpaid")}  rippleColor='#FF004D'>
+        <TouchableRipple
+          style={[
+            styles.ripple,
+            { borderColor: selectedItem === 'Unpaid' ? '#ff004d' : '#bebebe' },
+            { backgroundColor: selectedItem === 'Unpaid' ? '#ff004d' : 'transparent' },
+          ]}
+          onPress={() => handlePress('Unpaid')}
+          rippleColor='#ff004d'
+        >
           <View style={styles.rippleView}>
-            <Ionicons name="documents-outline" size={30} color="#FF004D" />
-            <Text style={{ fontSize: 20, color: "#FF004D" }}>Unpaid</Text>
-            <Text style={{ fontSize: 20, color: "#FF004D" }}>0</Text>
+            <Ionicons name="documents-outline" size={30} color={selectedItem === 'Unpaid' ? '#fff' : '#bebebe'} />
+            <Text style={{ fontSize: 20, color: selectedItem === 'Unpaid' ? '#fff' : '#bebebe' }}>Unpaid</Text>
+            <Text style={{ fontSize: 20, color: selectedItem === 'Unpaid' ? '#fff' : '#bebebe' }}>0</Text>
           </View>
         </TouchableRipple>
 
@@ -45,9 +74,9 @@ const ViewInvoices = () => {
 
       <DividerBar />
 
-<View style={{alignItems:'center'}}>
-  <Text>No Data Returned</Text>
-</View>
+      <View style={{ alignItems: 'center' }}>
+        <Text>No Data Returned</Text>
+      </View>
     </View>
   )
 }
