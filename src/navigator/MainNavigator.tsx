@@ -42,7 +42,7 @@ const MainNavigator = () => {
         <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }} />
         <Stack.Screen name='ForgotPassword' component={ForgotPassword} options={{ headerShown: false }} />
         <Stack.Screen name='ResetPassword' component={ResetPassword} options={{ headerShown: false }} />
-        <Stack.Screen name='Dashboard' component={Dashboard} />
+        <Stack.Screen name='Dashboard' component={Dashboard}  />
         <Stack.Screen name='OnBoarding' component={OnBoarding} options={{ headerShown: false }} />
 
         <Stack.Screen name='NewInvoice' component={NewInvoice} options={{ title: 'Generate Invoice' }} />

@@ -5,10 +5,18 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import animationData from '../../../assets/animation/animation2.json';
 import ReusableButton from '../../components/Button/ReusableButton';
+import Toast from 'react-native-toast-message';
 
 const ResetPassword = ({navigation}) => {
     const [password, setPassword] = useState("");
     const [confirmpassword, setConfirmPassword] = useState("");
+    const showToast = () => {
+        Toast.show({
+          type: 'success',
+          text1: 'Success',
+          text2: 'Password Changed Successfully 👍'
+        });
+      }
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logo}>
@@ -28,7 +36,7 @@ const ResetPassword = ({navigation}) => {
           <TextInput mode='outlined' label="Confirm New Password" value={confirmpassword} onChangeText={text => setConfirmPassword(text)} style={styles.textInput} outlineColor='#4683FB' activeOutlineColor='#4683FB' />
         </View>
         <View style={styles.formButtonView}>
-          <ReusableButton label="Done" onPress={()=>navigation.navigate("Login")} style={styles.button} textColor="#fff" />
+          <ReusableButton label="Done" onPress={()=>{navigation.navigate("Login");showToast()}} style={styles.button} textColor="#fff" />
         </View>
         
       </View>
