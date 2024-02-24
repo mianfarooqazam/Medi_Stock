@@ -1,6 +1,6 @@
 export const InvoicesData = [
   
-    { customerName: "John Smith", Area: "New York", invoiceNumber: "INV-0001",status:"Paid",balance:"Rs. 123456.00" },
+    { customerName: "John Smith", Area: "New York", invoiceNumber: "INV-0001",status:"Unpaid",balance:"Rs. 123456.00" },
     { customerName: "Emily Johnson", Area: "London", invoiceNumber: "INV-0002",status:"Paid",balance:"Rs. 123456.00" },
     { customerName: "Ahmed Hassan", Area: "Cairo", invoiceNumber: "INV-0003",status:"Paid",balance:"Rs. 123456.00" },
     { customerName: "Maria Garcia", Area: "Madrid", invoiceNumber: "INV-0004",status:"Unpaid",balance:"Rs. 123456.00" },
