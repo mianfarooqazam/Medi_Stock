@@ -1,93 +1,170 @@
-import { View, Text, ScrollView, StyleSheet, Alert, KeyboardAvoidingView, Platform } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { View, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import { addDoc, collection, } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import db from '../../../firebaseConfig';
-//
+import Toast from 'react-native-toast-message';
+
 const AddProduct = ({ navigation }) => {
-   
-        const [product, setProduct] = useState('')
-        const [mrp, setMrp] = useState('')
-        const [tp, setTp] = useState('')
-        const [packing, setPacking] = useState('')
-        const [batchno, setBatchno] = useState('')
-        const AddProducttoFirestore = async()=> {
-            try{
-                const productsRef = collection(db, 'Products');
+    const { control, handleSubmit, setValue } = useForm();
 
-                        await addDoc(productsRef, {
-                            Product_Name: product,
-                            MRP: mrp,
-                            TP: tp,
-                            Packing: packing,
-                            Batch_No: batchno,
-            
-                        });
-            }
-            catch(error){
-                Alert.alert("error","Error adding product")
-            }
+    const onSubmit = async (data) => {
+        try {
+            const productsRef = collection(db, 'Products');
+            await addDoc(productsRef, {
+                Product_Name: data.product,
+                MRP: data.mrp,
+                TP: data.tp,
+                Packing: data.packing,
+                Batch_No: data.batchno,
+            });
+            Toast.show({
+                type: 'success',
+                position:'bottom',
+                text1: 'Success',
+                text2: 'Product Added',
+              });
+            navigation.navigate("ProductsScreen");
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                text1: 'Error',
+                text2: 'Error adding product',
+              });
         }
+    };
+
     return (
-
         <View style={styles.container}>
-
-
             <View style={styles.view1}>
-                <TextInput label="Product Name" style={styles.textinput} value={product} onChangeText={(text)=>setProduct(text)}/>
-                <TextInput label="M.R.P" style={styles.textinput} value={mrp} onChangeText={(text)=>setMrp(text)}/>
-                <TextInput label="T.P" style={styles.textinput}  value={tp} onChangeText={(text)=>setTp(text)}/>
-                <TextInput label="Packing" style={styles.textinput} value={packing} onChangeText={(text)=>setPacking(text)}/>
-                <TextInput label="Batch number" style={styles.textinput}  value={batchno} onChangeText={(text)=>setBatchno(text)}/>
 
 
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Product Name"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('product', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="product"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="M.R.P"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('mrp', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="mrp"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="T.P"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('tp', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="tp"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Packing"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('packing', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="packing"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Batch number"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('batchno', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="batchno"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
             </View>
 
             <View style={styles.view2}>
-                <Button mode="contained" onPress={()=>{AddProducttoFirestore();Alert.alert("Product Added");navigation.navigate("ProductsScreen")}} style={styles.button}  > Add Product</Button>
-
+                <Button mode="contained" onPress={handleSubmit(onSubmit)} style={styles.button}>
+                    Add Product
+                </Button>
             </View>
-
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         backgroundColor: "#fff",
-        // justifyContent:"center",
-        // alignItems:'center'
     },
     view1: {
         flex: 1,
-        // backgroundColor:"pink",
-        // width:"90%",
         alignItems: 'center',
         justifyContent: "center"
+    },
+    view2: {
+        flex: 0.5,
+        alignItems: 'center'
     },
     textinput: {
         backgroundColor: "#fff",
         width: "90%",
-        marginVertical: 10
-
-    },
-
-    view2: {
-        flex: 0.5,
-        // backgroundColor:"yellow",
-        // width:"90%",
-        // justifyContent:"center",
-        alignItems: 'center'
+        marginVertical: 10,
     },
     button: {
         backgroundColor: "#4683fb",
         width: "90%",
-
-    }
+    },
 });
-
-
 
 export default AddProduct;

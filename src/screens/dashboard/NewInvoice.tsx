@@ -1,531 +1,622 @@
-import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, Platform } from 'react-native';
-import {
-    View,
-    StyleSheet,
-    Alert,
-    Text,
-    ScrollView,
-} from "react-native";
-import {
-    TextInput,
-    Button,
-    HelperText,
-    Chip,
-    TouchableRipple,
-    Portal,
-    Modal,
-    Provider,
-    Switch
-} from "react-native-paper";
-import ReusableButton from "../../components/Button/ReusableButton";
-import ResuableInput from "../../components/TextInput/ReusableInput";
-import { AntDesign, FontAwesome5, Ionicons } from "@expo/vector-icons";
-import { Dropdown } from "react-native-element-dropdown";
-import TextInputIcon from "react-native-paper/lib/typescript/components/TextInput/Adornment/TextInputIcon";
-import DividerBar from "../../components/Divider/DividerBar";
+import { FontAwesome5 } from "@expo/vector-icons";
 import moment from "moment";
+import React, { useEffect, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { Dropdown } from "react-native-element-dropdown";
+import {
+  HelperText,
+  Modal,
+  Portal,
+  Provider,
+  Switch,
+  TextInput,
+  TouchableRipple,
+} from "react-native-paper";
+import {
+  useForm,
+  Controller,
+  SubmitHandler,
+  SubmitErrorHandler,
+  useFieldArray,
+} from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+//
 import { CustomersData, ProductsData } from "../../DummyData/Data";
+import ReusableButton from "../../components/Button/ReusableButton";
+import DividerBar from "../../components/Divider/DividerBar";
+import {
+  InvoiceProductType,
+  InvoiceSchema,
+  InvoiceSchemaType,
+} from "../../../lib/zod-validations/invoice";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { generateInvoiceID } from "../../../lib/utils";
+
+const containerStyle = {
+  backgroundColor: "white",
+  padding: 20,
+  width: "80%",
+  alignSelf: "center",
+  justifyContent: "center",
+  borderRadius: 10,
+};
 
 const NewInvoice = ({ navigation }) => {
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    setValue,
+    watch,
+  } = useForm<InvoiceSchemaType>({
+    resolver: zodResolver(InvoiceSchema),
+    defaultValues: {
+      invoiceDate: new Date(),
+    //   invoiceNumber: generateInvoiceID()
+    },
+  });
 
-    const containerStyle = {
-        backgroundColor: "white",
-        padding: 20,
-        width: "80%",
-        alignSelf: "center",
-        justifyContent: "center",
-        borderRadius: 10,
+  const { fields: productsList, append: addProductToInvoice } = useFieldArray({
+    control: control,
+    name: "invoiceProducts",
+  });
 
-    };
-    const [selectedProducts, setSelectedProducts] = useState<SelectedProduct[]>([]);
-    const [productQuantity, setProductQuantity] = useState('');
-    const [productMRP, setProductMRP] = useState('');
-    const [discountValue, setDiscountValue] = useState('');
-    const [customervalue, setCustomerValue] = useState(null);
-    const [customerFocus, setCustomerFocus] = useState(false);
+  const formDiscountType = watch("invoiceDiscountType");
 
-    const [discountType, setDiscountType] = useState('flat');
-    const [productsVisible, setProductsVisible] = useState(false);
-    const [productValue, setProductValue] = useState(null);
-    const [productFocus, setProductFocus] = useState(false);
-    const showProductsModal = () => setProductsVisible(true);
-    const hideProductsModal = () => setProductsVisible(false);
+  const [selectedProduct, setSelectedProduct] = useState<InvoiceProductType>();
+  const [productQuantity, setProductQuantity] = useState(0);
+  const [productPrice, setProductPrice] = useState(0);
+  const [discountValue, setDiscountValue] = useState(0);
 
-    const [discount, setDiscount] = useState(false);
-    const showDiscountModal = () => setDiscount(true);
-    const hideDiscountModal = () => setDiscount(false);
+  const [productsVisible, setProductsVisible] = useState(false);
+  const showProductsModal = () => setProductsVisible(true);
+  const hideProductsModal = () => {
+    setSelectedProduct(undefined);
+    setProductPrice(0);
+    setProductQuantity(0);
+    setProductsVisible(false);
+  };
 
-    const [markpaidPressed, setMarkPaidPressed] = useState(true)
+  const [discount, setDiscount] = useState(false);
+  const showDiscountModal = () => setDiscount(true);
+  const hideDiscountModal = () => setDiscount(false);
 
-    const currentDate = moment().format("DD-MM-YYYY");
-    const [isSwitchOn, setIsSwitchOn] = React.useState(false);
-    const onToggleSwitch = () => {
-        const newValue = !isSwitchOn;
-        console.log("🚀 Switch", newValue);
-        setIsSwitchOn(newValue);
-    };
+  const [markpaidPressed, setMarkPaidPressed] = useState(false);
 
+  const currentDate = moment(getValues("invoiceDate")).format("DD-MM-YYYY");
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+  const onToggleSwitch = () => {
+    const newValue = !isSwitchOn;
+    setIsSwitchOn(newValue);
+  };
 
-    const calculateSubtotal = () => {
-        return selectedProducts.reduce((total, product) => {
-            return total + (product.mrp * product.quantity);
-        }, 0);
-    };
-    const calculateTotal = () => {
-        const subtotal = selectedProducts.reduce((total, product) => {
-            return total + (product.mrp * product.quantity);
-        }, 0);
-        const discount = parseFloat(discountValue) || 0;
-        return subtotal - discount;
-    };
-    const calculateBalance = () => {
-        const subtotal = selectedProducts.reduce((total, product) => {
-            return total + (product.mrp * product.quantity);
-        }, 0);
-        const discount = parseFloat(discountValue) || 0;
-        return subtotal - discount;
+  useEffect(() => {
+    const generatedInvoiceID = generateInvoiceID();
+    setValue("invoiceNumber", generatedInvoiceID);
+  }, []);
+
+  const subTotal: number = productsList.reduce(
+    (sum, item) => sum + item.productTotal,
+    0
+  );
+
+  const calculateTotal = () => {
+    const invoiceDiscount = getValues("invoiceDiscount") || 0;
+    const total = (subTotal - invoiceDiscount).toFixed(2);
+  
+    return total
+  };
+
+  const handleAddDiscount = () => {
+    if (formDiscountType === "percentage") {
+      const discountPercentage = discountValue / 100;
+      const discountAmount = subTotal * discountPercentage;
+      setValue("invoiceDiscount", discountAmount);
+    } else {
+      setValue("invoiceDiscount", discountValue);
     }
-    return (
-        <Provider>
-            <ScrollView style={styles.container}>
-                {/* {renderLabel()} */}
+    hideDiscountModal();
+  };
 
-                <View style={{ gap: 20 }}>
+  const handleAddProduct = () => {
+    if (!selectedProduct) {
+      alert("Please select a product.");
 
-                    <View
-                        style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            // borderWidth: 1,
-                            borderRadius: 10,
-                            backgroundColor: "#fff",
-                            padding: 10,
-                        }}
-                    >
-                        <View
-                            style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
-                        >
-                            <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                                Invoice Number:
-                            </Text>
-                            <Text
-                                style={{ fontWeight: "300", fontSize: 20, color: "#4683fb" }}
-                            >
-                                INV-0001
-                            </Text>
-                        </View>
-                        <View style={{}}>
-                            <HelperText type="info" >
-                                Disable Auto-Generate Invoice number from settings and use your own inovice-numbers
-                            </HelperText>
-                        </View>
-                    </View>
+      return;
+    }
+    addProductToInvoice({
+      productName: selectedProduct.productName,
+      productPrice: productPrice,
+      productQuantity: productQuantity,
+      productType: selectedProduct.productType,
+      productTotal: productPrice * productQuantity,
+      batchNumber: selectedProduct.batchNumber,
+      remainingQuantity: selectedProduct.remainingQuantity - productQuantity,
+    });
+    hideProductsModal();
+  };
 
+  const onSubmit: SubmitHandler<InvoiceSchemaType> = (data) => {
+    console.log(JSON.stringify(data));
+  };
 
+  const onError: SubmitErrorHandler<InvoiceSchemaType> = (errors, e) => {
+    console.log(JSON.stringify(errors));
+  };
 
-                    <View
-                        style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            // borderWidth: 1,
-                            borderRadius: 10,
-                            backgroundColor: "#fff",
-                            padding: 10,
-                            flexDirection: "row",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                        }}
-                    >
-                        <Text style={{ fontWeight: "bold", fontSize: 20 }}>Dated:</Text>
-                        <Text>{currentDate}</Text>
-                    </View>
+  return (
+    <SafeAreaView edges={["bottom"]}>
+      <ScrollView style={styles.container}>
+        {/* {renderLabel()} */}
 
-                    <View
-                        style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            // borderWidth: 1,
-                            borderRadius: 10,
-                            backgroundColor: "#fff",
-                            padding: 10,
-                            gap: 10,
-                        }}
-                    >
-                        <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                            Customer :
-                        </Text>
-                        <DividerBar />
-                        <Dropdown
-                            style={styles.dropdown}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            iconStyle={styles.iconStyle}
-                            data={CustomersData}
-                            search
-                            maxHeight={300}
-                            labelField="customerName"
-                            valueField="customerName"
-                            placeholder={
-                                !customerFocus ? "Select Customer" : "🚀 Loading Customers"
-                            }
-                            searchPlaceholder="Search..."
-                            value={customervalue}
-                            onFocus={() => setCustomerFocus(true)}
-                            onBlur={() => setCustomerFocus(false)}
-                            onChange={(item) => {
-                                setCustomerValue(item.value)
-                                setCustomerFocus(false);
-                            }}
-                        />
-                    </View>
-
-                    <View
-                        style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            // borderWidth: 1,
-                            borderRadius: 10,
-                            backgroundColor: "#fff",
-                            padding: 10,
-                            gap: 10,
-                        }} >
-                        <Text style={{ fontWeight: "bold", fontSize: 20 }}>Products :</Text>
-                        <DividerBar />
-                        <TouchableRipple onPress={() => showProductsModal()} >
-                            <View style={{ gap: 10 }}>
-                                <View
-                                    style={{
-                                        width: "90%",
-                                        alignSelf: "center",
-                                        borderWidth: 1,
-                                        borderColor: "#468EFB",
-                                        borderRadius: 10,
-                                        flexDirection: "row",
-                                        justifyContent: "center",
-                                        alignItems: "center",
-                                        backgroundColor: "#468EFB",
-                                        padding: 5,
-                                        gap: 10,
-                                    }}
-                                >
-                                    <Text style={{ color: "#fff", fontSize: 16 }}>Add Products</Text>
-                                    <FontAwesome5 name="plus-circle" size={16} color="#fff" />
-                                </View>
-
-                                <View style={{}}>
-                                    <View style={styles.table}>
-                                        <Text style={styles.tableHeader}>S/N</Text>
-                                        <Text style={styles.tableHeader}>Product</Text>
-                                        <Text style={styles.tableHeader}>Quantity</Text>
-                                        <Text style={styles.tableHeader}>MRP</Text>
-                                        <Text style={styles.tableHeader}>Total</Text>
-                                    </View>
-
-
-
-                                </View>
-                            </View>
-
-
-                        </TouchableRipple>
-                        {selectedProducts.map((product, index) => (
-
-                            <View style={styles.tableRow} key={index}>
-                                <Text style={styles.tableData}>{index + 1}</Text>
-                                <Text style={styles.tableData}>{product.productName}</Text>
-                                <Text style={styles.tableData}>{product.quantity}</Text>
-                                <Text style={styles.tableData}>{product.mrp}</Text>
-                                <Text style={[styles.tableData, { backgroundColor: "#F9F07A" }]}>{product.mrp * product.quantity}</Text>
-
-                            </View>
-
-                        ))}
-
-                        <Portal>
-                            <Modal
-                                visible={productsVisible}
-                                onDismiss={hideProductsModal}
-                                contentContainerStyle={[containerStyle, { maxHeight: 300 }]}
-                            >
-                                <View style={{ gap: 10 }}>
-                                    <Dropdown
-                                        style={styles.dropdown}
-                                        placeholderStyle={styles.placeholderStyle}
-                                        selectedTextStyle={styles.selectedTextStyle}
-                                        inputSearchStyle={styles.inputSearchStyle}
-                                        iconStyle={styles.iconStyle}
-                                        data={ProductsData}
-                                        search
-                                        maxHeight={300}
-                                        // other props
-
-                                        labelField="productName"
-                                        valueField="productName"
-                                        placeholder={
-                                            !productFocus ? "Select Products" : "🚀 Loading Products"
-                                        }
-                                        searchPlaceholder="Search..."
-                                        value={productValue}
-                                        onFocus={() => setProductFocus(true)}
-                                        onBlur={() => setProductFocus(false)}
-
-                                        onChange={(item) => {
-                                            setProductValue(item.value);
-                                            setProductFocus(false);
-                                        }}
-                                    />
-
-
-
-                                    <View style={{ gap: 10 }}>
-                                        <TextInput
-                                            mode="outlined"
-                                            label="Quantity"
-                                            value={productQuantity}
-                                            onChangeText={setProductQuantity}
-                                            keyboardType='numeric'
-                                        />
-                                        <TextInput
-                                            mode="outlined"
-                                            label="M.R.P"
-                                            value={productMRP}
-                                            onChangeText={setProductMRP}
-                                            keyboardType='numeric'
-                                        />
-                                        <ReusableButton
-                                            label="Add"
-                                            onPress={() => {
-                                                setSelectedProducts(prevProducts => [
-                                                    ...prevProducts,
-                                                    {
-                                                        productName: productValue,
-                                                        quantity: productQuantity,
-                                                        mrp: productMRP,
-                                                    }
-                                                ]);
-                                                hideProductsModal();
-                                            }}
-                                            style={{ backgroundColor: "#468EFB" }}
-                                            textColor={undefined}
-                                        />
-                                    </View>
-
-                                </View>
-                            </Modal>
-                        </Portal>
-
-                        <View style={{ gap: 10, backgroundColor: "#F6F5F5" }}>
-                            <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                                <Text>Sub Total :</Text>
-                                <Text>Rs. {calculateSubtotal()}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                                <Text onPress={() => showDiscountModal()}>Discount :</Text>
-                                <Text>Rs. {discountValue}{discountType === 'percentage' ? '%' : ''}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', justifyContent: "space-between" }}>
-                                <Text>Total :</Text>
-                                <Text>Rs. {calculateTotal()}</Text>
-                            </View>
-                        </View>
-                        <DividerBar />
-
-                        <Portal>
-                            <Modal
-                                visible={discount}
-                                onDismiss={hideDiscountModal}
-                                contentContainerStyle={containerStyle}
-                            >
-                                <View style={{ gap: 10 }}>
-
-                                    <Text style={{ fontWeight: "bold" }}>Discount</Text>
-                                    <DividerBar />
-                                    <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
-                                        <Text>Use Percentage instead</Text>
-                                        <Switch value={discountType === 'percentage'} onValueChange={() => setDiscountType(discountType === 'flat' ? 'percentage' : 'flat')} color="#468EFB" />
-                                    </View>
-                                    <TextInput mode="outlined" label={discountType === 'percentage' ? "Percentage" : "Flat Amount"} placeholder="100" value={productMRP}
-    onChangeText={setProductMRP} />
-
-
-                                    <View
-                                        style={{
-                                            flexDirection: "row",
-                                            gap: 10,
-                                            justifyContent: "center",
-                                        }}
-                                    >
-                                        <ReusableButton
-                                            label="Apply Discount"
-                                            onPress={() => {
-                                                const subtotal = calculateSubtotal();
-                                                if (discountType === 'percentage') {
-                                                    const discountPercentage = parseFloat(productMRP) / 100;
-                                                    const discountAmount = subtotal * discountPercentage;
-                                                    setDiscountValue(discountAmount);
-                                                } else {
-                                                    setDiscountValue(productMRP);
-                                                }
-                                                hideDiscountModal();
-                                            }}
-                                            style={{ width: "100%", backgroundColor: "#468EFB" }}
-                                            textColor={undefined}
-                                        />
-                                    </View>
-                                </View>
-                            </Modal>
-                        </Portal>
-                        <View style={{
-                            width: "100%",
-                            alignSelf: "center",
-                            borderColor: "#F9F07A",
-                            borderRadius: 10,
-                            backgroundColor: "#F9F07A",
-                            padding: 10,
-                            gap: 10,
-                            flexDirection: "row",
-                            alignItems: 'center',
-                            justifyContent: "space-between"
-                        }}>
-                            <Text style={{ fontWeight: "bold", fontSize: 20 }}>  Balance Due :</Text>
-                            <Text style={{ fontWeight: "500", fontSize: 16 }}>Rs. {calculateBalance().toFixed(2)} </Text>
-                        </View>
-                    </View>
-                    <View
-                        style={{
-                            width: "90%",
-                            alignSelf: "center",
-                            // borderWidth: 1,
-                            borderRadius: 10,
-                            backgroundColor: "#fff",
-                            padding: 10,
-                            flexDirection: 'row',
-                            justifyContent: "space-between",
-                            alignItems: "center"
-                        }}
-                    >
-                        <Text style={{ fontWeight: "bold", fontSize: 20 }}>Signature :</Text>
-                        <Switch value={isSwitchOn} onValueChange={onToggleSwitch} color="#468EFB" />
-                    </View>
-
-
-                    <TouchableRipple onPress={() => setMarkPaidPressed(!markpaidPressed)}>
-                        <View
-                            style={{
-                                width: "90%",
-                                alignSelf: "center",
-                                borderWidth: 1,
-                                borderColor: markpaidPressed ? "#9BCF53" : "#bebebe",
-                                borderRadius: 10,
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                backgroundColor: markpaidPressed ? "#9BCF53" : "#bebebe",
-                                padding: 10,
-                                gap: 10,
-                            }}
-                        >
-                            <Text style={{ color: "#fff", fontSize: 20 }} >Mark as {markpaidPressed ? "Paid" : "Unpaid"}</Text>
-                        </View>
-                    </TouchableRipple>
-
-
-                </View>
-
-
-            </ScrollView>
-
+        <View style={{ gap: 16 }}>
+          <View
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              // borderWidth: 1,
+              borderRadius: 10,
+              backgroundColor: "#fff",
+              padding: 10,
+            }}
+          >
             <View
-                style={{
+              style={{ flexDirection: "row", alignItems: "center", gap: 10 }}
+            >
+              <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                Invoice Number:
+              </Text>
+              <Controller
+                control={control}
+                name="invoiceNumber"
+                render={({ field: { value } }) => (
+                  <TextInput
+                    style={{
+                      fontWeight: "300",
+                      fontSize: 20,
+                      color: "#4683fb",
+                    }}
+                    value={value}
+                  />
+                )}
+                disabled
+              />
+            </View>
+            <View style={{}}>
+              <HelperText type="info">
+                Disable Auto-Generate Invoice number from settings and use your
+                own inovice-numbers
+              </HelperText>
+            </View>
+          </View>
+
+          <View
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              // borderWidth: 1,
+              borderRadius: 10,
+              backgroundColor: "#fff",
+              padding: 10,
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 20 }}>Dated:</Text>
+            <Text>{currentDate}</Text>
+          </View>
+
+          <View
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              // borderWidth: 1,
+              borderRadius: 10,
+              backgroundColor: "#fff",
+              padding: 10,
+              gap: 10,
+            }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 20 }}>Customer :</Text>
+            <DividerBar />
+            <Controller
+              control={control}
+              render={({ field: { onChange, value, onBlur } }) => (
+                <Dropdown
+                  style={styles.dropdown}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  inputSearchStyle={styles.inputSearchStyle}
+                  iconStyle={styles.iconStyle}
+                  data={CustomersData}
+                  search
+                  maxHeight={300}
+                  labelField="customerName"
+                  valueField="customerName"
+                  placeholder="Select Customer"
+                  searchPlaceholder="Search customer"
+                  value={value}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                />
+              )}
+              name="invoiceCustomer"
+            />
+          </View>
+
+          <View
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              // borderWidth: 1,
+              borderRadius: 10,
+              backgroundColor: "#fff",
+              padding: 10,
+              gap: 10,
+            }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 20 }}>Products :</Text>
+            <DividerBar />
+            <TouchableRipple onPress={() => showProductsModal()}>
+              <View style={{ gap: 10 }}>
+                <View
+                  style={{
                     width: "90%",
                     alignSelf: "center",
-                    // borderWidth: 1,
+                    borderWidth: 1,
+                    borderColor: "#468EFB",
                     borderRadius: 10,
-                    backgroundColor: "#fff",
-                    padding: 10,
                     flexDirection: "row",
                     justifyContent: "center",
-                    gap: 20,
-                }}
-            >
-                <ReusableButton
-                    label="Preview"
-                    onPress={() => navigation.navigate("InvoicePreview")}
-                    style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined} />
-                <ReusableButton
-                    label="Save"
-                    onPress={() => console.log("🚀 Save button pressed")}
-                    style={{ width: "45%", backgroundColor: "#4683fb" }} textColor={undefined} />
-            </View>
+                    alignItems: "center",
+                    backgroundColor: "#468EFB",
+                    padding: 5,
+                    gap: 10,
+                  }}
+                >
+                  <Text style={{ color: "#fff", fontSize: 16 }}>
+                    Add Products
+                  </Text>
+                  <FontAwesome5 name="plus-circle" size={16} color="#fff" />
+                </View>
 
-        </Provider>
-    );
+                <View style={{}}>
+                  <View style={styles.table}>
+                    <Text style={styles.tableHeader}>S/N</Text>
+                    <Text style={styles.tableHeader}>Product</Text>
+                    <Text style={styles.tableHeader}>Quantity</Text>
+                    <Text style={styles.tableHeader}>MRP</Text>
+                    <Text style={styles.tableHeader}>Total</Text>
+                  </View>
+                </View>
+              </View>
+            </TouchableRipple>
+            {productsList.map((product, index) => (
+              <View style={styles.tableRow} key={index}>
+                <Text style={styles.tableData}>{index + 1}</Text>
+                <Text style={styles.tableData}>{product.productName}</Text>
+                <Text style={styles.tableData}>{product.productQuantity}</Text>
+                <Text style={styles.tableData}>{product.productPrice}</Text>
+                <Text
+                  style={[styles.tableData, { backgroundColor: "#F9F07A" }]}
+                >
+                  {product.productPrice * product.productQuantity}
+                </Text>
+              </View>
+            ))}
+
+            <Portal>
+              <Modal
+                visible={productsVisible}
+                onDismiss={hideProductsModal}
+                contentContainerStyle={[containerStyle, { maxHeight: 300 }]}
+              >
+                <View style={{ gap: 10 }}>
+                  <Dropdown
+                    style={styles.dropdown}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.iconStyle}
+                    data={ProductsData}
+                    search
+                    maxHeight={300}
+                    labelField="productName"
+                    valueField="productName"
+                    placeholder="Select Products"
+                    searchPlaceholder="Search product..."
+                    value={selectedProduct}
+                    onChange={(item) => setSelectedProduct(item)}
+                  />
+
+                  <View style={{ gap: 10 }}>
+                    <TextInput
+                      mode="outlined"
+                      label="Quantity"
+                      value={productQuantity.toString()}
+                      onChangeText={(e) => setProductQuantity(e ? parseInt(e) :  0)}
+                    //   onChangeText={(e) => setProductQuantity(e ? parseInt(e) :  "")}
+                      keyboardType="numeric"
+                    />
+                    <TextInput
+                      mode="outlined"
+                      label="Price"
+                      value={productPrice.toString()}
+                      onChangeText={(e) => setProductPrice(e ? parseInt(e) :  0)}
+                    //   onChangeText={(e) => setProductPrice(e ? parseInt(e) :  "")}
+                      keyboardType="numeric"
+                    />
+                    <ReusableButton
+                      label="Add"
+                      onPress={handleAddProduct}
+                      style={{ backgroundColor: "#468EFB" }}
+                      textColor={undefined}
+                    />
+                  </View>
+                </View>
+              </Modal>
+            </Portal>
+
+            <View style={{ gap: 10, backgroundColor: "#F6F5F5" }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text>Sub Total :</Text>
+                <Text>Rs. {subTotal}</Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text onPress={() => showDiscountModal()}>Discount :</Text>
+                <Text>
+                  {formDiscountType === "percentage"
+                    ? `${discountValue} %`
+                    : `Rs. ${discountValue}`}
+                </Text>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text>Total :</Text>
+                <Text>Rs. {calculateTotal()}</Text>
+              </View>
+            </View>
+            <DividerBar />
+
+            <Portal>
+              <Modal
+                visible={discount}
+                onDismiss={hideDiscountModal}
+                contentContainerStyle={containerStyle}
+              >
+                <View style={{ gap: 10 }}>
+                  <Text style={{ fontWeight: "bold" }}>Discount</Text>
+                  <DividerBar />
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <Text>Use Percentage instead</Text>
+                    <Controller
+                      control={control}
+                      name="invoiceDiscountType"
+                      render={({ field: { onChange, value } }) => (
+                        <Switch
+                          value={value === "percentage"}
+                          onValueChange={(value) =>
+                            onChange(value ? "percentage" : "flat")
+                          }
+                          color="#468EFB"
+                        />
+                      )}
+                    />
+                  </View>
+                  <TextInput
+                    mode="outlined"
+                    label={
+                      formDiscountType === "percentage"
+                        ? "Percentage"
+                        : "Flat Amount"
+                    }
+                    placeholder="100"
+                    value={discountValue.toString()}
+                    onChangeText={(e) => setDiscountValue(e ? parseInt(e) :  0)}
+                    //   onChangeText={(e) => setDiscountValue(e ? parseInt(e) :  "")}
+                  />
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      gap: 10,
+                      justifyContent: "center",
+                    }}
+                  >
+                    <ReusableButton
+                      label="Apply Discount"
+                      onPress={handleAddDiscount}
+                      style={{ width: "100%", backgroundColor: "#468EFB" }}
+                      textColor={undefined}
+                    />
+                  </View>
+                </View>
+              </Modal>
+            </Portal>
+            <View
+              style={{
+                width: "100%",
+                alignSelf: "center",
+                borderColor: "#F9F07A",
+                borderRadius: 10,
+                backgroundColor: markpaidPressed ? "#9BCF53" : "#F9F07A",
+                padding: 10,
+                gap: 10,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+                Balance Due :
+              </Text>
+              <Text style={{ fontWeight: "500", fontSize: 16 }}>
+                Rs. {calculateTotal()}
+              </Text>
+            </View>
+          </View>
+          <View
+            style={{
+              width: "90%",
+              alignSelf: "center",
+              // borderWidth: 1,
+              borderRadius: 10,
+              backgroundColor: "#fff",
+              padding: 10,
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontWeight: "bold", fontSize: 20 }}>
+              Signature :
+            </Text>
+            <Switch
+              value={isSwitchOn}
+              onValueChange={onToggleSwitch}
+              color="#468EFB"
+            />
+          </View>
+
+          <TouchableRipple onPress={() => setMarkPaidPressed(!markpaidPressed)}>
+            <View
+              style={{
+                width: "90%",
+                alignSelf: "center",
+                borderWidth: 1,
+                borderColor: markpaidPressed ? "#9BCF53" : "#bebebe",
+                borderRadius: 10,
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: !markpaidPressed ? "#9BCF53" : "#bebebe",
+                padding: 10,
+                gap: 10,
+              }}
+            >
+              <Text style={{ color: "#fff", fontSize: 20 }}>
+                Mark as {markpaidPressed ? "Unpaid" : "Paid"}
+              </Text>
+            </View>
+          </TouchableRipple>
+        </View>
+      </ScrollView>
+
+      <View
+        style={{
+          width: "90%",
+          alignSelf: "center",
+          // borderWidth: 1,
+          borderRadius: 10,
+          backgroundColor: "#fff",
+          padding: 10,
+          flexDirection: "row",
+          justifyContent: "center",
+          gap: 20,
+        }}
+      >
+        <ReusableButton
+          label="Preview"
+          onPress={() => navigation.navigate("InvoicePreview")}
+          style={{ width: "45%", backgroundColor: "#4683fb" }}
+          textColor={undefined}
+        />
+        <ReusableButton
+          label="Save"
+          onPress={handleSubmit(onSubmit, onError)}
+          style={{ width: "45%", backgroundColor: "#4683fb" }}
+          textColor={undefined}
+        />
+      </View>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {},
-    // button: {
-    // width: '100%',
-    // backgroundColor: '#4683fb',
-    // },
-    dropdown: {
-        height: 50,
-        borderColor: "gray",
-        borderWidth: 1,
-        borderRadius: 8,
-        paddingHorizontal: 8,
-        width: "100%",
-        alignSelf: "center",
-    },
-    icon: {
-        marginRight: 5,
-    },
-    label: {
-        position: "absolute",
+  container: {},
+  // button: {
+  // width: '100%',
+  // backgroundColor: '#4683fb',
+  // },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    width: "100%",
+    alignSelf: "center",
+  },
+  icon: {
+    marginRight: 5,
+  },
+  label: {
+    position: "absolute",
 
-        left: 22,
-        top: 8,
-        zIndex: 999,
-        paddingHorizontal: 8,
-        fontSize: 14,
-    },
-    placeholderStyle: {
-        fontSize: 16,
-    },
-    selectedTextStyle: {
-        fontSize: 16,
-    },
-    iconStyle: {
-        width: 20,
-        height: 20,
-    },
-    inputSearchStyle: {
-        height: 40,
-        fontSize: 16,
-    },
-    table: {
-        flexDirection: 'row',
-        backgroundColor: '#bebebe',
-        padding: 5,
-        // justifyContent:"space-around"
-    },
-    tableHeader: {
-        flex: 1,
-        textAlign: "center",
-    },
-    tableRow: {
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
-        padding: 5,
-    },
-    tableData: {
-        flex: 1,
-        padding: 5,
-        textAlign: 'center',
-    },
+    left: 22,
+    top: 8,
+    zIndex: 999,
+    paddingHorizontal: 8,
+    fontSize: 14,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  table: {
+    flexDirection: "row",
+    backgroundColor: "#bebebe",
+    padding: 5,
+    // justifyContent:"space-around"
+  },
+  tableHeader: {
+    flex: 1,
+    textAlign: "center",
+  },
+  tableRow: {
+    flexDirection: "row",
+    borderBottomWidth: 1,
+    borderBottomColor: "#ddd",
+    padding: 5,
+  },
+  tableData: {
+    flex: 1,
+    padding: 5,
+    textAlign: "center",
+  },
 });
 
 export default NewInvoice;
