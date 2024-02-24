@@ -7,16 +7,16 @@ import Toast from 'react-native-toast-message';
 
 
 const Dashboard = ({navigation}) => {
-  useEffect(() => {
-    const showToast = () => {
-      Toast.show({
-        type: 'success',
-        text1: 'Hello User 👋',
-        text2: 'Lorem ipsum dolor sit amet, consectetur'
-      });
-    }
-    showToast(); 
-  }, []);
+  // useEffect(() => {
+  //   const showToast = () => {
+  //     Toast.show({
+  //       type: 'success',
+  //       text1: 'Hello User 👋',
+  //       text2: 'Lorem ipsum dolor sit amet, consectetur'
+  //     });
+  //   }
+  //   showToast(); 
+  // }, []);
   
   const { height } = Dimensions.get('screen');
   const itemHeight = height * 0.2; 
@@ -91,7 +91,6 @@ const styles = StyleSheet.create({
   },
   item: {
     flex: 0.4, 
-    // borderWidth: 0.1,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',

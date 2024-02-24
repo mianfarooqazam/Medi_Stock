@@ -1,15 +1,25 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import animationData from '../../../assets/animation/animation2.json';
 import ReusableButton from '../../components/Button/ReusableButton';
+import { useForm,Controller } from 'react-hook-form'; 
+import Toast from 'react-native-toast-message';
 
 const SignUp = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
+  const { control, handleSubmit } = useForm();
+  const onSubmit = async (data) => {
+    console.log(data);
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: 'Account Create Successfully',
+      text2: 'Log into your account',
+    });
+    navigation.replace("Login");
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logo}>
@@ -25,12 +35,63 @@ const SignUp = ({navigation}) => {
 
       <View style={styles.form}>
         <View style={styles.formTextView}>
-          <TextInput mode='outlined' label="Email" value={email} onChangeText={text => setEmail(text)} style={styles.textInput} activeOutlineColor='#4683FB' outlineColor='#4683FB' />
-          <TextInput mode='outlined' label="Password" value={password} onChangeText={text => setPassword(text)} style={styles.textInput} outlineColor='#4683FB' activeOutlineColor='#4683FB' />
-          <TextInput mode='outlined' label="Confirm Password" value={confirmpassword} onChangeText={text => setConfirmPassword(text)} style={styles.textInput} outlineColor='#4683FB' activeOutlineColor='#4683FB' />
+        <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                mode='outlined'
+                label="Email"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={styles.textInput}
+                activeOutlineColor='#4683FB'
+                outlineColor='#4683FB'
+              />
+            )}
+            name="email"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+           <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                mode='outlined'
+                label="Password"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={styles.textInput}
+                activeOutlineColor='#4683FB'
+                outlineColor='#4683FB'
+              />
+            )}
+            name="password"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+           <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                mode='outlined'
+                label="Confirm Password"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={styles.textInput}
+                activeOutlineColor='#4683FB'
+                outlineColor='#4683FB'
+              />
+            )}
+            name="confirmpassword"
+            rules={{ required: true }}
+            defaultValue=""
+          />
         </View>
         <View style={styles.formButtonView}>
-          <ReusableButton label="Sign Up" onPress={undefined} style={styles.button} textColor="#fff" />
+           <ReusableButton label="Sign Up" onPress={handleSubmit(onSubmit)} style={styles.button} textColor="#fff" />
         </View>
         
       </View>

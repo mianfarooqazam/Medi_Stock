@@ -1,21 +1,25 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import { TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import animationData from '../../../assets/animation/animation2.json';
 import ReusableButton from '../../components/Button/ReusableButton';
+import { useForm,Controller } from 'react-hook-form'; 
 import Toast from 'react-native-toast-message';
 
 const ForgotPassword = ({navigation}) => {
-  const [email, setEmail] = useState('');
-  const showToast = () => {
+  const { control, handleSubmit } = useForm();
+  const onSubmit = async (data) => {
+    console.log(data);
     Toast.show({
       type: 'success',
+      position: 'top',
       text1: 'Email Sent',
-      text2: 'Check your email'
+      text2: 'Check your email',
     });
-  }
+    navigation.replace("ResetPassword");
+  };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logo}>
@@ -31,10 +35,27 @@ const ForgotPassword = ({navigation}) => {
 
       <View style={styles.form}>
         <View style={styles.formTextView}>
-          <TextInput mode='outlined' label="Enter Email" value={email} onChangeText={text => setEmail(text)} style={styles.textInput} activeOutlineColor='#4683FB' outlineColor='#4683FB' />
+        <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <TextInput
+                mode='outlined'
+                label="Email"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={styles.textInput}
+                activeOutlineColor='#4683FB'
+                outlineColor='#4683FB'
+              />
+            )}
+            name="email"
+            rules={{ required: true }}
+            defaultValue=""
+          />
         </View>
         <View style={styles.formButtonView}>
-        <ReusableButton label="Submit" onPress={() => { navigation.navigate("ResetPassword"); showToast();}} style={styles.button} textColor="#fff" />
+        <ReusableButton label="Submit" onPress={handleSubmit(onSubmit)} style={styles.button} textColor="#fff" />
         </View>
         
       </View>
