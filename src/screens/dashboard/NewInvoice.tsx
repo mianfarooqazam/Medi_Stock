@@ -337,14 +337,16 @@ const NewInvoice = ({ navigation }) => {
                       mode="outlined"
                       label="Quantity"
                       value={productQuantity.toString()}
-                      onChangeText={(e) => setProductQuantity(parseInt(e))}
+                      onChangeText={(e) => setProductQuantity(e ? parseInt(e) :  0)}
+                    //   onChangeText={(e) => setProductQuantity(e ? parseInt(e) :  "")}
                       keyboardType="numeric"
                     />
                     <TextInput
                       mode="outlined"
                       label="Price"
                       value={productPrice.toString()}
-                      onChangeText={(e) => setProductPrice(parseInt(e))}
+                      onChangeText={(e) => setProductPrice(e ? parseInt(e) :  0)}
+                    //   onChangeText={(e) => setProductPrice(e ? parseInt(e) :  "")}
                       keyboardType="numeric"
                     />
                     <ReusableButton
@@ -433,7 +435,8 @@ const NewInvoice = ({ navigation }) => {
                     }
                     placeholder="100"
                     value={discountValue.toString()}
-                    onChangeText={(e) => setDiscountValue(parseInt(e))}
+                    onChangeText={(e) => setDiscountValue(e ? parseInt(e) :  0)}
+                    //   onChangeText={(e) => setDiscountValue(e ? parseInt(e) :  "")}
                   />
 
                   <View
