@@ -54,39 +54,39 @@ const ViewInvoices = () => {
           <TouchableRipple
             style={[
               styles.ripple,
-              { borderColor: selectedStatus === 'All' ? '#4683fb' : '#bebebe' },
+              { borderColor: selectedStatus === 'All' ? '#4683fb' : 'transparent' },
               { backgroundColor: selectedStatus === 'All' ? '#4683fb' : 'transparent' },
             ]}
             onPress={() => setSelectedStatus('All')}
             rippleColor='#4683fb'
           >
             <View style={styles.rippleView}>
-              <Ionicons name="documents-outline" size={30} color={selectedStatus === 'All' ? '#fff' : '#bebebe'} />
-              <Text style={{ fontSize: 20, color: selectedStatus === 'All' ? '#fff' : '#bebebe' }}>All</Text>
-              <Text style={{ fontSize: 20, color: selectedStatus === 'All' ? '#fff' : '#bebebe' }}>0</Text>
+              <Ionicons name="documents-outline" size={30} color={selectedStatus === 'All' ? '#fff' : '#000'} />
+              <Text style={{ fontSize: 20, color: selectedStatus === 'All' ? '#fff' : '#000' }}>All</Text>
+              <Text style={{ fontSize: 20, color: selectedStatus === 'All' ? '#fff' : '#000' }}>0</Text>
             </View>
           </TouchableRipple>
 
           <TouchableRipple
             style={[
               styles.ripple,
-              { borderColor: selectedStatus === 'Paid' ? '#9bcf53' : '#bebebe' },
+              { borderColor: selectedStatus === 'Paid' ? '#9bcf53' : 'transparent' },
               { backgroundColor: selectedStatus === 'Paid' ? '#9bcf53' : 'transparent' },
             ]}
             onPress={() => setSelectedStatus('Paid')}
             rippleColor='#9bcf53'
           >
             <View style={styles.rippleView}>
-              <Ionicons name="documents-outline" size={30} color={selectedStatus === 'Paid' ? '#fff' : '#bebebe'} />
-              <Text style={{ fontSize: 20, color: selectedStatus === 'Paid' ? '#fff' : '#bebebe' }}>Paid</Text>
-              <Text style={{ fontSize: 20, color: selectedStatus === 'Paid' ? '#fff' : '#bebebe' }}>0</Text>
+              <Ionicons name="documents-outline" size={30} color={selectedStatus === 'Paid' ? '#fff' : '#000'} />
+              <Text style={{ fontSize: 20, color: selectedStatus === 'Paid' ? '#fff' : '#000' }}>Paid</Text>
+              <Text style={{ fontSize: 20, color: selectedStatus === 'Paid' ? '#fff' : '#000' }}>0</Text>
             </View>
           </TouchableRipple>
 
           <TouchableRipple
             style={[
               styles.ripple,
-              { borderColor: selectedStatus === 'Unpaid' ? '#FF0000' : '#bebebe' },
+              { borderColor: selectedStatus === 'Unpaid' ? '#FF0000' : 'transparent' },
               { backgroundColor: selectedStatus === 'Unpaid' ? '#FF0000' : 'transparent' },
             ]}
             onPress={() => setSelectedStatus('Unpaid')}
@@ -94,9 +94,9 @@ const ViewInvoices = () => {
             rippleColor='#FF0000'
           >
             <View style={styles.rippleView}>
-              <Ionicons name="documents-outline" size={30} color={selectedStatus === 'Unpaid' ? '#fff' : '#bebebe'} />
-              <Text style={{ fontSize: 20, color: selectedStatus === 'Unpaid' ? '#fff' : '#bebebe' }}>Unpaid</Text>
-              <Text style={{ fontSize: 20, color: selectedStatus === 'Unpaid' ? '#fff' : '#bebebe' }}>0</Text>
+              <Ionicons name="documents-outline" size={30} color={selectedStatus === 'Unpaid' ? '#fff' : '#000'} />
+              <Text style={{ fontSize: 20, color: selectedStatus === 'Unpaid' ? '#fff' : '#000' }}>Unpaid</Text>
+              <Text style={{ fontSize: 20, color: selectedStatus === 'Unpaid' ? '#fff' : '#000' }}>0</Text>
             </View>
           </TouchableRipple>
 
