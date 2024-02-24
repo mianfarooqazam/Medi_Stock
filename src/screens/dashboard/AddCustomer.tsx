@@ -1,41 +1,100 @@
-import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { View, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
-import { addDoc, collection, } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
 import db from '../../../firebaseConfig';
+import Toast from 'react-native-toast-message';
 //
-const AddCustomer = () => {
-    const [customerName, setCustomerName] = useState('');
-    const [area, setArea] = useState('');
-    const [address, setAddress] = useState('');
-    const addCustomerToFirestore = async () => {
-        try {
-            const customersRef = collection(db, 'Customers');
-
-            await addDoc(customersRef, {
-                Customer_Name: customerName,
-                Area: area,
-                Address: address,
-               
-            });
-
-            
-        } catch (error) {
-            Alert.alert('Error', 'Error adding customer to Firestore. Please try again later.');
-        }
-    };
+const AddCustomer = ({navigation}) => {
+  const {control,handleSubmit,setValue} = useForm();
+  const onSubmit = async (data) => {
+    try {
+        const customersRef = collection(db, 'Customers');
+        await addDoc(customersRef, {
+            Customer_Name: data.customer,
+            Area: data.area,
+            Address: data.address,
+        });
+        Toast.show({
+            type: 'success',
+            position: 'bottom',
+            text1: 'Success',
+            text2: 'Customer Added',
+          });
+        navigation.navigate("CustomersScreen");
+    } catch (error) {
+        Toast.show({
+            type: 'error',
+            position: 'bottom',
+            text1: 'Error',
+            text2: 'Error adding customer',
+          });
+    }
+};
     return (
 
         <View style={styles.container}>
             <View style={styles.view1}>
-                <TextInput label="Customer Name" style={styles.textinput} value={customerName} onChangeText={(text) => setCustomerName(text)} />
-                <TextInput label="Area of Operation" style={styles.textinput} value={area} onChangeText={(text) => setArea(text)} />
-                <TextInput label="Customer Physical Address" style={styles.textinput} value={address} onChangeText={(text) => setAddress(text)} />
-                
-               
+            <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Customer Name"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('customer', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="customer"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Area of Operation"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('area', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="area"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
+                 <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <TextInput
+                            label="Customer Physical Address"
+                            onBlur={onBlur}
+                            onChangeText={(text) => {
+                                onChange(text);
+                                setValue('address', text);
+                            }}
+                            value={value}
+                            style={styles.textinput}
+                        />
+                    )}
+                    name="address"
+                    rules={{ required: true }}
+                    defaultValue=""
+                />
             </View>
             <View style={styles.view2}>
-                <Button mode="contained" onPress={()=>{addCustomerToFirestore();Alert.alert("Customer added Successfully")}} style={styles.button}  > Add Customer</Button>
+            <Button mode="contained" onPress={handleSubmit(onSubmit)} style={styles.button}>
+                    Add Customer
+                </Button>
             </View>
         </View>
     )

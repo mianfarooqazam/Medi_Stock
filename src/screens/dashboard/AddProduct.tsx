@@ -4,6 +4,7 @@ import { View, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { addDoc, collection } from 'firebase/firestore';
 import db from '../../../firebaseConfig';
+import Toast from 'react-native-toast-message';
 
 const AddProduct = ({ navigation }) => {
     const { control, handleSubmit, setValue } = useForm();
@@ -18,10 +19,20 @@ const AddProduct = ({ navigation }) => {
                 Packing: data.packing,
                 Batch_No: data.batchno,
             });
-            Alert.alert("Success", "Product Added");
+            Toast.show({
+                type: 'success',
+                position:'bottom',
+                text1: 'Success',
+                text2: 'Product Added',
+              });
             navigation.navigate("ProductsScreen");
         } catch (error) {
-            Alert.alert("Error", "Error adding product");
+            Toast.show({
+                type: 'error',
+                position: 'bottom',
+                text1: 'Error',
+                text2: 'Error adding product',
+              });
         }
     };
 
