@@ -1,13 +1,20 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { TextInput } from 'react-native-paper'
+import React from "react";
+import { TextInput } from "react-native-paper";
 
-const ResuableInput = ({label, style}) => {
+export type TextInput = React.ComponentProps<typeof TextInput>;
+
+const ResuableInput: React.FC<TextInput> = ({ label, style, ...props }) => {
   return (
-    <View>
-     <TextInput label={label} style={[{marginVertical: 10, width: '100%', backgroundColor: '#fff'},{style}]} />
-    </View>
-  )
-}
+    <TextInput
+      label={label}
+      style={[
+        { marginVertical: 10, width: "100%", backgroundColor: "#fff" },
+        style,
+      ]}
+      {...props}
+      autoCapitalize="none"
+    />
+  );
+};
 
-export default ResuableInput
+export default ResuableInput;

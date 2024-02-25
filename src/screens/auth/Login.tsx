@@ -8,6 +8,7 @@ import ReusableButton from '../../components/Button/ReusableButton';
 import { useForm, Controller } from 'react-hook-form';
 import Toast from 'react-native-toast-message';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import ResuableInput from '../../components/TextInput/ReusableInput';
 
 const Login = ({ navigation }) => {
   const { control, handleSubmit } = useForm();
@@ -46,7 +47,7 @@ const Login = ({ navigation }) => {
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
+              <ResuableInput
                 mode='outlined'
                 label="Email"
                 onBlur={onBlur}
@@ -64,7 +65,7 @@ const Login = ({ navigation }) => {
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
+              <ResuableInput
                 mode='outlined'
                 label="Password"
                 onBlur={onBlur}

@@ -1,13 +1,11 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import React from 'react';
-import { TextInput } from 'react-native-paper';
+import { Controller, useForm } from 'react-hook-form';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import LottieView from 'lottie-react-native';
-import animationData from '../../../assets/animation/animation2.json';
-import ReusableButton from '../../components/Button/ReusableButton';
-import { useForm, Controller } from 'react-hook-form';
 import Toast from 'react-native-toast-message';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import ReusableButton from '../../components/Button/ReusableButton';
+import ResuableInput from '../../components/TextInput/ReusableInput';
 
 
 const SignUp = ({ navigation }) => {
@@ -63,7 +61,7 @@ const SignUp = ({ navigation }) => {
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
+              <ResuableInput
                 mode='outlined'
                 label="Email"
                 onBlur={onBlur}
@@ -81,7 +79,7 @@ const SignUp = ({ navigation }) => {
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
+              <ResuableInput
                 mode='outlined'
                 label="Password"
                 onBlur={onBlur}
@@ -99,7 +97,7 @@ const SignUp = ({ navigation }) => {
           <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
+              <ResuableInput
                 mode='outlined'
                 label="Confirm Password"
                 onBlur={onBlur}
