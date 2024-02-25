@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import ReusableButton from "../../components/Button/ReusableButton";
 import { HelperText, Modal, Portal, Provider, TextInput } from "react-native-paper";
 import DividerBar from "../../components/Divider/DividerBar";
+import {getAuth,signOut} from "firebase/auth";
 import { Switch } from 'react-native-paper';
-const SettingScreen = () => {
+import { useForm } from "react-hook-form";
+import Toast from "react-native-toast-message";
+const SettingScreen = ({navigation}) => {
   const [invoiceVisible, setInvoiceVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [signatureVisible, setSignatureVisible] = useState(false);
@@ -29,20 +32,42 @@ const SettingScreen = () => {
 
   const [isSwitchOn, setIsSwitchOn] = React.useState(false);
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
-
+  const { control, handleSubmit } = useForm();
+  const onSubmit = async (data) => {
+    const auth = getAuth();
+    signOut(auth).then(() => {
+      console.log("Logged out")
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: 'Logout successfully',
+        text2: 'Please Login again',
+      });
+      navigation.replace("Login");
+    })
+      .catch((error) => {
+        const errorMessage = error.message;
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Error while logging you out',
+          text2: errorMessage,
+        });
+      })
+  };
   return (
 
     <Provider>
       <View style={{ gap: 10 }}>
         <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", marginTop: 20 }}>
-          <ReusableButton
+          <ReusableButton 
             label="Logout"
             style={{
               backgroundColor: "#f39c12",
               width: "100%",
               alignSelf: "center",
             }}
-            textColor={undefined} onPress={undefined} />
+            textColor={undefined} onPress={handleSubmit(onSubmit)} />
         </View>
 
         <View style={{ borderColor: "#fff", width: "80%", alignSelf: "center", gap: 10 }}>
