@@ -5,22 +5,35 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import animationData from '../../../assets/animation/animation2.json';
 import ReusableButton from '../../components/Button/ReusableButton';
-import { useForm,Controller } from 'react-hook-form'; 
+import { useForm, Controller } from 'react-hook-form';
 import Toast from 'react-native-toast-message';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const { control, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    console.log(data);
-    Toast.show({
-      type: 'success',
-      position: 'top',
-      text1: 'Hello User',
-      text2: 'Logged In Successfully',
-    });
-    navigation.replace("Dashboard");
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, data.email, data.password).then((userCredential) => {
+      const user = userCredential.user;
+      console.log(data);
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: 'Logged in successfully',
+        text2: 'Welcome to dashboard',
+      });
+      navigation.replace("Dashboard");
+    })
+      .catch((error) => {
+        const errorMessage = error.message;
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Error while logging into your account',
+          text2: errorMessage,
+        });
+      })
   };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logo}>
@@ -73,8 +86,8 @@ const Login = ({navigation}) => {
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.textLink} onPress={()=>navigation.navigate("ForgotPassword")}>Forgot Password 🤦</Text>
-        <Text>Don't have an account? <Text style={styles.textLink} onPress={()=>navigation.navigate("SignUp")}>Sign Up</Text></Text>
+        <Text style={styles.textLink} onPress={() => navigation.navigate("ForgotPassword")}>Forgot Password 🤦</Text>
+        <Text>Don't have an account? <Text style={styles.textLink} onPress={() => navigation.navigate("SignUp")}>Sign Up</Text></Text>
       </View>
     </SafeAreaView>
   );
@@ -112,7 +125,7 @@ const styles = StyleSheet.create({
   formButtonView: {
 
   },
-    textInput: {
+  textInput: {
     backgroundColor: "#fff",
     width: "90%",
     alignSelf: 'center',
@@ -125,14 +138,14 @@ const styles = StyleSheet.create({
 
   footer: {
     flex: 1,
-    justifyContent:'flex-end',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     width: "100%",
-    gap:10
+    gap: 10
   },
   textLink: {
-    color:"#4683FB",
-    fontSize:16
+    color: "#4683FB",
+    fontSize: 16
   },
   animation: {
     width: '100%',
