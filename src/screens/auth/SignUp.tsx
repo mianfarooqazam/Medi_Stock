@@ -17,10 +17,20 @@ const SignUp = ({ navigation }) => {
     createUserWithEmailAndPassword(auth, data.email, data.password).then((userCredential) => {
       const user = userCredential.user;
       console.log(data);
+      if (data.password !== data.confirmpassword) {
+        // Password and confirm password mismatch
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Password mismatch',
+          text2: 'Please make sure your passwords match',
+        });
+        return;
+      }
       Toast.show({
         type: 'success',
         position: 'top',
-        text1: 'Account Create Successfully',
+        text1: 'Account Created Successfully',
         text2: 'Log into your account',
       });
       navigation.replace("Login");
@@ -30,7 +40,7 @@ const SignUp = ({ navigation }) => {
         Toast.show({
           type: 'error',
           position: 'top',
-          text1: 'User already exist',
+          text1: 'Error while creating account',
           text2: errorMessage,
         });
       })
