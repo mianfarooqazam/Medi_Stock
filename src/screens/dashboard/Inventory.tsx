@@ -2,50 +2,25 @@ import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { HelperText, Searchbar } from 'react-native-paper';
 import Toast from 'react-native-toast-message';
-import { ProductsData } from '../../DummyData/Data';
 import { getDocs, collection, query, where, orderBy } from 'firebase/firestore';
 import firebase from '../../../firebaseConfig';
 
 const Inventory = ({ navigation }) => {
-  //   useEffect(() => {
-  //     const lowStockProducts = ProductsData.filter(item => item.remainingQuantity <  20);
-  //     if (lowStockProducts.length >  0) {
-  //       const alertMessage = lowStockProducts.map(item => `${item.productName}: ${item.remainingQuantity}`).join('\n');
-  //       Alert.alert(
-  //         'Low Stock Alert',
-  //         alertMessage,
-  //         [
-  //           { text: 'OK'},
-  //         ],
-  //         { cancelable: false }
-  //       );
-  //     }
-  //   }, []);
-  // useEffect(() => {
-  //   const showToast = () => {
-  //     Toast.show({
-  //       type: 'error',
-  //       text1: 'Time to Re-Stock!',
-  //       text2: 'Some of your products have reached minimun limit 👋'
-  //     });
-  //   }
-  //   showToast(); 
-  // }, [])
+   
   const [products, setProducts] = useState([]);
   const [stocks, setStocks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('')
-  const filteredProducts = ProductsData.filter(item => item.productName.toLowerCase().includes(searchQuery.toLowerCase()))
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const q = query(
+        const productquery = query(
           collection(firebase.db, "Products"),
           where("ProductName", ">=", searchQuery),
           where("ProductName", "<=", searchQuery + "\uf8ff"),
           orderBy("ProductName")
         );
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(productquery);
         const fetchedProducts = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
@@ -57,13 +32,11 @@ const Inventory = ({ navigation }) => {
     };
     const fetchStocks = async () => {
       try {
-        const q = query(
+        const stockquery = query(
           collection(firebase.db, "StockInOut"),
-          where("ProductName", ">=", searchQuery),
-          where("ProductName", "<=", searchQuery + "\uf8ff"),
           orderBy("ProductName")
         );
-        const querySnapshot = await getDocs(q);
+        const querySnapshot = await getDocs(stockquery);
         const fetchedStocks = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
@@ -79,14 +52,36 @@ const Inventory = ({ navigation }) => {
   }, [searchQuery]);
 
   useEffect(() => {
-    // Calculate remaining quantity and update products state
     const updatedProducts = products.map(product => {
       const stock = stocks.find(stock => stock.ProductName === product.ProductName);
-      const remainingQuantity = stock ? stock.StockIn - stock.StockOut : 0;
+      const remainingQuantity = stock ? stock.StockIn - stock.StockOut :  0;
       return { ...product, remainingQuantity };
     });
 
     setProducts(updatedProducts);
+
+
+    const lowStockProducts = updatedProducts.filter(item => item.remainingQuantity <  20);
+    if (lowStockProducts.length >  0) {
+      const alertMessage = lowStockProducts.map(item => `${item.ProductName}: ${item.remainingQuantity}`).join('\n');
+      Alert.alert(
+        'Low Stock Alert',
+        alertMessage,
+        [
+          { text: 'OK' },
+        ],
+        { cancelable: false }
+      );
+    }
+    const showToast = () => {
+      Toast.show({
+        type: 'error',
+        position: 'bottom',
+        text1: 'Time to Re-Stock!',
+        text2: 'Some of your products have reached minimun limit 👋'
+      });
+    }
+    showToast(); 
   }, [stocks]);
   return (
     <View style={styles.container}>
