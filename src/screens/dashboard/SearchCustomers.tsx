@@ -81,25 +81,24 @@ const SearchCustomers = () => {
           ) : (
             customers.map((customer, index) => (
 
-              <View style={{ padding: 10, backgroundColor: "#fff", borderRadius: 10, width: "80%", alignSelf: 'center' }} key={index}>
+              <View style={{ padding: 5, backgroundColor: "#fff", borderRadius: 10, width: "80%", alignSelf: 'center' }} key={index}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                <View style={{ flexDirection: "row", gap: 10, padding: 5 }}>
-             
-                    <Text style={{ color: "#468EFB", fontSize: 25, fontWeight: "bold" }}>{customer.CustomerName}</Text>
+                <View style={{ flexDirection: "row",padding: 5 }}>
+                    <Text style={{ color: "#468EFB", fontSize: 25, fontWeight: "500" }}>{customer.CustomerName}</Text>
                   </View>
 
                   <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Feather name="edit-2" size={20} color="black" onPress={() => showEditModal(item)} />
+                    <Feather name="edit-2" size={20} color="black" onPress={() => showEditModal(customer)} />
                     <AntDesign name="delete" size={20} color="red" onPress={() => showDeleteModal()} />
                   </View>
                 </View>
-                <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
-                  <Text>Area :</Text>
-                  <Text>{customer.Area}</Text>
+                <View style={{ flexDirection: "row", gap:5,  padding: 5 }}>
+                  <Text  style={{color:"#bebebe"}}>Area :</Text>
+                  <Text style={{color:"#bebebe"}}>{customer.Area}</Text>
                 </View>
-                <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
-                  <Text>Address :</Text>
-                  <Text>{customer.Address}</Text>
+                <View style={{ flexDirection: "row", gap: 5, padding: 5 }}>
+                  <Text style={{color:"#bebebe"}}>Address :</Text>
+                  <Text style={{color:"#bebebe"}}>{customer.Address}</Text>
                 </View>
                 
               </View>
@@ -135,7 +134,7 @@ const SearchCustomers = () => {
             contentContainerStyle={containerStyle}
           >
             <View style={{ gap: 20 }}>
-              <Text>Delete Customer ?</Text>
+              <Text>Are you sure you want to Delete customername ?</Text>
               <ReusableButton
                 label="Delete"
                 onPress={() => console.log("🚀 Customer deleted!")}
