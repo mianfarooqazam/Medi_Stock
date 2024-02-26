@@ -6,37 +6,38 @@ import { ProductsData } from '../../DummyData/Data';
 import { getDocs, collection, query, where, orderBy } from 'firebase/firestore';
 import firebase from '../../../firebaseConfig';
 
-const Inventory = ({navigation}) => {
-//   useEffect(() => {
-//     const lowStockProducts = ProductsData.filter(item => item.remainingQuantity <  20);
-//     if (lowStockProducts.length >  0) {
-//       const alertMessage = lowStockProducts.map(item => `${item.productName}: ${item.remainingQuantity}`).join('\n');
-//       Alert.alert(
-//         'Low Stock Alert',
-//         alertMessage,
-//         [
-//           { text: 'OK'},
-//         ],
-//         { cancelable: false }
-//       );
-//     }
-//   }, []);
-// useEffect(() => {
-//   const showToast = () => {
-//     Toast.show({
-//       type: 'error',
-//       text1: 'Time to Re-Stock!',
-//       text2: 'Some of your products have reached minimun limit 👋'
-//     });
-//   }
-//   showToast(); 
-// }, [])
-const [products, setProducts] = useState([]);
+const Inventory = ({ navigation }) => {
+  //   useEffect(() => {
+  //     const lowStockProducts = ProductsData.filter(item => item.remainingQuantity <  20);
+  //     if (lowStockProducts.length >  0) {
+  //       const alertMessage = lowStockProducts.map(item => `${item.productName}: ${item.remainingQuantity}`).join('\n');
+  //       Alert.alert(
+  //         'Low Stock Alert',
+  //         alertMessage,
+  //         [
+  //           { text: 'OK'},
+  //         ],
+  //         { cancelable: false }
+  //       );
+  //     }
+  //   }, []);
+  // useEffect(() => {
+  //   const showToast = () => {
+  //     Toast.show({
+  //       type: 'error',
+  //       text1: 'Time to Re-Stock!',
+  //       text2: 'Some of your products have reached minimun limit 👋'
+  //     });
+  //   }
+  //   showToast(); 
+  // }, [])
+  const [products, setProducts] = useState([]);
+  const [stocks, setStocks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('')
   const filteredProducts = ProductsData.filter(item => item.productName.toLowerCase().includes(searchQuery.toLowerCase()))
-  
+
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchProducts = async () => {
       try {
         const q = query(
           collection(firebase.db, "Products"),
@@ -45,7 +46,7 @@ const [products, setProducts] = useState([]);
           orderBy("ProductName")
         );
         const querySnapshot = await getDocs(q);
-        const fetchedProducts= querySnapshot.docs.map(doc => ({
+        const fetchedProducts = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()
         }));
@@ -54,9 +55,39 @@ const [products, setProducts] = useState([]);
         console.error("Error fetching documents: ", error);
       }
     };
+    const fetchStocks = async () => {
+      try {
+        const q = query(
+          collection(firebase.db, "StockInOut"),
+          where("ProductName", ">=", searchQuery),
+          where("ProductName", "<=", searchQuery + "\uf8ff"),
+          orderBy("ProductName")
+        );
+        const querySnapshot = await getDocs(q);
+        const fetchedStocks = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setStocks(fetchedStocks);
+      } catch (error) {
+        console.error("Error fetching documents: ", error);
+      }
+    };
 
-    fetchData();
+    fetchProducts();
+    fetchStocks();
   }, [searchQuery]);
+
+  useEffect(() => {
+    // Calculate remaining quantity and update products state
+    const updatedProducts = products.map(product => {
+      const stock = stocks.find(stock => stock.ProductName === product.ProductName);
+      const remainingQuantity = stock ? stock.StockIn - stock.StockOut : 0;
+      return { ...product, remainingQuantity };
+    });
+
+    setProducts(updatedProducts);
+  }, [stocks]);
   return (
     <View style={styles.container}>
       <View>
@@ -70,7 +101,7 @@ const [products, setProducts] = useState([]);
       </View>
       <View style={{ alignItems: "center" }}>
         <HelperText type='info'  >
-          You can set minimum Products threshold in <Text onPress={()=>navigation.navigate("SettingScreen")} style={{color:"#4683fb"}}>Settings</Text>
+          You can set minimum Products threshold in <Text onPress={() => navigation.navigate("SettingScreen")} style={{ color: "#4683fb" }}>Settings</Text>
         </HelperText>
       </View>
       <View>
@@ -84,12 +115,12 @@ const [products, setProducts] = useState([]);
           </View>
 
           <ScrollView>
-          {products.length === 0 ? (
-            <View style={styles.noResultsView}>
-              <Text style={styles.noResultsText}>Products not found 😔</Text>
-            </View>
-          ) : (
-            products.map((product, index) => (
+            {products.length === 0 ? (
+              <View style={styles.noResultsView}>
+                <Text style={styles.noResultsText}>Products not found 😔</Text>
+              </View>
+            ) : (
+              products.map((product, index) => (
                 <View style={styles.tableRow} key={index}>
                   <Text style={styles.tableData}>{index + 1}</Text>
                   <Text style={styles.tableData}>{product.Packing}</Text>
