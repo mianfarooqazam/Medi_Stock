@@ -1,21 +1,21 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, StyleSheet, } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { addDoc, collection } from 'firebase/firestore';
-import db from '../../../firebaseConfig';
+import firebase from '../../../firebaseConfig'; 
 import Toast from 'react-native-toast-message';
 //
 const AddCustomer = ({navigation}) => {
   const {control,handleSubmit,setValue} = useForm();
   const onSubmit = async (data) => {
     try {
-        const customersRef = collection(db, 'Customers');
-        await addDoc(customersRef, {
-            Customer_Name: data.customer,
+        const docRef = await addDoc(collection(firebase.db, "Customers"), {
+            CustomerName: data.customer,
             Area: data.area,
             Address: data.address,
         });
+        console.log("Document written with ID: ", docRef.id);
         Toast.show({
             type: 'success',
             position: 'bottom',
@@ -23,7 +23,9 @@ const AddCustomer = ({navigation}) => {
             text2: 'Customer Added',
           });
         navigation.navigate("CustomersScreen");
-    } catch (error) {
+    } 
+    catch (error) {
+        console.error("Error adding document: ", error);
         Toast.show({
             type: 'error',
             position: 'bottom',
@@ -44,13 +46,13 @@ const AddCustomer = ({navigation}) => {
                             onBlur={onBlur}
                             onChangeText={(text) => {
                                 onChange(text);
-                                setValue('customer', text);
+                                setValue('customername', text);
                             }}
                             value={value}
                             style={styles.textinput}
                         />
                     )}
-                    name="customer"
+                    name="customername"
                     rules={{ required: true }}
                     defaultValue=""
                 />
