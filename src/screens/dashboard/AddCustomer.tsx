@@ -11,7 +11,7 @@ const AddCustomer = ({navigation}) => {
   const onSubmit = async (data) => {
     try {
         const docRef = await addDoc(collection(firebase.db, "Customers"), {
-            CustomerName: data.customer,
+            CustomerName: data.customername,
             Area: data.area,
             Address: data.address,
         });

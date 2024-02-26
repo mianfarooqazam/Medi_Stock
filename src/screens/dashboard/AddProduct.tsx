@@ -3,7 +3,7 @@ import { useForm, Controller } from 'react-hook-form';
 import { View, StyleSheet, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { addDoc, collection } from 'firebase/firestore';
-import db from '../../../firebaseConfig';
+import firebase from '../../../firebaseConfig';
 import Toast from 'react-native-toast-message';
 
 const AddProduct = ({ navigation }) => {
@@ -11,14 +11,14 @@ const AddProduct = ({ navigation }) => {
 
     const onSubmit = async (data) => {
         try {
-            const productsRef = collection(db, 'Products');
-            await addDoc(productsRef, {
-                Product_Name: data.product,
+            const docRef = await addDoc(collection(firebase.db, "Products"), {
+                ProductName: data.productname,
                 MRP: data.mrp,
                 TP: data.tp,
                 Packing: data.packing,
-                Batch_No: data.batchno,
+                BatchNo: data.batchno,
             });
+            console.log("Document written with ID: ", docRef.id);
             Toast.show({
                 type: 'success',
                 position:'bottom',
@@ -49,13 +49,13 @@ const AddProduct = ({ navigation }) => {
                             onBlur={onBlur}
                             onChangeText={(text) => {
                                 onChange(text);
-                                setValue('product', text);
+                                setValue('productname', text);
                             }}
                             value={value}
                             style={styles.textinput}
                         />
                     )}
-                    name="product"
+                    name="productname"
                     rules={{ required: true }}
                     defaultValue=""
                 />
@@ -71,6 +71,7 @@ const AddProduct = ({ navigation }) => {
                             }}
                             value={value}
                             style={styles.textinput}
+                            keyboardType='numeric'
                         />
                     )}
                     name="mrp"
@@ -89,6 +90,8 @@ const AddProduct = ({ navigation }) => {
                             }}
                             value={value}
                             style={styles.textinput}
+                            keyboardType='numeric'
+                            
                         />
                     )}
                     name="tp"
