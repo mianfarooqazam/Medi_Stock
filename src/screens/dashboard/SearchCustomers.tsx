@@ -1,12 +1,13 @@
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import { Divider, Modal, Portal, Provider, Searchbar, TextInput } from 'react-native-paper'
 import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 import { AntDesign, Feather } from '@expo/vector-icons'
 import ReusableButton from '../../components/Button/ReusableButton'
 import DividerBar from '../../components/Divider/DividerBar'
-import { CustomersData } from '../../DummyData/Data'
-
+import { CustomersData } from '../../DummyData/Data';
+import { getDocs, collection, query, where, orderBy } from 'firebase/firestore';
+import firebase from '../../../firebaseConfig';
 
 const containerStyle = {
   backgroundColor: "white",
@@ -19,9 +20,8 @@ const containerStyle = {
 };
 
 const SearchCustomers = () => {
+  const [customers, setCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
-  const filteredCustomers = CustomersData.filter(item => item.customerName.toLowerCase().includes(searchQuery.toLowerCase()))
-
   const [deleteVisible, setdeleteVisible] = useState(false);
   const showDeleteModal = () => setdeleteVisible(true);
   const hideDeleteModal = () => setdeleteVisible(false);
@@ -41,6 +41,28 @@ const SearchCustomers = () => {
     seteditVisible(true);
   };
   const hideEditModal = () => seteditVisible(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const q = query(
+          collection(firebase.db, "Customers"),
+          where("CustomerName", ">=", searchQuery),
+          where("CustomerName", "<=", searchQuery + "\uf8ff"),
+          orderBy("CustomerName")
+        );
+        const querySnapshot = await getDocs(q);
+        const fetchedCustomers = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setCustomers(fetchedCustomers);
+      } catch (error) {
+        console.error("Error fetching documents: ", error);
+      }
+    };
+
+    fetchData();
+  }, [searchQuery]);
   return (
     <Provider>
       <View style={styles.container}>
@@ -52,18 +74,18 @@ const SearchCustomers = () => {
           />
         </View>
         <ScrollView contentContainerStyle={{ gap: 10 }}>
-          {filteredCustomers.length === 0 ? (
+          {customers.length === 0 ? (
             <View style={styles.noResultsView}>
               <Text style={styles.noResultsText}>Customer not found 😔</Text>
             </View>
           ) : (
-            filteredCustomers.map((item, index) => (
+            customers.map((customer, index) => (
 
               <View style={{ padding: 10, backgroundColor: "#fff", borderRadius: 10, width: "80%", alignSelf: 'center' }} key={index}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                 <View style={{ flexDirection: "row", gap: 10, padding: 5 }}>
-              {/* <Text style={{ fontSize: 25, }}>Name :</Text> */}
-                    <Text style={{ color: "#468EFB", fontSize: 25, fontWeight: "bold" }}>{item.customerName}</Text>
+             
+                    <Text style={{ color: "#468EFB", fontSize: 25, fontWeight: "bold" }}>{customer.CustomerName}</Text>
                   </View>
 
                   <View style={{ flexDirection: "row", gap: 10 }}>
@@ -73,11 +95,11 @@ const SearchCustomers = () => {
                 </View>
                 <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
                   <Text>Area :</Text>
-                  <Text>{item.Area}</Text>
+                  <Text>{customer.Area}</Text>
                 </View>
                 <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
                   <Text>Address :</Text>
-                  <Text>{item.Address}</Text>
+                  <Text>{customer.Address}</Text>
                 </View>
                 
               </View>
@@ -141,6 +163,7 @@ const styles = StyleSheet.create({
   },
   noResultsText: {
     fontSize: 20,
+    color: "#468EFB",
   },
   textinput: {
     backgroundColor: "#fff",
