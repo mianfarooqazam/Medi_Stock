@@ -39,7 +39,6 @@ const StockInOut = () => {
 
       <View>
         <View style={styles.table}>
-          <Text style={styles.tableHeader}>S/N</Text>
           <Text style={styles.tableHeader}>Product</Text>
           <Text style={styles.tableHeader}>Stock-In</Text>
           <Text style={styles.tableHeader}>Stock-Out</Text>
@@ -55,7 +54,6 @@ const StockInOut = () => {
             stocks.map((stocks, index) => (
               
       <View style={styles.tableRow} key={index}>
-        <Text style={styles.tableData}>{index +1 }</Text>
         <Text style={styles.tableData}>{stocks.ProductName}</Text>   
         <Text style={[styles.tableData, {color:"#008000"}]}>{stocks.StockIn} </Text>
         <Text style={[styles.tableData, {color:"#FF0000"}]}>{stocks.StockOut} </Text>
