@@ -31,7 +31,7 @@ const StockInOut = () => {
     const fetchData = async () => {
       try {
         const q = query(
-          collection(firebase.db, "StockInOut"),
+          collection(firebase.db, "Products"),
           where("ProductName", ">=", searchQuery),
           where("ProductName", "<=", searchQuery + "\uf8ff"),
           // orderBy("ProductName")
@@ -145,7 +145,7 @@ const StockInOut = () => {
               rules={{ required: true }}
               defaultValue=""
             />
-           
+
 
             <View style={{}}>
               <ReusableButton label="Update Stock" onPress={() => { }} style={styles.button} textColor="#fff" />

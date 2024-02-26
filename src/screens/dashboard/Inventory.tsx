@@ -1,38 +1,62 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { HelperText, Searchbar } from 'react-native-paper';
-import { Item } from 'react-native-paper/lib/typescript/components/List/List';
 import Toast from 'react-native-toast-message';
 import { ProductsData } from '../../DummyData/Data';
+import { getDocs, collection, query, where, orderBy } from 'firebase/firestore';
+import firebase from '../../../firebaseConfig';
 
 const Inventory = ({navigation}) => {
-  useEffect(() => {
-    const lowStockProducts = ProductsData.filter(item => item.remainingQuantity <  20);
-    if (lowStockProducts.length >  0) {
-      const alertMessage = lowStockProducts.map(item => `${item.productName}: ${item.remainingQuantity}`).join('\n');
-      Alert.alert(
-        'Low Stock Alert',
-        alertMessage,
-        [
-          { text: 'OK'},
-        ],
-        { cancelable: false }
-      );
-    }
-  }, []);
-useEffect(() => {
-  const showToast = () => {
-    Toast.show({
-      type: 'error',
-      text1: 'Time to Re-Stock!',
-      text2: 'Some of your products have reached minimun limit 👋'
-    });
-  }
-  showToast(); 
-}, [])
+//   useEffect(() => {
+//     const lowStockProducts = ProductsData.filter(item => item.remainingQuantity <  20);
+//     if (lowStockProducts.length >  0) {
+//       const alertMessage = lowStockProducts.map(item => `${item.productName}: ${item.remainingQuantity}`).join('\n');
+//       Alert.alert(
+//         'Low Stock Alert',
+//         alertMessage,
+//         [
+//           { text: 'OK'},
+//         ],
+//         { cancelable: false }
+//       );
+//     }
+//   }, []);
+// useEffect(() => {
+//   const showToast = () => {
+//     Toast.show({
+//       type: 'error',
+//       text1: 'Time to Re-Stock!',
+//       text2: 'Some of your products have reached minimun limit 👋'
+//     });
+//   }
+//   showToast(); 
+// }, [])
+const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('')
   const filteredProducts = ProductsData.filter(item => item.productName.toLowerCase().includes(searchQuery.toLowerCase()))
+  
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const q = query(
+          collection(firebase.db, "Products"),
+          where("ProductName", ">=", searchQuery),
+          where("ProductName", "<=", searchQuery + "\uf8ff"),
+          orderBy("ProductName")
+        );
+        const querySnapshot = await getDocs(q);
+        const fetchedProducts= querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setProducts(fetchedProducts);
+      } catch (error) {
+        console.error("Error fetching documents: ", error);
+      }
+    };
 
+    fetchData();
+  }, [searchQuery]);
   return (
     <View style={styles.container}>
       <View>
@@ -60,18 +84,18 @@ useEffect(() => {
           </View>
 
           <ScrollView>
-
-            {filteredProducts.length === 0 ? (
-              <View style={styles.noResultsView}>
-                <Text style={styles.noResultsText}>No such products 😔</Text>
-              </View>
-            ) : (
-              filteredProducts.map((item, index) => (
+          {products.length === 0 ? (
+            <View style={styles.noResultsView}>
+              <Text style={styles.noResultsText}>Products not found 😔</Text>
+            </View>
+          ) : (
+            products.map((product, index) => (
                 <View style={styles.tableRow} key={index}>
                   <Text style={styles.tableData}>{index + 1}</Text>
-                  <Text style={styles.tableData}>{item.packing}</Text>
-                  <Text style={styles.tableData}>{item.productName}</Text>
-                  <Text style={[styles.tableData, item.remainingQuantity < 20 ? styles.redText : null]}>{item.remainingQuantity}</Text>
+                  <Text style={styles.tableData}>{product.Packing}</Text>
+                  <Text style={styles.tableData}>{product.ProductName}</Text>
+                  {/* <Text style={[styles.tableData, product.remainingQuantity < 20 ? styles.redText : null]}>{item.remainingQuantity}</Text> */}
+                  <Text style={[styles.tableData, product.remainingQuantity < 20 ? styles.redText : null]}>{product.remainingQuantity}</Text>
                 </View>
               )
               ))}

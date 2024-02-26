@@ -45,10 +45,11 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Sales")}>
-          <Text style={styles.screenText}>Sales</Text>
-          <MaterialIcon name="attach-money" size={40} color="#fff" />
+      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Inventory")}>
+          <Text style={styles.screenText}>Inventory</Text>
+          <MaterialIcon name="inventory" size={40} color="#fff" />
         </TouchableOpacity>
+     
      
         <TouchableOpacity style={[styles.item, { height: itemHeight }]}onPress={()=>navigation.navigate("StockInOut")}>
           <Text style={styles.screenText}>Stock In-Out</Text>
@@ -56,9 +57,9 @@ const Dashboard = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <View style={styles.row}>
-      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Inventory")}>
-          <Text style={styles.screenText}>Inventory</Text>
-          <MaterialIcon name="inventory" size={40} color="#fff" />
+      <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("Sales")}>
+          <Text style={styles.screenText}>Sales</Text>
+          <MaterialIcon name="attach-money" size={40} color="#fff" />
         </TouchableOpacity>
         <TouchableOpacity style={[styles.item, { height: itemHeight }]} onPress={()=>navigation.navigate("SettingScreen")}>
           <Text style={styles.screenText}>Settings</Text>
