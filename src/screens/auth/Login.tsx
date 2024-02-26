@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TextInput } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
@@ -9,22 +9,21 @@ import { useForm, Controller } from 'react-hook-form';
 import Toast from 'react-native-toast-message';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import ResuableInput from '../../components/TextInput/ReusableInput';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = ({ navigation }) => {
   const { control, handleSubmit } = useForm();
-
   const onSubmit = async (data) => {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, data.email, data.password).then((userCredential) => {
       const user = userCredential.user;
+      console.log(data);
       Toast.show({
         type: 'success',
         position: 'top',
         text1: 'Logged in successfully',
         text2: 'Welcome to dashboard',
       });
-    
+      navigation.replace("Dashboard");
     })
       .catch((error) => {
         const errorMessage = error.message;

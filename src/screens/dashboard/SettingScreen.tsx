@@ -8,7 +8,6 @@ import { Switch } from 'react-native-paper';
 import { useForm } from "react-hook-form";
 import Toast from "react-native-toast-message";
 const SettingScreen = ({navigation}) => {
-  const auth = getAuth();
   const [invoiceVisible, setInvoiceVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [signatureVisible, setSignatureVisible] = useState(false);
@@ -35,7 +34,7 @@ const SettingScreen = ({navigation}) => {
   const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   const { control, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    
+    const auth = getAuth();
     signOut(auth).then(() => {
       console.log("Logged out")
       Toast.show({
@@ -44,6 +43,7 @@ const SettingScreen = ({navigation}) => {
         text1: 'Logout successfully',
         text2: 'Please Login again',
       });
+      navigation.replace("Login");
     })
       .catch((error) => {
         const errorMessage = error.message;
