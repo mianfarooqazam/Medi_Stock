@@ -64,14 +64,14 @@ const Inventory = ({ navigation }) => {
     const lowStockProducts = updatedProducts.filter(item => item.remainingQuantity <  20);
     if (lowStockProducts.length >  0) {
       const alertMessage = lowStockProducts.map(item => `${item.ProductName}: ${item.remainingQuantity}`).join('\n');
-      Alert.alert(
-        'Low Stock Alert',
-        alertMessage,
-        [
-          { text: 'OK' },
-        ],
-        { cancelable: false }
-      );
+      // Alert.alert(
+      //   'Low Stock Alert',
+      //   alertMessage,
+      //   [
+      //     { text: 'OK' },
+      //   ],
+      //   { cancelable: false }
+      // );
     }
     const showToast = () => {
       Toast.show({

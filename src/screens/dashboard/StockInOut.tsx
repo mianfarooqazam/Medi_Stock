@@ -40,8 +40,7 @@ const StockInOut = () => {
           id: doc.id,
           ...doc.data()
         }));
-        setStocks(fetchedStocks);
-        console.log(fetchedStocks)
+        setStocks(fetchedStocks); 
       } catch (error) {
         console.error("Error fetching stocks: ", error);
       }
@@ -77,7 +76,7 @@ const StockInOut = () => {
         <ScrollView contentContainerStyle={{ gap: 10 }}>
           {stocks.length === 0 ? (
             <View style={styles.noResultsView}>
-              <Text style={styles.noResultsText}>Stocks not found 😔</Text>
+              <Text style={styles.noResultsText}>No stock products found 😔</Text>
             </View>
           ) : (
             stocks.map((stocks, index) => (
