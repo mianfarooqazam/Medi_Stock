@@ -83,6 +83,7 @@ const Inventory = ({ navigation }) => {
     }
     showToast(); 
   }, [stocks]);
+  
   return (
     <View style={styles.container}>
       <View>
@@ -121,7 +122,7 @@ const Inventory = ({ navigation }) => {
                   <Text style={styles.tableData}>{product.Packing}</Text>
                   <Text style={styles.tableData}>{product.ProductName}</Text>
                   {/* <Text style={[styles.tableData, product.remainingQuantity < 20 ? styles.redText : null]}>{item.remainingQuantity}</Text> */}
-                  <Text style={[styles.tableData, product.remainingQuantity < 20 ? styles.redText : null]}>{product.remainingQuantity}</Text>
+                  <Text style={[styles.tableData, product.remainingQuantity < 20 ? styles.redText : styles.blueText]}>{product.remainingQuantity}</Text>
                 </View>
               )
               ))}
@@ -168,6 +169,9 @@ const styles = StyleSheet.create({
   },
   redText: {
     color: 'red',
+  },
+  blueText: {
+    color: '#4683fb',
   },
   noResultsView: {
     alignItems: "center",

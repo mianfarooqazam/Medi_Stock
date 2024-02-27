@@ -1,8 +1,8 @@
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { getDocs, collection, query, where, orderBy } from 'firebase/firestore';
+import { getDocs, collection, query, where, doc, updateDoc } from 'firebase/firestore';
 import firebase from '../../../firebaseConfig';
-import { Modal, Portal, Searchbar, TextInput } from 'react-native-paper';
+import { Modal, Portal, Searchbar, } from 'react-native-paper';
 import { Feather } from '@expo/vector-icons';
 import Toast from 'react-native-toast-message';
 import ReusableButton from '../../components/Button/ReusableButton';
@@ -31,10 +31,9 @@ const StockInOut = () => {
     const fetchData = async () => {
       try {
         const q = query(
-          collection(firebase.db, "Products"),
+          collection(firebase.db, "StockInOut"),
           where("ProductName", ">=", searchQuery),
           where("ProductName", "<=", searchQuery + "\uf8ff"),
-          // orderBy("ProductName")
         );
         const querySnapshot = await getDocs(q);
         const fetchedStocks = querySnapshot.docs.map(doc => ({
@@ -42,6 +41,7 @@ const StockInOut = () => {
           ...doc.data()
         }));
         setStocks(fetchedStocks);
+        console.log(fetchedStocks)
       } catch (error) {
         console.error("Error fetching stocks: ", error);
       }
@@ -57,6 +57,7 @@ const StockInOut = () => {
       text2: 'Customer Added',
     });
   }
+
   return (
     <View style={styles.container}>
       <Searchbar onChangeText={setSearchQuery}
@@ -105,6 +106,7 @@ const StockInOut = () => {
             <Text style={{ fontWeight: "bold" }}>Add Stock</Text>
             <DividerBar />
 
+
             <Controller
               control={control}
               render={({ field: { onChange, value, onBlur } }) => (
@@ -114,11 +116,11 @@ const StockInOut = () => {
                   selectedTextStyle={styles.selectedTextStyle}
                   inputSearchStyle={styles.inputSearchStyle}
                   iconStyle={styles.iconStyle}
-                  data={[]}
+                  data={stocks.map(stock => ({ label: stock.ProductName, value: stock.ProductName }))}
                   search
                   maxHeight={300}
-                  labelField="customerName"
-                  valueField="customerName"
+                  labelField="label"
+                  valueField="value"
                   placeholder="Select Product"
                   searchPlaceholder="Search Product"
                   value={value}
@@ -139,6 +141,7 @@ const StockInOut = () => {
                   style={styles.textInput}
                   activeOutlineColor='#4683FB'
                   outlineColor='#4683FB'
+                  keyboardType='numeric'
                 />
               )}
               name="stockin"
@@ -148,7 +151,12 @@ const StockInOut = () => {
 
 
             <View style={{}}>
-              <ReusableButton label="Update Stock" onPress={() => { }} style={styles.button} textColor="#fff" />
+              <ReusableButton
+                label="Update Stock"
+                onPress={() => { }}
+                style={styles.button}
+                textColor="#fff"
+              />
             </View>
           </View>
         </Modal>
