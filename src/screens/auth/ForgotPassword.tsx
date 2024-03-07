@@ -5,49 +5,40 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 import animationData from '../../../assets/animation/animation2.json';
 import ReusableButton from '../../components/Button/ReusableButton';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm,Controller } from 'react-hook-form'; 
 import Toast from 'react-native-toast-message';
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import ResuableInput from '../../components/TextInput/ReusableInput';
 
-const Login = ({ navigation }) => {
+const ForgotPassword = ({navigation}) => {
   const { control, handleSubmit } = useForm();
   const onSubmit = async (data) => {
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, data.email, data.password).then((userCredential) => {
-      const user = userCredential.user;
-      console.log(data);
-      Toast.show({
-        type: 'success',
-        position: 'top',
-        text1: 'Logged in successfully',
-        text2: 'Welcome to dashboard',
-      });
-      navigation.replace("Dashboard");
-    })
-      .catch((error) => {
-        const errorMessage = error.message;
-        Toast.show({
-          type: 'error',
-          position: 'top',
-          text1: 'Error while logging into your account',
-          text2: errorMessage,
-        });
-      })
+    console.log(data);
+    Toast.show({
+      type: 'success',
+      position: 'top',
+      text1: 'Email Sent',
+      text2: 'Check your email',
+    });
+    navigation.replace("ResetPassword");
   };
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.logo}>
+        {/* <LottieView
+          source={animationData}
+          autoPlay
+          loop
+          style={styles.animation}
+        /> */}
         <Image source={require('../../../assets/images/medicine_logo_white.png')} />
         <Text style={styles.logoText}>Medi Stock</Text>
       </View>
 
       <View style={styles.form}>
         <View style={styles.formTextView}>
-          <Controller
+        <Controller
             control={control}
             render={({ field: { onChange, onBlur, value } }) => (
-              <ResuableInput
+              <TextInput
                 mode='outlined'
                 label="Email"
                 onBlur={onBlur}
@@ -62,38 +53,19 @@ const Login = ({ navigation }) => {
             rules={{ required: true }}
             defaultValue=""
           />
-          <Controller
-            control={control}
-            render={({ field: { onChange, onBlur, value } }) => (
-              <ResuableInput
-                mode='outlined'
-                label="Password"
-                onBlur={onBlur}
-                onChangeText={value => onChange(value)}
-                value={value}
-                style={styles.textInput}
-                outlineColor='#4683FB'
-                activeOutlineColor='#4683FB'
-              />
-            )}
-            name="password"
-            rules={{ required: true }}
-            defaultValue=""
-          />
         </View>
         <View style={styles.formButtonView}>
-          <ReusableButton label="Login" onPress={handleSubmit(onSubmit)} style={styles.button} textColor="#fff" />
+        <ReusableButton label="Submit" onPress={handleSubmit(onSubmit)} style={styles.button} textColor="#fff" />
         </View>
+        
+      </View>
+      <View style={styles.footer}>
+         <Text style={styles.textLink} onPress={()=>navigation.navigate("Login")}>Back to Login</Text>
       </View>
 
-      <View style={styles.footer}>
-        <Text style={styles.textLink} onPress={() => navigation.navigate("ForgotPassword")}>Forgot Password 🤦</Text>
-        <Text>Don't have an account? <Text style={styles.textLink} onPress={() => navigation.navigate("SignUp")}>Sign Up</Text></Text>
-      </View>
     </SafeAreaView>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -126,7 +98,7 @@ const styles = StyleSheet.create({
   formButtonView: {
 
   },
-  textInput: {
+    textInput: {
     backgroundColor: "#fff",
     width: "90%",
     alignSelf: 'center',
@@ -139,14 +111,14 @@ const styles = StyleSheet.create({
 
   footer: {
     flex: 1,
-    justifyContent: 'flex-end',
+    justifyContent:'flex-end',
     alignItems: 'center',
     width: "100%",
-    gap: 10
+    gap:10
   },
   textLink: {
-    color: "#4683FB",
-    fontSize: 16
+    color:"#4683FB",
+    fontSize:16
   },
   animation: {
     width: '100%',
@@ -154,7 +126,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
-
-
-
+export default ForgotPassword;

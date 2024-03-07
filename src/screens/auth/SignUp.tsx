@@ -1,34 +1,129 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Button, HelperText, TextInput } from 'react-native-paper';
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import React from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { auth } from '../../../firebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-// import auth from '@react-native-firebase/auth';
+import Toast from 'react-native-toast-message';
+import ReusableButton from '../../components/Button/ReusableButton';
+import ResuableInput from '../../components/TextInput/ReusableInput';
 
-//
 
-const SignUp = () => {
-  const [email, setEmail] = useState('');
-
-  const [password, setPassword] = useState('');
-  const handleSignUp = async () => {
-      try {
-        const fireBaseSignup = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(fireBaseSignup);
-      } catch (error) {
-        console.log('Sign Up Error: ',error)
+const SignUp = ({ navigation }) => {
+  const { control, handleSubmit } = useForm();
+  const onSubmit = async (data) => {
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth, data.email, data.password).then((userCredential) => {
+      const user = userCredential.user;
+      console.log(data);
+      if (data.password !== data.confirmpassword) {
+        // Password and confirm password mismatch
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Password mismatch',
+          text2: 'Please make sure your passwords match',
+        });
+        return;
       }
-
+      Toast.show({
+        type: 'success',
+        position: 'top',
+        text1: 'Account Created Successfully',
+        text2: 'Log into your account',
+      });
+      navigation.replace("Login");
+    })
+      .catch((error) => {
+        const errorMessage = error.message;
+        Toast.show({
+          type: 'error',
+          position: 'top',
+          text1: 'Error while creating account',
+          text2: errorMessage,
+        });
+      })
   };
   return (
     <SafeAreaView style={styles.container}>
-      <Text style={{ textAlign: 'center' }}>User Registration</Text>
-      <TextInput label='Email' value={email} onChangeText={(text) => setEmail(text)} />
+      <View style={styles.logo}>
+        {/* <LottieView
+          source={animationData}
+          autoPlay
+          loop
+          style={styles.animation}
+        /> */}
+        <Image source={require('../../../assets/images/medicine_logo_white.png')} />
+        <Text style={styles.logoText}>Medi Stock</Text>
+      </View>
 
+      <View style={styles.form}>
+        <View style={styles.formTextView}>
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ResuableInput
+                mode='outlined'
+                label="Email"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={styles.textInput}
+                activeOutlineColor='#4683FB'
+                outlineColor='#4683FB'
+              />
+            )}
+            name="email"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ResuableInput
+                mode='outlined'
+                label="Password"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={styles.textInput}
+                activeOutlineColor='#4683FB'
+                outlineColor='#4683FB'
+              />
+            )}
+            name="password"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+          <Controller
+            control={control}
+            render={({ field: { onChange, onBlur, value } }) => (
+              <ResuableInput
+                mode='outlined'
+                label="Confirm Password"
+                onBlur={onBlur}
+                onChangeText={value => onChange(value)}
+                value={value}
+                style={styles.textInput}
+                activeOutlineColor='#4683FB'
+                outlineColor='#4683FB'
+              />
+            )}
+            name="confirmpassword"
+            rules={{ required: true }}
+            defaultValue=""
+          />
+        </View>
+        <View style={styles.formButtonView}>
+          <ReusableButton label="Sign Up" onPress={handleSubmit(onSubmit)} style={styles.button} textColor="#fff" />
+        </View>
 
-      <TextInput label='Password' value={password} onChangeText={(text) => setPassword(text)} secureTextEntry />
-      <Button mode="contained" onPress={handleSignUp}> Sign Up </Button>
+      </View>
+
+      <View style={styles.footer}>
+        <Text style={styles.textLink}>Guest</Text>
+        <Text>Already have account! <Text style={styles.textLink} onPress={() => navigation.navigate("Login")}>Login</Text></Text>
+      </View>
+
     </SafeAreaView>
   );
 };
@@ -36,10 +131,59 @@ const SignUp = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     justifyContent: 'center',
-    // marginVertical:20
-    // width: '90%',
+    alignItems: 'center',
+    padding: 10,
+    backgroundColor: "#fff"
+  },
+  logo: {
+    width: "100%",
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  logoText: {
+    fontSize: 30,
+    fontWeight: "300",
+    color: "#4683FB"
+  },
+  form: {
+    flex: 2,
+    justifyContent: 'center',
+    width: "100%",
+    gap: 30,
+  },
+  formTextView: {
+    gap: 10
+  },
+  formButtonView: {
+
+  },
+  textInput: {
+    backgroundColor: "#fff",
+    width: "90%",
+    alignSelf: 'center',
+  },
+  button: {
+    backgroundColor: "#4683fb",
+    width: "90%",
+    alignSelf: "center",
+  },
+
+  footer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    width: "100%",
+    gap: 10
+  },
+  textLink: {
+    color: "#4683FB",
+    fontSize: 16
+  },
+  animation: {
+    width: '100%',
+    height: '100%',
   },
 });
 

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Modal, Portal, Provider, Button, Divider, } from 'react-native-paper';
 import ReusableChip from '../../components/ReusableChip';
 
-const YourProfile = () => {
+const ComingSoon = () => {
     const [visible, setVisible] = useState(false);
 
     const showModal = () => setVisible(true);
@@ -68,4 +68,4 @@ backgroundColor:"#8efb"
 
 });
 //
-export default YourProfile;
+export default ComingSoon;

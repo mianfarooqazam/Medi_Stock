@@ -1,38 +1,13 @@
 import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
 import { Divider, Modal, Portal, Provider, Searchbar, TextInput } from 'react-native-paper'
 import { Item } from 'react-native-paper/lib/typescript/components/List/List'
 import { AntDesign, Feather } from '@expo/vector-icons'
 import ReusableButton from '../../components/Button/ReusableButton'
 import DividerBar from '../../components/Divider/DividerBar'
-
-
-const CustomerData = [
-  { customerName: "John Smith", Area: "New York", Address: "United States" },
-  { customerName: "Emily Johnson", Area: "London", Address: "United Kingdom" },
-  { customerName: "Ahmed Hassan", Area: "Cairo", Address: "Egypt" },
-  { customerName: "Maria Garcia", Area: "Madrid", Address: "Spain" },
-  { customerName: "Luis Rodriguez", Area: "Mexico City", Address: "Mexico" },
-  { customerName: "Yuki Tanaka", Area: "Tokyo", Address: "Japan" },
-  { customerName: "Sophie Dupont", Area: "Paris", Address: "France" },
-  { customerName: "Anna Müller", Area: "Berlin", Address: "Germany" },
-  { customerName: "Michael Brown", Area: "Sydney", Address: "Australia" },
-  { customerName: "Jane Doe", Area: "Toronto", Address: "Canada" },
-  { customerName: "Emma White", Area: "Dubai", Address: "United Arab Emirates" },
-  { customerName: "Oliver Wilson", Area: "Singapore", Address: "Singapore" },
-  { customerName: "Farooq", Area: "Charsadda", Address: "Peshawar" },
-  { customerName: "Sophia Martinez", Area: "Moscow", Address: "Russia" },
-  { customerName: "Liam Miller", Area: "Rome", Address: "Italy" },
-  { customerName: "Isabella Garcia", Area: "Barcelona", Address: "Spain" },
-  { customerName: "Mason Anderson", Area: "Amsterdam", Address: "Netherlands" },
-  { customerName: "Mia Thompson", Area: "Vienna", Address: "Austria" },
-  { customerName: "Ethan Jackson", Area: "Stockholm", Address: "Sweden" },
-  { customerName: "Ava White", Area: "Helsinki", Address: "Finland" },
-  { customerName: "Ethan Lee", Area: "Oslo", Address: "Norway" },
-  { customerName: "Olivia Harris", Area: "Copenhagen", Address: "Denmark" },
-  { customerName: "William Clark", Area: "Lisbon", Address: "Portugal" },
-  { customerName: "Emily Taylor", Area: "Luxembourg City", Address: "Luxembourg" },
-];
+import { CustomersData } from '../../DummyData/Data';
+import { getDocs, collection, query, where, orderBy } from 'firebase/firestore';
+import firebase from '../../../firebaseConfig';
 
 const containerStyle = {
   backgroundColor: "white",
@@ -45,9 +20,8 @@ const containerStyle = {
 };
 
 const SearchCustomers = () => {
+  const [customers, setCustomers] = useState([]);
   const [searchQuery, setSearchQuery] = useState("")
-  const filteredCustomers = CustomerData.filter(item => item.customerName.toLowerCase().includes(searchQuery.toLowerCase()))
-
   const [deleteVisible, setdeleteVisible] = useState(false);
   const showDeleteModal = () => setdeleteVisible(true);
   const hideDeleteModal = () => setdeleteVisible(false);
@@ -67,6 +41,28 @@ const SearchCustomers = () => {
     seteditVisible(true);
   };
   const hideEditModal = () => seteditVisible(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const q = query(
+          collection(firebase.db, "Customers"),
+          where("CustomerName", ">=", searchQuery),
+          where("CustomerName", "<=", searchQuery + "\uf8ff"),
+          orderBy("CustomerName")
+        );
+        const querySnapshot = await getDocs(q);
+        const fetchedCustomers = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setCustomers(fetchedCustomers);
+      } catch (error) {
+        console.error("Error fetching documents: ", error);
+      }
+    };
+
+    fetchData();
+  }, [searchQuery]);
   return (
     <Provider>
       <View style={styles.container}>
@@ -78,32 +74,31 @@ const SearchCustomers = () => {
           />
         </View>
         <ScrollView contentContainerStyle={{ gap: 10 }}>
-          {filteredCustomers.length === 0 ? (
+          {customers.length === 0 ? (
             <View style={styles.noResultsView}>
               <Text style={styles.noResultsText}>Customer not found 😔</Text>
             </View>
           ) : (
-            filteredCustomers.map((item, index) => (
+            customers.map((customer, index) => (
 
-              <View style={{ padding: 10, backgroundColor: "#fff", borderRadius: 10, width: "80%", alignSelf: 'center' }} key={index}>
+              <View style={{ padding: 5, backgroundColor: "#fff", borderRadius: 10, width: "80%", alignSelf: 'center' }} key={index}>
                 <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                <View style={{ flexDirection: "row", gap: 10, padding: 5 }}>
-              {/* <Text style={{ fontSize: 25, }}>Name :</Text> */}
-                    <Text style={{ color: "#468EFB", fontSize: 25, fontWeight: "bold" }}>{item.customerName}</Text>
+                <View style={{ flexDirection: "row",padding: 5 }}>
+                    <Text style={{ color: "#468EFB", fontSize: 25, fontWeight: "500" }}>{customer.CustomerName}</Text>
                   </View>
 
                   <View style={{ flexDirection: "row", gap: 10 }}>
-                    <Feather name="edit-2" size={20} color="black" onPress={() => showEditModal(item)} />
+                    <Feather name="edit-2" size={20} color="black" onPress={() => showEditModal(customer)} />
                     <AntDesign name="delete" size={20} color="red" onPress={() => showDeleteModal()} />
                   </View>
                 </View>
-                <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
-                  <Text>Area :</Text>
-                  <Text>{item.Area}</Text>
+                <View style={{ flexDirection: "row", gap:5,  padding: 5 }}>
+                  <Text  style={{color:"#bebebe"}}>Area :</Text>
+                  <Text style={{color:"#bebebe"}}>{customer.Area}</Text>
                 </View>
-                <View style={{ flexDirection: "row", gap: 10, justifyContent: "space-between", padding: 5 }}>
-                  <Text>Address :</Text>
-                  <Text>{item.Address}</Text>
+                <View style={{ flexDirection: "row", gap: 5, padding: 5 }}>
+                  <Text style={{color:"#bebebe"}}>Address :</Text>
+                  <Text style={{color:"#bebebe"}}>{customer.Address}</Text>
                 </View>
                 
               </View>
@@ -139,7 +134,7 @@ const SearchCustomers = () => {
             contentContainerStyle={containerStyle}
           >
             <View style={{ gap: 20 }}>
-              <Text>Delete Customer ?</Text>
+              <Text>Are you sure you want to Delete customername ?</Text>
               <ReusableButton
                 label="Delete"
                 onPress={() => console.log("🚀 Customer deleted!")}
@@ -167,6 +162,7 @@ const styles = StyleSheet.create({
   },
   noResultsText: {
     fontSize: 20,
+    color: "#468EFB",
   },
   textinput: {
     backgroundColor: "#fff",

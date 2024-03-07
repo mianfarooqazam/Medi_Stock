@@ -4,7 +4,7 @@ import { View, Dimensions, StyleSheet, ScrollView } from 'react-native';
 import { Button, Text, TouchableRipple } from 'react-native-paper';
 import PieChart from 'react-native-pie-chart'
 import DividerBar from '../../components/Divider/DividerBar';
-
+import { customerSalesData,productSalesData,sliceColors } from '../../DummyData/Data';
 
 const { width } = Dimensions.get('window')
 const Sales = () => {
@@ -12,23 +12,9 @@ const Sales = () => {
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null)
     const widthAndHeight = 200
-    const customerSalesData = {
-        Jerry: 123,
-        Doe: 521,
-        Tom: 433,
-        Peter: 789,
-        Emilia: 537,
-        
-    };
-    const productSalesData = {
-        Cosflor: 323,
-        Regix: 421,
-        Costio: 133,
-        Refix: 589,
-        Mativ: 437,
-    };
+    
 
-    const sliceColors = ['#fbd203', '#7F27FF', '#2ecc71', '#ff3c00', '#468EFB','#d3d3d3']
+    
 
     const customerSeries = Object.values(customerSalesData);
     const sliceCustomerColor = Object.keys(customerSalesData).map((customer, index) => {
